@@ -6,22 +6,18 @@ import (
 	"os/signal"
 	"syscall"
 
-	"github.com/KarnerTh/query-lookout/domain"
-	"github.com/KarnerTh/query-lookout/service/lookout"
+	"github.com/KarnerTh/query-lookout/orchestration"
 )
 
 func main() {
-	l := lookout.New(domain.LookoutConfig{})
-	l.Start()
+	orchestration.Setup()
 
-	manageRunState()
-}
-
-// Keeps program running until SIGINT or SIGTERM
-func manageRunState() {
+	// Keep program running until SIGINT or SIGTERM
 	quitChannel := make(chan os.Signal, 1)
 	signal.Notify(quitChannel, syscall.SIGINT, syscall.SIGTERM)
 	<-quitChannel
 
-	fmt.Println("\n\nService stopped - see you soon 👋")
+	fmt.Println("\n\nStopping service...")
+	orchestration.Close()
+	fmt.Println("Service stopped - see you soon 👋")
 }

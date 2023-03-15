@@ -2,3 +2,7 @@
 - SQL interface for quering
 - graphql controller
 
+
+
+# Docker
+- install sql lite before? https://github.com/mattn/go-sqlite3/issues/451
