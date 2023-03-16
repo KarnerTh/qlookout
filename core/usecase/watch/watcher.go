@@ -1,7 +1,6 @@
 package watch
 
 import (
-	"github.com/KarnerTh/query-lookout/cronjob"
 	"github.com/robfig/cron/v3"
 	log "github.com/sirupsen/logrus"
 )
@@ -27,9 +26,9 @@ func New() Watcher {
 }
 
 func (w watcher) Watch(config WatchConfig) WatcherId {
-	job := cronjob.CronJob[WatchConfig]{
-		Value:   config,
-		Execute: executeCronJob,
+	job := cronJob[WatchConfig]{
+		value:   config,
+		execute: executeCronJob,
 	}
 
 	id, err := w.cron.AddJob(config.Cron, job)
