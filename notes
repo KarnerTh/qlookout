@@ -1,6 +1,7 @@
 - SQL in memory for internal stuff
 - SQL interface for quering
 - graphql controller
+- do not panic all the time (log.fatal)
 
 
 

@@ -4,6 +4,7 @@ import (
 	"database/sql"
 
 	lookoutInfra "github.com/KarnerTh/query-lookout/usecase/lookout/infrastructure"
+	"github.com/KarnerTh/query-lookout/usecase/watch"
 	log "github.com/sirupsen/logrus"
 )
 
@@ -19,7 +20,8 @@ func Setup() {
 	lookoutRepo := lookoutInfra.NewLookoutRepo(db)
 
 	// use cases
-	setupLookout(lookoutRepo)
+	watcher := watch.New()
+	setupLookout(lookoutRepo, watcher)
 }
 
 func Close() {

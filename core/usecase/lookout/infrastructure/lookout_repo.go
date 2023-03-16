@@ -11,18 +11,18 @@ type lookoutRepo struct {
 }
 
 func NewLookoutRepo(db *sql.DB) lookout.LookoutRepo {
-	return lookoutRepo{db: db}
+	return &lookoutRepo{db: db}
 }
 
-func (r lookoutRepo) Get() ([]lookout.Lookout, error) {
+func (r lookoutRepo) Get() ([]lookout.LookoutConfig, error) {
 	rows, err := r.db.Query("select id, name, query, cron from lookout")
 	if err != nil {
 		return nil, err
 	}
 
-	var lookouts []lookout.Lookout
+	var lookouts []lookout.LookoutConfig
 	for rows.Next() {
-		var l lookout.Lookout
+		var l lookout.LookoutConfig
 		if err = rows.Scan(&l.Id, &l.Name, &l.Query, &l.Cron); err != nil {
 			return nil, err
 		}

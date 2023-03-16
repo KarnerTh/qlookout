@@ -1,5 +1,5 @@
 package lookout
 
 type LookoutRepo interface {
-	Get() ([]Lookout, error)
+	Get() ([]LookoutConfig, error)
 }

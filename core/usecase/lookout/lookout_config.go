@@ -1,6 +1,6 @@
 package lookout
 
-type Lookout struct {
+type LookoutConfig struct {
 	Id    int
 	Name  string
 	Query string
