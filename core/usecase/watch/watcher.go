@@ -28,8 +28,8 @@ func New(resultNotifier WatchResultPublisher) Watcher {
 }
 
 func (w watcher) Watch(config WatchConfig) WatcherId {
-	job := cronJob[watchCronJobData]{
-		value: watchCronJobData{
+	job := cronJob[cronJobWatchData]{
+		value: cronJobWatchData{
 			config:          config,
 			resultPublisher: w.resultPublisher,
 		},
@@ -48,7 +48,7 @@ func (w watcher) StopWatching(id WatcherId) {
 	w.cron.Remove(id)
 }
 
-func executeCronJob(job watchCronJobData) {
+func executeCronJob(job cronJobWatchData) {
 	// TODO: execute query
 	log.Info("Execute lookout ", job.config.Name)
 	job.resultPublisher.Publish(WatchResult{Value: "works from notifier"})

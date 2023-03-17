@@ -1,6 +1,6 @@
 package watch
 
-type watchCronJobData struct {
+type cronJobWatchData struct {
 	config          WatchConfig
 	resultPublisher WatchResultPublisher
 }
