@@ -1,5 +1,5 @@
 package query
 
 type QueryRepo interface {
-	Query(query string) (any, error)
+	Query(queryString string) (QueryResult, error)
 }

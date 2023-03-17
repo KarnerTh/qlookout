@@ -53,7 +53,6 @@ func (w watcher) StopWatching(id WatcherId) {
 }
 
 func executeCronJob(job cronJobWatchData) {
-	// TODO: execute query
 	log.Info("Execute lookout ", job.config.Name)
 	result, err := job.queryRepo.Query(job.config.Query)
 	if err != nil {

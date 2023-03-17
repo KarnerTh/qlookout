@@ -6,5 +6,5 @@ type WatchResultPublisher = notifier.Publisher[WatchResult]
 type WatchResultSubscriber = notifier.Subscriber[WatchResult]
 
 type WatchResult struct {
-  Value string
+	Value string
 }
