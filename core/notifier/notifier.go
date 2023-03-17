@@ -2,10 +2,18 @@ package notifier
 
 import "sync"
 
-// TODO: add unsubscribe?
-type Notifier[T any] interface {
+type Publisher[T any] interface {
 	Publish(value T)
+}
+
+// TODO: add unsubscribe?
+type Subscriber[T any] interface {
 	Subscribe() <-chan T
+}
+
+type Notifier[T any] interface {
+	Publisher[T]
+	Subscriber[T]
 }
 
 type notifier[T any] struct {

@@ -12,7 +12,7 @@ type LookoutManager interface {
 type lookoutManager struct {
 	lookoutRepo LookoutRepo
 	watcher     watch.Watcher
-	cronJobIds  map[int]watch.WatcherId // key is the id of the lookout, value the id of the cron job
+	cronJobIds  map[int]watch.WatcherId // key is the id of the lookout
 }
 
 func NewLookoutService(lookoutRepo LookoutRepo, watcher watch.Watcher) LookoutManager {

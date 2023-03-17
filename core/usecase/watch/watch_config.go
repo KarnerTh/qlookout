@@ -6,3 +6,4 @@ type WatchConfig struct {
 	Query     string
 	Cron      string
 }
+

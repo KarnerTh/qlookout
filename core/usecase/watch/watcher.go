@@ -13,12 +13,14 @@ type Watcher interface {
 }
 
 type watcher struct {
-	cron *cron.Cron
+	cron            *cron.Cron
+	resultPublisher WatchResultPublisher
 }
 
-func New() Watcher {
+func New(resultNotifier WatchResultPublisher) Watcher {
 	w := &watcher{
-		cron: cron.New(),
+		cron:            cron.New(),
+		resultPublisher: resultNotifier,
 	}
 	w.cron.Start()
 
@@ -26,8 +28,11 @@ func New() Watcher {
 }
 
 func (w watcher) Watch(config WatchConfig) WatcherId {
-	job := cronJob[WatchConfig]{
-		value:   config,
+	job := cronJob[watchCronJobData]{
+		value: watchCronJobData{
+			config:          config,
+			resultPublisher: w.resultPublisher,
+		},
 		execute: executeCronJob,
 	}
 
@@ -38,11 +43,13 @@ func (w watcher) Watch(config WatchConfig) WatcherId {
 
 	return id
 }
+
 func (w watcher) StopWatching(id WatcherId) {
 	w.cron.Remove(id)
 }
 
-func executeCronJob(job WatchConfig) {
-	log.Info("Execute lookout ", job.Name)
+func executeCronJob(job watchCronJobData) {
 	// TODO: execute query
+	log.Info("Execute lookout ", job.config.Name)
+	job.resultPublisher.Publish(WatchResult{Value: "works from notifier"})
 }
