@@ -20,7 +20,17 @@ func (q queryRepo) Query(query string) (any, error) {
 		return nil, err
 	}
 
-  // TODO: what about any?
+	// TODO: what about any?
+	// WARNING: only single value as response allowed
+	var rowData []any
+	for rows.Next() {
+		var value any
+		if err = rows.Scan(&value); err != nil {
+			return nil, err
+		}
 
-	return rows, nil
+		rowData = append(rowData, value)
+	}
+
+	return rowData, nil
 }

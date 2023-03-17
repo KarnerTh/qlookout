@@ -7,8 +7,8 @@ endif
 
 .PHONY: run-migration
 run-migration:
-	migrate -path migration -database sqlite3://data.db up
+	migrate -path database/migration -database sqlite3://data.db up
 
 .PHONY: run-down-migration
 run-down-migration:
-	migrate -path migration -database sqlite3://data.db down 1
+	migrate -path database/migration -database sqlite3://data.db down 1

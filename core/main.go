@@ -16,8 +16,5 @@ func main() {
 	quitChannel := make(chan os.Signal, 1)
 	signal.Notify(quitChannel, syscall.SIGINT, syscall.SIGTERM)
 	<-quitChannel
-
-	fmt.Println("\n\nStopping service...")
-	orchestration.Close()
 	fmt.Println("Service stopped - see you soon 👋")
 }
