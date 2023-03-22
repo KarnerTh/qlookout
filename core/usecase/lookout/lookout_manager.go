@@ -10,22 +10,22 @@ type LookoutManager interface {
 }
 
 type lookoutManager struct {
-	lookoutRepo LookoutRepo
-	watcher     watch.Watcher
-	cronJobIds  map[int]watch.WatcherId // key is the id of the lookout
+	lookoutService LookoutService
+	watcher        watch.Watcher
+	cronJobIds     map[int]watch.WatcherId // key is the id of the lookout
 }
 
-func NewLookoutService(lookoutRepo LookoutRepo, watcher watch.Watcher) LookoutManager {
+func NewLookoutManager(lookoutService LookoutService, watcher watch.Watcher) LookoutManager {
 	return &lookoutManager{
-		lookoutRepo: lookoutRepo,
-		watcher:     watcher,
-		cronJobIds:  make(map[int]watch.WatcherId),
+		lookoutService: lookoutService,
+		watcher:        watcher,
+		cronJobIds:     make(map[int]watch.WatcherId),
 	}
 }
 
 func (l *lookoutManager) Start() {
 	log.Debug("Lookout manager started")
-	lookouts, err := l.lookoutRepo.Get()
+	lookouts, err := l.lookoutService.GetConfigs()
 	if err != nil {
 		log.WithError(err).Fatal("Could not get lookouts")
 	}
@@ -40,4 +40,5 @@ func (l *lookoutManager) Start() {
 
 		l.cronJobIds[lo.Id] = id
 	}
+	log.Debug("All lookouts started successfully")
 }

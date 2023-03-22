@@ -53,12 +53,12 @@ func (w watcher) StopWatching(id WatcherId) {
 }
 
 func executeCronJob(job cronJobWatchData) {
-	log.Info("Execute lookout ", job.config.Name)
+	log.Infof("Execute lookout %s", job.config.Name)
 	result, err := job.queryRepo.Query(job.config.Query)
 	if err != nil {
 		log.WithError(err).Error("Error quering job")
+		return
 	}
 
-	log.Infof("Result: %+v\n", result)
-	job.resultPublisher.Publish(WatchResult{Value: "works from notifier"})
+	job.resultPublisher.Publish(WatchResult{LookoutId: job.config.LookoutId, Result: result})
 }

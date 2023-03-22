@@ -3,8 +3,10 @@ package orchestration
 import (
 	"github.com/KarnerTh/query-lookout/database"
 	"github.com/KarnerTh/query-lookout/notifier"
+	"github.com/KarnerTh/query-lookout/usecase/lookout"
 	lookoutInfra "github.com/KarnerTh/query-lookout/usecase/lookout/infrastructure"
 	queryInfra "github.com/KarnerTh/query-lookout/usecase/query/infrastructure"
+	reviewInfra "github.com/KarnerTh/query-lookout/usecase/review/infrastructure"
 	"github.com/KarnerTh/query-lookout/usecase/watch"
 	log "github.com/sirupsen/logrus"
 )
@@ -31,8 +33,13 @@ func Setup() {
 	// repos
 	lookoutRepo := lookoutInfra.NewLookoutRepo(internalDb)
 	queryRepo := queryInfra.NewQueryRepo(watchDb)
+	reviewRepo := reviewInfra.NewReviewRepo(internalDb)
+
+	// services
+	lookoutService := lookout.NewLookoutService(lookoutRepo)
 
 	// use cases
 	watcher := watch.New(watchResultNotifier, queryRepo)
-	setupLookout(lookoutRepo, watcher)
+	setupLookout(lookoutService, watcher)
+	setupReviewer(watchResultNotifier, reviewRepo)
 }

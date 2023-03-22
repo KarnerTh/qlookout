@@ -6,6 +6,6 @@ import (
 )
 
 func setupLookout(lookoutRepo lookout.LookoutRepo, watcher watch.Watcher) {
-	l := lookout.NewLookoutService(lookoutRepo, watcher)
+	l := lookout.NewLookoutManager(lookoutRepo, watcher)
 	l.Start()
 }
