@@ -7,5 +7,5 @@ import (
 
 func setupLookout(lookoutRepo lookout.LookoutRepo, watcher watch.Watcher) {
 	l := lookout.NewLookoutManager(lookoutRepo, watcher)
-	l.Start()
+	go l.Start()
 }

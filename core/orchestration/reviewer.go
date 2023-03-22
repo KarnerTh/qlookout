@@ -7,5 +7,5 @@ import (
 
 func setupReviewer(watchResultSubscriber watch.WatchResultSubscriber, reviewRepo review.ReviewRepo) {
 	reviewer := review.New(watchResultSubscriber, reviewRepo)
-	reviewer.Start()
+	go reviewer.Start()
 }

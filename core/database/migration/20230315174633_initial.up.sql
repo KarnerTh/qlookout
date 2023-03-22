@@ -18,7 +18,7 @@ create table review_rule(
 );
 
 
-
+-- TODO: remove
 -- temp test data
 insert into lookout (name, query, cron) values ('test', 'select count(*) as "count" from lookout', '@every 1s');
 insert into review_rule (lookout_id, column_name, row_index, exact_value) values (1, 'count', 0, '1');
