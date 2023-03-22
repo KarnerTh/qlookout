@@ -15,7 +15,7 @@ func NewReviewRepo(db *sql.DB) review.ReviewRepo {
 }
 
 func (r reviewRepo) GetRules(lookoutId int) ([]review.ReviewRule, error) {
-	rows, err := r.db.Query("select id, column_name, row_index, exact_value from review_rule")
+	rows, err := r.db.Query("select id, lookout_id, column_name, row_index, exact_value from review_rule")
 	if err != nil {
 		return nil, err
 	}
@@ -23,7 +23,8 @@ func (r reviewRepo) GetRules(lookoutId int) ([]review.ReviewRule, error) {
 	var rules []review.ReviewRule
 	for rows.Next() {
 		var rule review.ReviewRule
-		if err = rows.Scan(&rule.Id, &rule.ColumnName, &rule.RowIndex, &rule.ExactValue); err != nil {
+		err := rows.Scan(&rule.Id, &rule.LookoutId, &rule.ColumnName, &rule.RowIndex, &rule.ExactValue)
+		if err != nil {
 			return nil, err
 		}
 
