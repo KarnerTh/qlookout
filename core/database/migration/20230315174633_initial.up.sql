@@ -15,6 +15,9 @@ create table review_rule(
   column_name text not null,
   row_index integer not null,
   exact_value text,
+  greater_than text,
+  less_than text,
+  should_be_null boolean,
 
   FOREIGN KEY(lookout_id) REFERENCES lookout(id)
 );

@@ -1,8 +1,6 @@
 package review
 
 import (
-	"fmt"
-
 	"github.com/KarnerTh/query-lookout/usecase/watch"
 	log "github.com/sirupsen/logrus"
 )
@@ -50,12 +48,10 @@ func (r reviewer) Review(watchResult watch.WatchResult) []ReviewResult {
 
 	results := make([]ReviewResult, len(rules))
 	for i, rule := range rules {
-		expectedValue := rule.ExactValue
-		actualValue := fmt.Sprint(watchResult.Result.Rows[rule.RowIndex][rule.ColumnName])
-
+		success := validate(watchResult, rule)
 		results[i] = ReviewResult{
 			Rule:    rule,
-			Success: actualValue == expectedValue,
+			Success: success,
 		}
 	}
 

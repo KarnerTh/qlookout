@@ -15,7 +15,16 @@ func NewReviewRepo(db *sql.DB) review.ReviewRepo {
 }
 
 func (r reviewRepo) GetRules(lookoutId int) ([]review.ReviewRule, error) {
-	rows, err := r.db.Query("select id, lookout_id, column_name, row_index, exact_value from review_rule")
+	rows, err := r.db.Query(`
+    select  id,
+            lookout_id,
+            column_name,
+            row_index,
+            exact_value,
+            greater_than,
+            less_than,
+            should_be_null 
+    from review_rule`)
 	if err != nil {
 		return nil, err
 	}
@@ -23,10 +32,28 @@ func (r reviewRepo) GetRules(lookoutId int) ([]review.ReviewRule, error) {
 	var rules []review.ReviewRule
 	for rows.Next() {
 		var rule review.ReviewRule
-		err := rows.Scan(&rule.Id, &rule.LookoutId, &rule.ColumnName, &rule.RowIndex, &rule.ExactValue)
-		if err != nil {
+		var exactValue sql.NullString
+		var greaterThan sql.NullString
+		var lessThan sql.NullString
+		var shouldBeNull sql.NullBool
+
+		if err := rows.Scan(
+			&rule.Id,
+			&rule.LookoutId,
+			&rule.ColumnName,
+			&rule.RowIndex,
+			&exactValue,
+			&greaterThan,
+			&lessThan,
+			&shouldBeNull,
+		); err != nil {
 			return nil, err
 		}
+
+		rule.ExactValue = exactValue.String
+		rule.GreaterThan = greaterThan.String
+		rule.LessThan = lessThan.String
+		rule.ShouldBeNull = shouldBeNull.Bool
 
 		rules = append(rules, rule)
 	}
