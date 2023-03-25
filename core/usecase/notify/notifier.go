@@ -41,6 +41,8 @@ func (n notifier) Notify(reviewResult review.ReviewResult) {
 			log.WithError(err).Error("Could not get lookout config")
 		}
 
-		sendLocalNotification(Notification{Title: fmt.Sprintf("NOK: %s", lookout.Name), Description: "rule not successfull"})
+		if lookout.NotifyLocal {
+			sendLocalNotification(Notification{Title: fmt.Sprintf("NOK: %s", lookout.Name), Description: "rule not successfull"})
+		}
 	}
 }

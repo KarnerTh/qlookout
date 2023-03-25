@@ -16,26 +16,26 @@ func NewLookoutRepo(db *sql.DB) lookout.LookoutRepo {
 }
 
 func (r lookoutRepo) GetConfigs() ([]lookout.LookoutConfig, error) {
-	rows, err := r.db.Query("select id, name, query, cron from lookout")
+	rows, err := r.db.Query("select id, name, query, cron, notify_local, notify_mail from lookout")
 	if err != nil {
 		return nil, err
 	}
 
 	var lookouts []lookout.LookoutConfig
 	for rows.Next() {
-		var l lookout.LookoutConfig
-		if err = rows.Scan(&l.Id, &l.Name, &l.Query, &l.Cron); err != nil {
+		var config lookout.LookoutConfig
+		if err = rows.Scan(&config.Id, &config.Name, &config.Query, &config.Cron, &config.NotifyLocal, &config.NotifyMail); err != nil {
 			return nil, err
 		}
 
-		lookouts = append(lookouts, l)
+		lookouts = append(lookouts, config)
 	}
 
 	return lookouts, nil
 }
 
 func (r lookoutRepo) GetConfig(id int) (*lookout.LookoutConfig, error) {
-	rows, err := r.db.Query("select id, name, query, cron from lookout where id = ?", id)
+	rows, err := r.db.Query("select id, name, query, cron, notify_local, notify_mail from lookout where id = ?", id)
 	if err != nil {
 		return nil, err
 	}
@@ -45,7 +45,7 @@ func (r lookoutRepo) GetConfig(id int) (*lookout.LookoutConfig, error) {
 	}
 
 	var config lookout.LookoutConfig
-	if err = rows.Scan(&config.Id, &config.Name, &config.Query, &config.Cron); err != nil {
+	if err = rows.Scan(&config.Id, &config.Name, &config.Query, &config.Cron, &config.NotifyLocal, &config.NotifyMail); err != nil {
 		return nil, err
 	}
 

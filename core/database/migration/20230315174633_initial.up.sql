@@ -4,7 +4,9 @@ create table lookout(
   id integer primary key,
   name text not null,
   query text not null,
-  cron text not null
+  cron text not null,
+  notify_local boolean not null,
+  notify_mail boolean not null
 );
 
 create table review_rule(
@@ -20,5 +22,5 @@ create table review_rule(
 
 -- TODO: remove
 -- temp test data
-insert into lookout (name, query, cron) values ('test', 'select count(*) as "count" from lookout', '@every 1s');
+insert into lookout (name, query, cron, notify_local, notify_mail) values ('test', 'select count(*) as "count" from lookout', '@every 1s', true, false);
 insert into review_rule (lookout_id, column_name, row_index, exact_value) values (1, 'count', 0, '1');
