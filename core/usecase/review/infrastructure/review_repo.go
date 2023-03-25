@@ -11,7 +11,7 @@ type reviewRepo struct {
 }
 
 func NewReviewRepo(db *sql.DB) review.ReviewRepo {
-	return &reviewRepo{db: db}
+	return reviewRepo{db: db}
 }
 
 func (r reviewRepo) GetRules(lookoutId int) ([]review.ReviewRule, error) {

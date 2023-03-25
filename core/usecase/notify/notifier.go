@@ -19,7 +19,7 @@ type notifier struct {
 }
 
 func New(reviewResultSubscriber review.ReviewResultSubscriber, lookoutService lookout.LookoutService) Notifier {
-	return &notifier{
+	return notifier{
 		reviewResultSubscriber: reviewResultSubscriber,
 		lookoutService:         lookoutService,
 	}

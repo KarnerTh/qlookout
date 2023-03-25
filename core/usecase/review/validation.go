@@ -7,7 +7,7 @@ import (
 )
 
 func validate(watchResult watch.WatchResult, rule ReviewRule) bool {
-	// TODO: use column type to parse correctly
+	// TODO: use column type to parse correctly?
 	actualValue := watchResult.Result.Rows[rule.RowIndex][rule.ColumnName]
 
 	if rule.ExactValue != "" {

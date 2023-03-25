@@ -21,7 +21,7 @@ func New(
 	reviewResultPublisher ReviewResultPublisher,
 	reviewRepo ReviewRepo,
 ) Reviewer {
-	return &reviewer{
+	return reviewer{
 		watchResultSubscriber: watchResultSubscriber,
 		reviewResultPublisher: reviewResultPublisher,
 		reviewRepo:            reviewRepo,

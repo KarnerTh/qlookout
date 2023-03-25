@@ -12,7 +12,7 @@ type lookoutRepo struct {
 }
 
 func NewLookoutRepo(db *sql.DB) lookout.LookoutRepo {
-	return &lookoutRepo{db: db}
+	return lookoutRepo{db: db}
 }
 
 func (r lookoutRepo) GetConfigs() ([]lookout.LookoutConfig, error) {

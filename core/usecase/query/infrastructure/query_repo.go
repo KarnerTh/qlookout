@@ -11,7 +11,7 @@ type queryRepo struct {
 }
 
 func NewQueryRepo(db *sql.DB) query.QueryRepo {
-	return &queryRepo{db: db}
+	return queryRepo{db: db}
 }
 
 func (q queryRepo) Query(queryString string) (query.QueryResult, error) {

@@ -14,7 +14,7 @@ type lookoutService struct {
 }
 
 func NewLookoutService(lookoutRepo LookoutRepo) LookoutService {
-	return &lookoutService{
+	return lookoutService{
 		lookoutRepo: lookoutRepo,
 	}
 }
