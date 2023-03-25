@@ -1,6 +1,7 @@
 package lookout
 
 import log "github.com/sirupsen/logrus"
+
 // TODO: Service needed?
 
 type LookoutService interface {

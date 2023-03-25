@@ -13,12 +13,18 @@ type Reviewer interface {
 
 type reviewer struct {
 	watchResultSubscriber watch.WatchResultSubscriber
+	reviewResultPublisher ReviewResultPublisher
 	reviewRepo            ReviewRepo
 }
 
-func New(watchResultSubscriber watch.WatchResultSubscriber, reviewRepo ReviewRepo) Reviewer {
+func New(
+	watchResultSubscriber watch.WatchResultSubscriber,
+	reviewResultPublisher ReviewResultPublisher,
+	reviewRepo ReviewRepo,
+) Reviewer {
 	return &reviewer{
 		watchResultSubscriber: watchResultSubscriber,
+		reviewResultPublisher: reviewResultPublisher,
 		reviewRepo:            reviewRepo,
 	}
 }
@@ -28,12 +34,9 @@ func (r reviewer) Start() {
 
 	for {
 		watchResult := <-watchResultChannel
-
 		reviewResults := r.Review(watchResult)
 		for _, result := range reviewResults {
-			if !result.Success {
-				log.Error("heyyy")
-			}
+			r.reviewResultPublisher.Publish(result)
 		}
 	}
 }

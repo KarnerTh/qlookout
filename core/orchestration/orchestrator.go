@@ -1,14 +1,16 @@
 package orchestration
 
 import (
+	log "github.com/sirupsen/logrus"
+
 	"github.com/KarnerTh/query-lookout/database"
 	"github.com/KarnerTh/query-lookout/notifier"
 	"github.com/KarnerTh/query-lookout/usecase/lookout"
 	lookoutInfra "github.com/KarnerTh/query-lookout/usecase/lookout/infrastructure"
 	queryInfra "github.com/KarnerTh/query-lookout/usecase/query/infrastructure"
+	"github.com/KarnerTh/query-lookout/usecase/review"
 	reviewInfra "github.com/KarnerTh/query-lookout/usecase/review/infrastructure"
 	"github.com/KarnerTh/query-lookout/usecase/watch"
-	log "github.com/sirupsen/logrus"
 )
 
 func Setup() {
@@ -29,6 +31,7 @@ func Setup() {
 
 	// notifier
 	watchResultNotifier := notifier.New[watch.WatchResult]()
+	reviewResultNotifier := notifier.New[review.ReviewResult]()
 
 	// repos
 	lookoutRepo := lookoutInfra.NewLookoutRepo(internalDb)
@@ -41,5 +44,5 @@ func Setup() {
 	// use cases
 	watcher := watch.New(watchResultNotifier, queryRepo)
 	setupLookout(lookoutService, watcher)
-	setupReviewer(watchResultNotifier, reviewRepo)
+	setupReviewer(watchResultNotifier, reviewResultNotifier, reviewRepo)
 }
