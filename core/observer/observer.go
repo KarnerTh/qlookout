@@ -1,4 +1,4 @@
-package notifier
+package observer
 
 import "sync"
 
@@ -11,23 +11,23 @@ type Subscriber[T any] interface {
 	Subscribe() <-chan T
 }
 
-type Notifier[T any] interface {
+type Observer[T any] interface {
 	Publisher[T]
 	Subscriber[T]
 }
 
-type notifier[T any] struct {
+type observer[T any] struct {
 	mu   sync.Mutex
 	subs []chan T
 }
 
-func New[T any]() Notifier[T] {
-	return &notifier[T]{
+func New[T any]() Observer[T] {
+	return &observer[T]{
 		subs: []chan T{},
 	}
 }
 
-func (n *notifier[T]) Publish(value T) {
+func (n *observer[T]) Publish(value T) {
 	n.mu.Lock()
 	defer n.mu.Unlock()
 
@@ -36,7 +36,7 @@ func (n *notifier[T]) Publish(value T) {
 	}
 }
 
-func (n *notifier[T]) Subscribe() <-chan T {
+func (n *observer[T]) Subscribe() <-chan T {
 	n.mu.Lock()
 	defer n.mu.Unlock()
 

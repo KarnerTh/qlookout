@@ -1,12 +1,12 @@
 package watch
 
 import (
-	"github.com/KarnerTh/query-lookout/notifier"
+	"github.com/KarnerTh/query-lookout/observer"
 	"github.com/KarnerTh/query-lookout/usecase/query"
 )
 
-type WatchResultPublisher = notifier.Publisher[WatchResult]
-type WatchResultSubscriber = notifier.Subscriber[WatchResult]
+type WatchResultPublisher = observer.Publisher[WatchResult]
+type WatchResultSubscriber = observer.Subscriber[WatchResult]
 
 type WatchResult struct {
 	LookoutId int

@@ -4,7 +4,7 @@ import (
 	log "github.com/sirupsen/logrus"
 
 	"github.com/KarnerTh/query-lookout/database"
-	"github.com/KarnerTh/query-lookout/notifier"
+	"github.com/KarnerTh/query-lookout/observer"
 	"github.com/KarnerTh/query-lookout/usecase/lookout"
 	lookoutInfra "github.com/KarnerTh/query-lookout/usecase/lookout/infrastructure"
 	queryInfra "github.com/KarnerTh/query-lookout/usecase/query/infrastructure"
@@ -30,8 +30,8 @@ func Setup() {
 	}
 
 	// notifier
-	watchResultNotifier := notifier.New[watch.WatchResult]()
-	reviewResultNotifier := notifier.New[review.ReviewResult]()
+	watchResultObserver := observer.New[watch.WatchResult]()
+	reviewResultObserver := observer.New[review.ReviewResult]()
 
 	// repos
 	lookoutRepo := lookoutInfra.NewLookoutRepo(internalDb)
@@ -42,7 +42,7 @@ func Setup() {
 	lookoutService := lookout.NewLookoutService(lookoutRepo)
 
 	// use cases
-	watcher := watch.New(watchResultNotifier, queryRepo)
+	watcher := watch.New(watchResultObserver, queryRepo)
 	setupLookout(lookoutService, watcher)
-	setupReviewer(watchResultNotifier, reviewResultNotifier, reviewRepo)
+	setupReviewer(watchResultObserver, reviewResultObserver, reviewRepo)
 }

@@ -1,9 +1,10 @@
 package review
 
-import "github.com/KarnerTh/query-lookout/notifier"
+import "github.com/KarnerTh/query-lookout/observer"
 
-type ReviewResultPublisher = notifier.Publisher[ReviewResult]
-type ReviewResultSubscriber = notifier.Subscriber[ReviewResult]
+
+type ReviewResultPublisher = observer.Publisher[ReviewResult]
+type ReviewResultSubscriber = observer.Subscriber[ReviewResult]
 
 type ReviewResult struct {
 	Rule    ReviewRule
