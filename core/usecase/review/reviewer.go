@@ -9,6 +9,7 @@ import (
 
 type Reviewer interface {
 	Start()
+	Review(watchResult watch.WatchResult) []ReviewResult
 }
 
 type reviewer struct {
