@@ -64,5 +64,5 @@ func validate(watchResult watch.WatchResult, rule ReviewRule) bool {
 	}
 
 	log.Warnf("Rule with id %d has no validation parameters", rule.Id)
-	return true
+	return false
 }
