@@ -7,6 +7,6 @@ import (
 )
 
 func setupNotifier(reviewResultSubscriber review.ReviewResultSubscriber, lookoutService lookout.LookoutService) {
-  notifier := notify.New(reviewResultSubscriber, lookoutService)
-  go notifier.Start()
+	notifier := notify.New(reviewResultSubscriber, lookoutService)
+	go notifier.Start()
 }

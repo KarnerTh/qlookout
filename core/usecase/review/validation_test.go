@@ -138,7 +138,7 @@ func TestValidate(t *testing.T) {
 		lessThanFailure,
 		greaterAndLessThanSuccess,
 		greaterAndLessThanFailure,
-    undefinedRule,
+		undefinedRule,
 	}
 
 	for i, testCase := range testCases {

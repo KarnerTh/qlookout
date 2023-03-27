@@ -22,8 +22,8 @@ func validate(watchResult watch.WatchResult, rule ReviewRule) bool {
 		return actualValue == nil
 	}
 
-  // TODO: parse int correctly (not always int64?)
-  // HACK: types of column need to be checked
+	// TODO: parse int correctly (not always int64?)
+	// HACK: types of column need to be checked
 	if rule.GreaterThan != "" && rule.LessThan == "" {
 		value := actualValue.(int64)
 		greaterThan, err := strconv.ParseInt(rule.GreaterThan, 10, 64)
