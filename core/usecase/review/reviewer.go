@@ -51,13 +51,13 @@ func (r reviewer) Review(watchResult watch.WatchResult) ([]ReviewResult, error) 
 	for i, rule := range rules {
 		success, err := validate(watchResult, rule)
 		if err != nil {
-			// TODO: error part of the review result?
 			log.WithError(err).Error("Error in validating rule")
 		}
 
 		results[i] = ReviewResult{
 			Rule:    rule,
 			Success: success,
+			Error:   err,
 		}
 	}
 

@@ -8,4 +8,5 @@ type ReviewResultSubscriber = observer.Subscriber[ReviewResult]
 type ReviewResult struct {
 	Rule    ReviewRule
 	Success bool
+	Error   error
 }
