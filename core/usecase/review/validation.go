@@ -5,64 +5,90 @@ import (
 	"strconv"
 
 	"github.com/KarnerTh/query-lookout/usecase/watch"
-	log "github.com/sirupsen/logrus"
 )
 
-func validate(watchResult watch.WatchResult, rule ReviewRule) bool {
-	// TODO: use column type to parse correctly?
+func validate(watchResult watch.WatchResult, rule ReviewRule) (bool, error) {
 	actualValue := watchResult.Result.Rows[rule.RowIndex][rule.ColumnName]
 
 	if rule.ExactValue != "" {
 		value := fmt.Sprint(actualValue)
 		expectedValue := rule.ExactValue
-		return value == expectedValue
+		return value == expectedValue, nil
 	}
 
 	if rule.ShouldBeNull {
-		return actualValue == nil
+		return actualValue == nil, nil
 	}
 
-	// TODO: parse int correctly (not always int64?)
-	// HACK: types of column need to be checked
-	if rule.GreaterThan != "" && rule.LessThan == "" {
-		value := actualValue.(int64)
-		greaterThan, err := strconv.ParseInt(rule.GreaterThan, 10, 64)
-		if err != nil {
-			log.WithError(err).Errorf("Could not parse value %s", rule.GreaterThan)
-			return false
-		}
+	rangeResult := true
 
-		return value > greaterThan
+	if rule.GreaterThan != "" {
+		if rule.ColumnType == Int {
+			value, rule, err := getInt64Values(actualValue, rule.GreaterThan)
+			if err != nil {
+				return false, err
+			}
+			rangeResult = rangeResult && value > rule
+		} else if rule.ColumnType == Float {
+			value, rule, err := getFloat64Values(actualValue, rule.GreaterThan)
+			if err != nil {
+				return false, err
+			}
+			rangeResult = rangeResult && value > rule
+		} else {
+			rangeResult = false
+		}
 	}
 
-	if rule.LessThan != "" && rule.GreaterThan == "" {
-		value := actualValue.(int64)
-		lessThan, err := strconv.ParseInt(rule.LessThan, 10, 64)
-		if err != nil {
-			log.WithError(err).Errorf("Could not parse value %s", rule.LessThan)
-			return false
+	if rule.LessThan != "" {
+		if rule.ColumnType == Int {
+			value, rule, err := getInt64Values(actualValue, rule.LessThan)
+			if err != nil {
+				return false, err
+			}
+			rangeResult = rangeResult && value < rule
+		} else if rule.ColumnType == Float {
+			value, rule, err := getFloat64Values(actualValue, rule.LessThan)
+			if err != nil {
+				return false, err
+			}
+			rangeResult = rangeResult && value < rule
+		} else {
+			rangeResult = false
 		}
-
-		return value < lessThan
 	}
 
-	if rule.LessThan != "" && rule.GreaterThan != "" {
-		value := actualValue.(int64)
-		lessThan, err := strconv.ParseInt(rule.LessThan, 10, 64)
-		if err != nil {
-			log.WithError(err).Errorf("Could not parse value %s", rule.LessThan)
-			return false
-		}
-
-		greaterThan, err := strconv.ParseInt(rule.GreaterThan, 10, 64)
-		if err != nil {
-			log.WithError(err).Errorf("Could not parse value %s", rule.GreaterThan)
-			return false
-		}
-
-		return (value < lessThan) && (value > greaterThan)
+	if rule.GreaterThan != "" || rule.LessThan != "" {
+		return rangeResult, nil
 	}
 
-	log.Warnf("Rule with id %d has no validation parameters", rule.Id)
-	return false
+	return false, fmt.Errorf("Rule with id %d has no validation parameters", rule.Id)
+}
+
+func getInt64Values(actualValue any, ruleValue string) (actualValueResult int64, ruleValueResult int64, error error) {
+	actualValueResult, ok := actualValue.(int64)
+	if !ok {
+		return 0, 0, fmt.Errorf("Could not parse value %v as int64", actualValue)
+	}
+
+	ruleValueResult, err := strconv.ParseInt(ruleValue, 10, 64)
+	if err != nil {
+		return 0, 0, fmt.Errorf("Could not parse value %s", ruleValue)
+	}
+
+	return actualValueResult, ruleValueResult, nil
+}
+
+func getFloat64Values(actualValue any, ruleValue string) (actualValueResult float64, ruleValueResult float64, error error) {
+	actualValueResult, ok := actualValue.(float64)
+	if !ok {
+		return 0, 0, fmt.Errorf("Could not parse value %v as float64", actualValue)
+	}
+
+	ruleValueResult, err := strconv.ParseFloat(ruleValue, 64)
+	if err != nil {
+		return 0, 0, fmt.Errorf("Could not parse value %s", ruleValue)
+	}
+
+	return actualValueResult, ruleValueResult, nil
 }

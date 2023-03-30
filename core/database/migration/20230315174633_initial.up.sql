@@ -13,6 +13,7 @@ create table review_rule(
   id integer primary key,
   lookout_id integer not null, 
   column_name text not null,
+  column_type text check(column_type in ('text', 'int', 'float')) not null,
   row_index integer not null,
   exact_value text,
   greater_than text,
@@ -26,4 +27,4 @@ create table review_rule(
 -- TODO: remove
 -- temp test data
 insert into lookout (name, query, cron, notify_local, notify_mail) values ('test', 'select count(*) as "count" from lookout', '@every 1s', true, false);
-insert into review_rule (lookout_id, column_name, row_index, exact_value) values (1, 'count', 0, '1');
+insert into review_rule (lookout_id, column_name, column_type, row_index, exact_value) values (1, 'count', 'int', 0, '1');

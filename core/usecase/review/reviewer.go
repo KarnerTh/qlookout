@@ -7,7 +7,7 @@ import (
 
 type Reviewer interface {
 	Start()
-	Review(watchResult watch.WatchResult) []ReviewResult
+	Review(watchResult watch.WatchResult) ([]ReviewResult, error)
 }
 
 type reviewer struct {
@@ -33,27 +33,33 @@ func (r reviewer) Start() {
 
 	for {
 		watchResult := <-watchResultChannel
-		reviewResults := r.Review(watchResult)
+		reviewResults, _ := r.Review(watchResult)
 		for _, result := range reviewResults {
 			r.reviewResultPublisher.Publish(result)
 		}
 	}
 }
 
-func (r reviewer) Review(watchResult watch.WatchResult) []ReviewResult {
+func (r reviewer) Review(watchResult watch.WatchResult) ([]ReviewResult, error) {
 	rules, err := r.reviewRepo.GetRules(watchResult.LookoutId)
 	if err != nil {
 		log.WithError(err).Errorf("Could not get rules by id")
+		return nil, err
 	}
 
 	results := make([]ReviewResult, len(rules))
 	for i, rule := range rules {
-		success := validate(watchResult, rule)
+		success, err := validate(watchResult, rule)
+		if err != nil {
+			// TODO: error part of the review result?
+			log.WithError(err).Error("Error in validating rule")
+		}
+
 		results[i] = ReviewResult{
 			Rule:    rule,
 			Success: success,
 		}
 	}
 
-	return results
+	return results, nil
 }
