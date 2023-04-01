@@ -13,14 +13,14 @@ type LookoutManager interface {
 type lookoutManager struct {
 	lookoutService LookoutService
 	watcher        watch.Watcher
-	cronJobIds     map[int]watch.WatcherId // key is the id of the lookout
+	watcherIds     map[int]watch.WatcherId // key is the id of the lookout
 }
 
 func NewLookoutManager(lookoutService LookoutService, watcher watch.Watcher) LookoutManager {
 	return &lookoutManager{
 		lookoutService: lookoutService,
 		watcher:        watcher,
-		cronJobIds:     make(map[int]watch.WatcherId),
+		watcherIds:     make(map[int]watch.WatcherId),
 	}
 }
 
@@ -39,7 +39,7 @@ func (l *lookoutManager) Start() {
 			Cron:      lo.Cron,
 		})
 
-		l.cronJobIds[lo.Id] = id
+		l.watcherIds[lo.Id] = id
 	}
 	log.Info("All lookouts started successfully")
 }

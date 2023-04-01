@@ -23,7 +23,7 @@ func setupConfig() config.Config {
 
 	err = viper.ReadInConfig()
 	if err != nil {
-		log.WithError(err).Fatal("Could not get home dir")
+		log.WithError(err).Fatal("Could not read config")
 	}
 
 	return config.New()
