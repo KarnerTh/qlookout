@@ -2,8 +2,6 @@ package lookout
 
 import log "github.com/sirupsen/logrus"
 
-// TODO: Service needed?
-
 type LookoutService interface {
 	GetConfigs() ([]LookoutConfig, error)
 	GetConfig(id int) (*LookoutConfig, error)

@@ -6,7 +6,6 @@ type Publisher[T any] interface {
 	Publish(value T)
 }
 
-// TODO: add unsubscribe?
 type Subscriber[T any] interface {
 	Subscribe() <-chan T
 }
