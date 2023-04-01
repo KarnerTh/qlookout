@@ -15,7 +15,7 @@ import (
 
 func Setup() {
 	config := setupConfig()
-	setupLogger()
+	setupLogger(config)
 	log.Debug("Setup orchestration")
 
 	// database connections

@@ -41,5 +41,5 @@ func (l *lookoutManager) Start() {
 
 		l.cronJobIds[lo.Id] = id
 	}
-	log.Debug("All lookouts started successfully")
+	log.Info("All lookouts started successfully")
 }

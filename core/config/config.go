@@ -3,6 +3,7 @@ package config
 import "github.com/spf13/viper"
 
 const (
+	logLevel        = "log_level"
 	dataSource      = "data_source"
 	baseUrl         = "base_url"
 	mailFromAddress = "mail_from_address"
@@ -14,6 +15,7 @@ const (
 type config struct{}
 
 type Config interface {
+	LogLevel() string
 	DataSource() string
 	BaseUrl() string
 	MailFromAddress() string
@@ -23,7 +25,13 @@ type Config interface {
 }
 
 func New() Config {
+	viper.SetDefault(logLevel, "INFO")
+
 	return config{}
+}
+
+func (c config) LogLevel() string {
+	return viper.GetString(logLevel)
 }
 
 func (c config) DataSource() string {
