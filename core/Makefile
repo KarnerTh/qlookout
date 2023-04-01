@@ -9,11 +9,11 @@ endif
 
 .PHONY: run-migration
 run-migration:
-	migrate -path database/migration -database sqlite3://data.db up
+	migrate -path database/migrations -database sqlite3://data.db up
 
 .PHONY: run-down-migration
 run-down-migration:
-	migrate -path database/migration -database sqlite3://data.db down 1
+	migrate -path database/migrations -database sqlite3://data.db down 1
 
 # https://github.com/vektra/mockery is needed
 .PHONY: create-mocks

@@ -25,6 +25,11 @@ func Setup() {
 		log.WithError(err).Fatal("Could not initiate internal db")
 	}
 
+	err = database.MigrateInternalSqliteDb(internalDb)
+	if err != nil {
+		log.WithError(err).Fatal("Shutting down due to failing migrations")
+	}
+
 	watchDb, err := connectionFactory.NewConnector(config.DataSource())
 	if err != nil {
 		log.WithError(err).Fatal("Could not initiate connection to data source")
