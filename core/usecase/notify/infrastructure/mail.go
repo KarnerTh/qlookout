@@ -18,12 +18,13 @@ var mailTemplateContent string
 
 type mailNotifier struct {
 	fromAddress  string
+	toAddress    string
 	smtpHost     string
 	smtpPort     string
 	mailTemplate *template.Template
 }
 
-func NewMailNotifier(fromAddress string, smtpHost string, smtpPort string) notify.Notifier {
+func NewMailNotifier(fromAddress string, toAddress string, smtpHost string, smtpPort string) notify.Notifier {
 	tmpl, err := template.New("mail_template").Parse(mailTemplateContent)
 	if err != nil {
 		log.WithError(err).Fatal("Could not load mail template")
@@ -31,6 +32,7 @@ func NewMailNotifier(fromAddress string, smtpHost string, smtpPort string) notif
 
 	return mailNotifier{
 		fromAddress:  fromAddress,
+		toAddress:    toAddress,
 		smtpHost:     smtpHost,
 		smtpPort:     smtpPort,
 		mailTemplate: tmpl,
@@ -38,7 +40,28 @@ func NewMailNotifier(fromAddress string, smtpHost string, smtpPort string) notif
 }
 
 func (n mailNotifier) Send(value notify.Notification) error {
-	to := []string{"recipient@email.com"}
+	missingConfigs := []string{}
+	if n.fromAddress == "" {
+		missingConfigs = append(missingConfigs, "mail_from_address")
+	}
+
+	if n.toAddress == "" {
+		missingConfigs = append(missingConfigs, "mail_to_address")
+	}
+
+	if n.smtpHost == "" {
+		missingConfigs = append(missingConfigs, "mail_smtp_host")
+	}
+
+	if n.smtpPort == "" {
+		missingConfigs = append(missingConfigs, "mail_smtp_port")
+	}
+
+	if len(missingConfigs) > 0 {
+		return fmt.Errorf("Config missing: %s", strings.Join(missingConfigs, ", "))
+	}
+
+	to := strings.Split(n.toAddress, ",")
 	smtpAddress := fmt.Sprintf("%s:%s", n.smtpHost, n.smtpPort)
 
 	fromHeader := fmt.Sprintf("From: %s\n", n.fromAddress)

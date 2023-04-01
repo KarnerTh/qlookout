@@ -46,5 +46,5 @@ func Setup() {
 	watcher := watch.New(watchResultObserver, queryRepo)
 	setupLookout(lookoutService, watcher)
 	setupReviewer(watchResultObserver, reviewResultObserver, reviewRepo)
-	setupNotifier(reviewResultObserver, lookoutService)
+	setupNotifier(config, reviewResultObserver, lookoutService)
 }

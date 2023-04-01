@@ -47,10 +47,16 @@ func (n notifyManager) Notify(reviewResult review.ReviewResult) {
 		}
 
 		if lookout.NotifyLocal {
-			_ = n.localNotifier.Send(Notification{Title: fmt.Sprintf("NOK: %s", lookout.Name), Description: "rule not successfull"})
+			err = n.localNotifier.Send(Notification{Title: fmt.Sprintf("NOK: %s", lookout.Name), Description: "rule not successfull"})
+			if err != nil {
+				log.WithError(err).Error("Could not send local notification")
+			}
 		}
 		if lookout.NotifyMail {
-			_ = n.mailNotifier.Send(Notification{Title: fmt.Sprintf("NOK: %s", lookout.Name), Description: "rule not successfull"})
+			err = n.mailNotifier.Send(Notification{Title: fmt.Sprintf("NOK: %s", lookout.Name), Description: "rule not successfull"})
+			if err != nil {
+				log.WithError(err).Error("Could not send mail notification")
+			}
 		}
 	}
 }
