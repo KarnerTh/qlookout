@@ -12,6 +12,6 @@ func setupNotifier(config config.Config, reviewResultSubscriber review.ReviewRes
 	localNotifier := notifyInfra.NewLocalNotifier()
 	mailNotifier := notifyInfra.NewMailNotifier(config.MailFromAddress(), config.MailToAddress(), config.MailSmtpHost(), config.MailSmtpPort())
 
-	notifier := notify.New(reviewResultSubscriber, lookoutService, localNotifier, mailNotifier)
+	notifier := notify.New(config, reviewResultSubscriber, lookoutService, localNotifier, mailNotifier)
 	go notifier.Start()
 }
