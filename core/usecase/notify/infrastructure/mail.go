@@ -40,6 +40,43 @@ func NewMailNotifier(fromAddress string, toAddress string, smtpHost string, smtp
 }
 
 func (n mailNotifier) Send(value notify.Notification) error {
+	if err := n.validateMailConfig(); err != nil {
+		return err
+	}
+
+	smtpAddress := fmt.Sprintf("%s:%s", n.smtpHost, n.smtpPort)
+	to := strings.Split(n.toAddress, ",")
+	msg := n.getMailMsg(value)
+
+	if err := smtp.SendMail(smtpAddress, nil, n.fromAddress, to, msg); err != nil {
+		log.WithError(err).Error("Could not send mail")
+		return err
+	}
+
+	return nil
+}
+
+func (n mailNotifier) getMailMsg(value notify.Notification) []byte {
+	fromHeader := fmt.Sprintf("From: %s\n", n.fromAddress)
+	toHeader := fmt.Sprintf("To: %s\n", n.toAddress)
+	subject := "Subject: Test email from Go!\n"
+	mime := "MIME-version: 1.0;\nContent-Type: text/html; charset=\"UTF-8\";\n\n"
+	body := getMailContent(n.mailTemplate, value)
+
+	return []byte(toHeader + fromHeader + subject + mime + body)
+}
+
+func getMailContent(template *template.Template, data notify.Notification) string {
+	bodyBuf := new(bytes.Buffer)
+	if err := template.Execute(bodyBuf, data); err != nil {
+		log.WithError(err).Error("Could not load mail template")
+		return ""
+	}
+
+	return bodyBuf.String()
+}
+
+func (n mailNotifier) validateMailConfig() error {
 	missingConfigs := []string{}
 	if n.fromAddress == "" {
 		missingConfigs = append(missingConfigs, "mail_from_address")
@@ -61,31 +98,5 @@ func (n mailNotifier) Send(value notify.Notification) error {
 		return fmt.Errorf("Config missing: %s", strings.Join(missingConfigs, ", "))
 	}
 
-	to := strings.Split(n.toAddress, ",")
-	smtpAddress := fmt.Sprintf("%s:%s", n.smtpHost, n.smtpPort)
-
-	fromHeader := fmt.Sprintf("From: %s\n", n.fromAddress)
-	toHeader := fmt.Sprintf("To: %s\n", strings.Join(to, ","))
-	subject := "Subject: Test email from Go!\n"
-	mime := "MIME-version: 1.0;\nContent-Type: text/html; charset=\"UTF-8\";\n\n"
-	body := getMailBody(n.mailTemplate, value)
-	msg := []byte(toHeader + fromHeader + subject + mime + body)
-
-	err := smtp.SendMail(smtpAddress, nil, n.fromAddress, to, msg)
-	if err != nil {
-		log.WithError(err).Error("Could not send mail")
-		return err
-	}
-
 	return nil
-}
-
-func getMailBody(template *template.Template, data notify.Notification) string {
-	bodyBuf := new(bytes.Buffer)
-	if err := template.Execute(bodyBuf, data); err != nil {
-		log.WithError(err).Error("Could not load mail template")
-		return ""
-	}
-
-	return bodyBuf.String()
 }
