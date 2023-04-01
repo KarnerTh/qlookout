@@ -1,8 +1,9 @@
 package review
 
 import (
-	"github.com/KarnerTh/query-lookout/usecase/watch"
 	log "github.com/sirupsen/logrus"
+
+	"github.com/KarnerTh/query-lookout/usecase/watch"
 )
 
 type Reviewer interface {

@@ -14,19 +14,20 @@ import (
 )
 
 func Setup() {
+	config := setupConfig()
 	setupLogger()
 	log.Debug("Setup orchestration")
 
 	// database connections
 	connectionFactory := database.NewConnectorFactory()
-	internalDb, err := connectionFactory.NewConnector("sqlite3://data.db") // TODO: env var?
+	internalDb, err := connectionFactory.NewConnector("sqlite3://data.db")
 	if err != nil {
 		log.WithError(err).Fatal("Could not initiate internal db")
 	}
 
-	watchDb, err := connectionFactory.NewConnector("sqlite3://data.db") // TODO: env var?
+	watchDb, err := connectionFactory.NewConnector(config.DataSource())
 	if err != nil {
-		log.WithError(err).Fatal("Could not initiate internal db")
+		log.WithError(err).Fatal("Could not initiate connection to data source")
 	}
 
 	// notifier

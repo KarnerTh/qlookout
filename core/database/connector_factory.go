@@ -11,23 +11,27 @@ import (
 type connectorFactory struct{}
 
 type ConnectorFactory interface {
-	NewConnector(connectionString string) (*sql.DB, error)
+	NewConnector(dataSource string) (*sql.DB, error)
 }
 
 func NewConnectorFactory() ConnectorFactory {
 	return connectorFactory{}
 }
 
-func (connectorFactory) NewConnector(connectionString string) (*sql.DB, error) {
+func (connectorFactory) NewConnector(dataSource string) (*sql.DB, error) {
+	if dataSource == "" {
+		return nil, errors.New("No data source provided")
+	}
+
 	switch {
-	case strings.HasPrefix(connectionString, "sqlite3"):
-		return open(openSqlite, Sqlite3, connectionString)
-	case strings.HasPrefix(connectionString, "postgresql") || strings.HasPrefix(connectionString, "postgres"):
-		return open(openPostgres, Postgres, connectionString)
-	case strings.HasPrefix(connectionString, "mysql"):
-		return open(openMysql, MySql, connectionString)
-	case strings.HasPrefix(connectionString, "sqlserver"):
-		return open(openMssql, MsSql, connectionString)
+	case strings.HasPrefix(dataSource, "sqlite3"):
+		return open(openSqlite, Sqlite3, dataSource)
+	case strings.HasPrefix(dataSource, "postgresql") || strings.HasPrefix(dataSource, "postgres"):
+		return open(openPostgres, Postgres, dataSource)
+	case strings.HasPrefix(dataSource, "mysql"):
+		return open(openMysql, MySql, dataSource)
+	case strings.HasPrefix(dataSource, "sqlserver"):
+		return open(openMssql, MsSql, dataSource)
 	default:
 		return nil, errors.New("could not create connector for db")
 	}

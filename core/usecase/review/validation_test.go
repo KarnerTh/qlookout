@@ -4,9 +4,10 @@ import (
 	"fmt"
 	"testing"
 
+	"github.com/stretchr/testify/assert"
+
 	"github.com/KarnerTh/query-lookout/usecase/query"
 	"github.com/KarnerTh/query-lookout/usecase/watch"
-	"github.com/stretchr/testify/assert"
 )
 
 type testCaseData struct {

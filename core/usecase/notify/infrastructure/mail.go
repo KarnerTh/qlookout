@@ -8,8 +8,9 @@ import (
 	"net/smtp"
 	"strings"
 
-	"github.com/KarnerTh/query-lookout/usecase/notify"
 	log "github.com/sirupsen/logrus"
+
+	"github.com/KarnerTh/query-lookout/usecase/notify"
 )
 
 //go:embed mail_template.html

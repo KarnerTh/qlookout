@@ -3,9 +3,10 @@ package notify
 import (
 	"fmt"
 
+	log "github.com/sirupsen/logrus"
+
 	"github.com/KarnerTh/query-lookout/usecase/lookout"
 	"github.com/KarnerTh/query-lookout/usecase/review"
-	log "github.com/sirupsen/logrus"
 )
 
 type NotifyManager interface {
