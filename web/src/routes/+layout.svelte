@@ -23,8 +23,8 @@
           badge="12"
         />
         <NavigationHeader title="Settings" />
-        <NavigationItem icon="settings" title="Settings" link="/lookout" />
-        <NavigationItem icon="logout" title="Logout" link="/notifications" />
+        <NavigationItem icon="settings" title="Settings" link="/settings" />
+        <NavigationItem icon="logout" title="Logout" link="/logout" />
       </ul>
     </div>
   </div>
