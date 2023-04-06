@@ -28,7 +28,7 @@
       </ul>
     </div>
   </div>
-  <div class="fixed right-0 left-64 bg-green-50">
+  <div class="fixed right-0 left-64 m-3">
     <slot />
   </div>
 </div>
