@@ -20,8 +20,8 @@ type CombinedResolver struct {
 	reviewResolver.ReviewResolver
 }
 
-func Start(endpoint string) {
-	log.Info("Starting graphql handler")
+func Setup(endpoint string) {
+	log.Info("Setup graphql schema and handler")
 	schema := graphql.MustParseSchema(schemaContent, &CombinedResolver{})
 	http.Handle(endpoint, &relay.Handler{Schema: schema})
 	setupGraphqlIde(endpoint)

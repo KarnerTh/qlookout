@@ -4,7 +4,6 @@ import (
 	log "github.com/sirupsen/logrus"
 
 	"github.com/KarnerTh/query-lookout/database"
-	"github.com/KarnerTh/query-lookout/delivery"
 	"github.com/KarnerTh/query-lookout/observer"
 	"github.com/KarnerTh/query-lookout/usecase/lookout"
 	lookoutInfra "github.com/KarnerTh/query-lookout/usecase/lookout/infrastructure"
@@ -55,5 +54,5 @@ func Setup() {
 	setupNotifier(config, reviewResultObserver, lookoutService)
 
 	// delivery
-	go delivery.Start()
+	setupDelivery()
 }
