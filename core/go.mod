@@ -47,8 +47,10 @@ require (
 
 require (
 	github.com/denisenkom/go-mssqldb v0.12.3
+	github.com/friendsofgo/graphiql v0.2.2
 	github.com/go-sql-driver/mysql v1.7.0
 	github.com/golang-migrate/migrate/v4 v4.15.2
+	github.com/graph-gophers/graphql-go v1.5.0
 	github.com/jackc/pgx/v4 v4.18.1
 	github.com/stretchr/testify v1.8.2
 	golang.org/x/sys v0.6.0 // indirect

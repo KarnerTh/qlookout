@@ -1,0 +1,7 @@
+type Query {
+  lookout: String!
+}
+
+type Lookout {
+  name: String!
+}

@@ -1,0 +1,7 @@
+type Query {
+  rule: String!
+}
+
+type Rule {
+  name: String!
+}
