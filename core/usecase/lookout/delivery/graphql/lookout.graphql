@@ -1,7 +1,12 @@
 type Query {
-  lookout: String!
+  lookouts: [Lookout!]!
 }
 
 type Lookout {
+  id: Int!
   name: String!
+  query: String!
+  cron: String!
+  notifyLocal: Boolean!
+  notifyMail: Boolean!
 }

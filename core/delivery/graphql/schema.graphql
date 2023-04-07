@@ -7,12 +7,17 @@ schema {
 }
 
 type Query {
-    lookout: String!
+    lookouts: [Lookout!]!
     rule: String!
 }
 
 type Lookout {
+    id: Int!
     name: String!
+    query: String!
+    cron: String!
+    notifyLocal: Boolean!
+    notifyMail: Boolean!
 }
 
 type Rule {

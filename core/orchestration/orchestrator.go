@@ -54,5 +54,5 @@ func Setup() {
 	setupNotifier(config, reviewResultObserver, lookoutService)
 
 	// delivery
-	setupDelivery()
+	setupDelivery(lookoutService)
 }
