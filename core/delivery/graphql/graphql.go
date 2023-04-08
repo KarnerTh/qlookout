@@ -4,12 +4,14 @@ import (
 	_ "embed"
 	"net/http"
 
-	lookoutResolver "github.com/KarnerTh/query-lookout/usecase/lookout/delivery/graphql"
-	reviewResolver "github.com/KarnerTh/query-lookout/usecase/review/delivery/graphql"
 	"github.com/friendsofgo/graphiql"
 	"github.com/graph-gophers/graphql-go"
 	"github.com/graph-gophers/graphql-go/relay"
 	log "github.com/sirupsen/logrus"
+
+	"github.com/KarnerTh/query-lookout/delivery"
+	lookoutResolver "github.com/KarnerTh/query-lookout/usecase/lookout/delivery/graphql"
+	reviewResolver "github.com/KarnerTh/query-lookout/usecase/review/delivery/graphql"
 )
 
 //go:embed schema.graphql
@@ -24,7 +26,7 @@ func Setup(endpoint string, resolver *CombinedResolver) {
 	log.Info("Setup graphql schema and handler")
 	opts := []graphql.SchemaOpt{graphql.UseFieldResolvers()}
 	schema := graphql.MustParseSchema(schemaContent, resolver, opts...)
-	http.Handle(endpoint, &relay.Handler{Schema: schema})
+	http.Handle(endpoint, delivery.CorsMiddleware(&relay.Handler{Schema: schema}))
 	setupGraphqlIde(endpoint)
 }
 

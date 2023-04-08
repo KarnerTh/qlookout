@@ -12,6 +12,7 @@ import (
 
 func setupDelivery(lookoutService lookout.LookoutService) {
 	log.Info("Start delivery")
+
 	graphql.Setup(
 		"/query",
 		&graphql.CombinedResolver{
