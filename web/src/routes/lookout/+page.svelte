@@ -1,14 +1,19 @@
 <script lang="ts">
-  import Dropdown from "$lib/dropdown/Dropdown.svelte";
-  import DropdownItem from "$lib/dropdown/DropdownItem.svelte";
-  import { iconData } from "$lib/icons";
-  import Table from "$lib/table/Table.svelte";
+  import Dropdown from "$lib/components/dropdown/Dropdown.svelte";
+  import DropdownItem from "$lib/components/dropdown/DropdownItem.svelte";
+  import { iconData } from "$lib/components/icons";
+  import Table from "$lib/components/table/Table.svelte";
   import { goto } from "$app/navigation";
-  import type { LookoutPageData } from "./+page";
-
-  export let data: LookoutPageData;
+  import { getLookouts } from "$lib/usecase/lookout/query/getLookouts";
+  import { convertLookoutConfigModelToTableData } from "$lib/usecase/lookout/lookoutConfigModel";
+  import LoadingSpinner from "$lib/components/loading/LoadingSpinner.svelte";
 
   let selectedIds: number[] = [];
+  const lookouts = getLookouts();
+
+  $: tableData = $lookouts.data
+    ? $lookouts.data.lookouts.map(convertLookoutConfigModelToTableData)
+    : [];
 
   const onRowClicked = (id: number): void => {
     goto(`/lookout/${id}`);
@@ -24,7 +29,7 @@
 
   const onCheckboxAllClicked = (selected: boolean): void => {
     if (selected) {
-      selectedIds = data.lookouts.map((item) => item.id);
+      selectedIds = tableData.map((item) => item.id);
     } else {
       selectedIds = [];
     }
@@ -56,13 +61,25 @@
       />
     </div>
   </div>
-  <Table
-    on:rowClicked={(event) => onRowClicked(event.detail.id)}
-    on:checkBoxAllClicked={(event) =>
-      onCheckboxAllClicked(event.detail.selected)}
-    on:checkBoxClicked={(event) => onCheckboxClicked(event.detail.id)}
-    {selectedIds}
-    columns={["Lookout name", "Cron", "# Rules", "Notify local", "Notify mail"]}
-    rows={data.lookouts}
-  />
+  {#if $lookouts.loading}
+    <div class="flex justify-center pt-9">
+      <LoadingSpinner />
+    </div>
+  {:else}
+    <Table
+      on:rowClicked={(event) => onRowClicked(event.detail.id)}
+      on:checkBoxAllClicked={(event) =>
+        onCheckboxAllClicked(event.detail.selected)}
+      on:checkBoxClicked={(event) => onCheckboxClicked(event.detail.id)}
+      {selectedIds}
+      columns={[
+        "Lookout name",
+        "Cron",
+        "# Rules",
+        "Notify local",
+        "Notify mail",
+      ]}
+      rows={tableData}
+    />
+  {/if}
 </div>

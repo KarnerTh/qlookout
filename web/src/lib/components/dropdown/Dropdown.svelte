@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { iconData } from "$lib/icons";
+  import { iconData } from "$lib/components/icons";
 
   export let title: string;
 </script>

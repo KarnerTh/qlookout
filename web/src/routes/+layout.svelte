@@ -1,7 +1,16 @@
 <script lang="ts">
   import "../app.css";
-  import NavigationHeader from "../lib/navigation/NavigationHeader.svelte";
-  import NavigationItem from "../lib/navigation/NavigationItem.svelte";
+  import NavigationHeader from "../lib/components/navigation/NavigationHeader.svelte";
+  import NavigationItem from "../lib/components/navigation/NavigationItem.svelte";
+  import { ApolloClient, HttpLink, InMemoryCache } from "@apollo/client/core";
+  import { setClient } from "svelte-apollo";
+
+  const client = new ApolloClient({
+    link: new HttpLink({ uri: "http://localhost:8080/query" }),
+    cache: new InMemoryCache(),
+  });
+
+  setClient(client);
 </script>
 
 <div
