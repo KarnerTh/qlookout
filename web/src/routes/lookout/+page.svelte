@@ -7,6 +7,8 @@
   import { getLookouts } from "$lib/usecase/lookout/query/getLookouts";
   import { convertLookoutConfigModelToTableData } from "$lib/usecase/lookout/lookoutConfigModel";
   import LoadingSpinner from "$lib/components/loading/LoadingSpinner.svelte";
+  import Button from "$lib/components/button/Button.svelte";
+  import PageHeader from "$lib/components/header/PageHeader.svelte";
 
   let selectedIds: number[] = [];
   const lookouts = getLookouts();
@@ -36,16 +38,16 @@
   };
 </script>
 
-<h1 class="mb-3 text-4xl font-extrabold tracking-tight">Lookouts</h1>
+<PageHeader title="Lookouts" />
 
 <div class="overflow-x-auto">
-  <div class="flex items-center justify-between pb-3">
+  <div class="flex items-center pb-3">
     <Dropdown title="Action">
       <DropdownItem title="Set active" />
       <DropdownItem title="Set inactive" />
     </Dropdown>
 
-    <div class="relative">
+    <div class="relative ml-4">
       <div
         class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none"
       >
@@ -60,6 +62,14 @@
         placeholder="Search for items"
       />
     </div>
+
+    <span class="grow" />
+
+    <Button
+      title="Create"
+      leadingIcon="plus"
+      on:click={() => goto("/lookout/create")}
+    />
   </div>
   {#if $lookouts.loading}
     <div class="flex justify-center pt-9">

@@ -1,6 +1,7 @@
 package lookout
 
 type LookoutRepo interface {
-	GetConfigs() ([]LookoutConfig, error)
-	GetConfig(id int) (*LookoutConfig, error)
+	Get() ([]LookoutConfig, error)
+	GetById(id int) (*LookoutConfig, error)
+	Create(data LookoutConfigCreate) (*LookoutConfig, error)
 }

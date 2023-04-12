@@ -44,7 +44,7 @@ func (n notifyManager) Start() {
 
 func (n notifyManager) Notify(reviewResult review.ReviewResult) {
 	if !reviewResult.Success {
-		lookout, err := n.lookoutService.GetConfig(reviewResult.Rule.LookoutId)
+		lookout, err := n.lookoutService.GetById(reviewResult.Rule.LookoutId)
 		if err != nil {
 			log.WithError(err).Error("Could not get lookout config")
 		}

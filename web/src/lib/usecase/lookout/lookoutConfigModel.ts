@@ -1,4 +1,4 @@
-import type { TableRow } from "$lib/table/table-data";
+import type { TableRow } from "$lib/components/table/table-data";
 
 export interface LookoutConfigModel {
   id: number;
@@ -8,6 +8,8 @@ export interface LookoutConfigModel {
   notifyLocal: boolean;
   notifyMail: boolean;
 }
+
+export type LookoutConfigCreateModel = Omit<LookoutConfigModel, "id">;
 
 export const convertLookoutConfigModelToTableData = (model: LookoutConfigModel): TableRow => {
   return {

@@ -43,7 +43,7 @@ func (w watcher) Watch(config WatchConfig) WatcherId {
 
 	id, err := w.cron.AddJob(config.Cron, job)
 	if err != nil {
-		log.WithError(err).Fatal("Could not cron job - please check lookout configuration")
+		log.WithError(err).Fatal("Could not start cron job - please check lookout configuration")
 	}
 
 	return id

@@ -14,27 +14,36 @@ func NewLookoutResolver(lookoutService lookout.LookoutService) LookoutResolver {
 	}
 }
 
-func (r LookoutResolver) Lookouts() []lookoutConfigModel {
-	lookouts, err := r.lookoutService.GetConfigs()
+func (r LookoutResolver) Lookouts() ([]lookoutConfigModel, error) {
+	lookouts, err := r.lookoutService.Get()
 	if err != nil {
-		// TODO: send error
+		return nil, err
 	}
 
-	return lookoutToModel(lookouts)
+	return lookoutToModel(lookouts), nil
 }
 
 func lookoutToModel(domain []lookout.LookoutConfig) []lookoutConfigModel {
 	models := make([]lookoutConfigModel, len(domain))
 	for i, value := range domain {
-		models[i] = lookoutConfigModel{
-			Id:          int32(value.Id),
-			Name:        value.Name,
-			Query:       value.Query,
-			Cron:        value.Cron,
-			NotifyLocal: value.NotifyLocal,
-			NotifyMail:  value.NotifyMail,
-		}
+		models[i] = configToModel(value)
 	}
 
 	return models
+}
+
+func (r LookoutResolver) CreateLookout(args struct{ Data lookoutConfigCreateModel }) (lookoutConfigModel, error) {
+	data, err := r.lookoutService.Create(lookout.LookoutConfigCreate{
+		Name:        args.Data.Name,
+		Cron:        args.Data.Cron,
+		Query:       args.Data.Query,
+		NotifyLocal: args.Data.NotifyLocal,
+		NotifyMail:  args.Data.NotifyMail,
+	})
+
+	if err != nil {
+		return lookoutConfigModel{}, err
+	}
+
+	return configToModel(*data), nil
 }

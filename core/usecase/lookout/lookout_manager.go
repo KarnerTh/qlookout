@@ -26,7 +26,7 @@ func NewLookoutManager(lookoutService LookoutService, watcher watch.Watcher) Loo
 
 func (l *lookoutManager) Start() {
 	log.Debug("Lookout manager started")
-	lookouts, err := l.lookoutService.GetConfigs()
+	lookouts, err := l.lookoutService.Get()
 	if err != nil {
 		log.WithError(err).Fatal("Could not get lookouts")
 	}
