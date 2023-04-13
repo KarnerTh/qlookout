@@ -25,7 +25,9 @@ func (r reviewRepo) GetRules(lookoutId int) ([]review.ReviewRule, error) {
             greater_than,
             less_than,
             should_be_null 
-    from review_rule`)
+    from review_rule
+    where lookout_id = ?
+    `, lookoutId)
 	if err != nil {
 		return nil, err
 	}

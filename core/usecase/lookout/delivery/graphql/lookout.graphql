@@ -1,5 +1,6 @@
 type Query {
   lookouts: [Lookout!]!
+  lookout(id: Int!): Lookout!
 }
 
 type Mutation {

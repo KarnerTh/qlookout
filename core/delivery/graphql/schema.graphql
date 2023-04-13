@@ -9,6 +9,7 @@ schema {
 
 type Query {
     lookouts: [Lookout!]!
+    lookout(id: Int!): Lookout!
     rule: String!
 }
 

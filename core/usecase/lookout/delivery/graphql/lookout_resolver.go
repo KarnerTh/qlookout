@@ -50,3 +50,12 @@ func (r LookoutResolver) CreateLookout(args struct{ Data lookoutConfigCreateMode
 	r.lookoutManager.Watch(data.Id)
 	return configToModel(*data), nil
 }
+
+func (r LookoutResolver) Lookout(args struct{ Id int32 }) (lookoutConfigModel, error) {
+	data, err := r.lookoutService.GetById(int(args.Id))
+	if err != nil {
+		return lookoutConfigModel{}, err
+	}
+
+	return configToModel(*data), nil
+}
