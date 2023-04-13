@@ -10,13 +10,13 @@ import (
 	lookoutGraphQl "github.com/KarnerTh/query-lookout/usecase/lookout/delivery/graphql"
 )
 
-func setupDelivery(lookoutService lookout.LookoutService) {
+func setupDelivery(lookoutManager lookout.LookoutManager, lookoutService lookout.LookoutService) {
 	log.Info("Start delivery")
 
 	graphql.Setup(
 		"/query",
 		&graphql.CombinedResolver{
-			LookoutResolver: lookoutGraphQl.NewLookoutResolver(lookoutService),
+			LookoutResolver: lookoutGraphQl.NewLookoutResolver(lookoutManager, lookoutService),
 		},
 	)
 

@@ -49,10 +49,10 @@ func Setup() {
 
 	// use cases
 	watcher := watch.New(watchResultObserver, queryRepo)
-	setupLookout(lookoutService, watcher)
+	lookoutManager := setupLookout(lookoutService, watcher)
 	setupReviewer(watchResultObserver, reviewResultObserver, reviewRepo)
 	setupNotifier(config, reviewResultObserver, lookoutService)
 
 	// delivery
-	setupDelivery(lookoutService)
+	setupDelivery(lookoutManager, lookoutService)
 }

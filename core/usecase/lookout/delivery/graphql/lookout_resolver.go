@@ -5,11 +5,13 @@ import (
 )
 
 type LookoutResolver struct {
+	lookoutManager lookout.LookoutManager
 	lookoutService lookout.LookoutService
 }
 
-func NewLookoutResolver(lookoutService lookout.LookoutService) LookoutResolver {
+func NewLookoutResolver(lookoutManager lookout.LookoutManager, lookoutService lookout.LookoutService) LookoutResolver {
 	return LookoutResolver{
+		lookoutManager: lookoutManager,
 		lookoutService: lookoutService,
 	}
 }
@@ -45,5 +47,6 @@ func (r LookoutResolver) CreateLookout(args struct{ Data lookoutConfigCreateMode
 		return lookoutConfigModel{}, err
 	}
 
+	r.lookoutManager.Watch(data.Id)
 	return configToModel(*data), nil
 }

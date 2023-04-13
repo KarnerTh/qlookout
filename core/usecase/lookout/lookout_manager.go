@@ -8,6 +8,7 @@ import (
 
 type LookoutManager interface {
 	Start()
+	Watch(lookoutId int)
 }
 
 type lookoutManager struct {
@@ -38,8 +39,30 @@ func (l *lookoutManager) Start() {
 			Query:     lo.Query,
 			Cron:      lo.Cron,
 		})
-
 		l.watcherIds[lo.Id] = id
 	}
 	log.Info("All lookouts started successfully")
+}
+
+func (l *lookoutManager) Watch(lookoutId int) {
+	_, ok := l.watcherIds[lookoutId]
+	if ok {
+		log.Warnf("Can not add lookout with id %d, because it is already running", lookoutId)
+		return
+	}
+
+	lookout, err := l.lookoutService.GetById(lookoutId)
+	if err != nil {
+		log.WithError(err).Warnf("Can not add lookout with id %d, because getById failed", lookoutId)
+		return
+	}
+
+	id := l.watcher.Watch(watch.WatchConfig{
+		LookoutId: lookoutId,
+		Name:      lookout.Name,
+		Query:     lookout.Query,
+		Cron:      lookout.Cron,
+	})
+	l.watcherIds[lookoutId] = id
+	log.Infof("Added watch for lookout with id %d", lookoutId)
 }
