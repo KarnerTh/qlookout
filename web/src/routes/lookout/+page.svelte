@@ -3,7 +3,7 @@
   import DropdownItem from "$lib/components/dropdown/DropdownItem.svelte";
   import { iconData } from "$lib/components/icons";
   import Table from "$lib/components/table/Table.svelte";
-  import { goto } from "$app/navigation";
+  import { afterNavigate, goto } from "$app/navigation";
   import { getLookouts } from "$lib/usecase/lookout/query/getLookouts";
   import { convertLookoutConfigModelToTableData } from "$lib/usecase/lookout/lookoutConfigModel";
   import LoadingSpinner from "$lib/components/loading/LoadingSpinner.svelte";
@@ -36,6 +36,12 @@
       selectedIds = [];
     }
   };
+
+  afterNavigate(() => {
+    if (history.state.refetch) {
+      lookouts.refetch();
+    }
+  });
 </script>
 
 <PageHeader title="Lookouts" />

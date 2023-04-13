@@ -9,8 +9,6 @@ export interface LookoutConfigModel {
   notifyMail: boolean;
 }
 
-export type LookoutConfigCreateModel = Omit<LookoutConfigModel, "id">;
-
 export const convertLookoutConfigModelToTableData = (model: LookoutConfigModel): TableRow => {
   return {
     id: model.id,
