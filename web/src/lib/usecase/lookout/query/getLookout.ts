@@ -1,6 +1,6 @@
 import { gql } from "@apollo/client/core";
 import { query } from "svelte-apollo";
-import type { LookoutConfigModel } from "../lookoutConfigModel";
+import type { LookoutConfigDetailModel } from "../lookoutConfigModel";
 
 const lookoutQuery = gql`
   query Lookout($id: Int!) {
@@ -11,9 +11,22 @@ const lookoutQuery = gql`
       query
       notifyLocal
       notifyMail
+      rules {
+        id
+        lookoutId
+        columnName
+        columnType
+        rowIndex
+        exactValue
+        greaterThan
+        lessThan
+        shouldBeNull
+      }
     }
   }
 `;
 
 export const useLookout = (id: number) =>
-  query<{ lookout: LookoutConfigModel }>(lookoutQuery, { variables: { id } });
+  query<{ lookout: LookoutConfigDetailModel }>(lookoutQuery, {
+    variables: { id },
+  });

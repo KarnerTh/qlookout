@@ -29,6 +29,6 @@
   </div>
 
   <div class="mt-2">
-    <LookoutRuleInfo />
+    <LookoutRuleInfo rules={$lookout.data.lookout.rules} />
   </div>
 {/if}

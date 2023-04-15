@@ -2,13 +2,13 @@ type Query {
 }
 
 type Rule {
-  Id: Int!
-  LookoutId: Int!
-  ColumnName: String!
-  ColumnType: String!
-  RowIndex: Int!
-  ExactValue: String
-  GreaterThan: String
-  LessThan: String
-  ShouldBeNull: Boolean!
+  id: Int!
+  lookoutId: Int!
+  columnName: String!
+  columnType: String!
+  rowIndex: Int!
+  exactValue: String
+  greaterThan: String
+  lessThan: String
+  shouldBeNull: Boolean!
 }

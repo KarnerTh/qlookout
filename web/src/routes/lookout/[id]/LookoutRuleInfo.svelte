@@ -1,6 +1,9 @@
 <script lang="ts">
   import Card from "$lib/components/card/Card.svelte";
   import Table from "$lib/components/table/Table.svelte";
+  import { convertRuleModelToTableData, type RuleModel } from "$lib/usecase/review/ruleModel";
+
+  export let rules: RuleModel[];
 </script>
 
 <Card>
@@ -12,7 +15,7 @@
       on:checkBoxClicked={(_) => {}}
       selectedIds={[]}
       columns={["Column name", "Column type", "Row index", "Rule"]}
-      rows={[]}
+      rows={rules.map(item => convertRuleModelToTableData(item))}
     />
   </div>
 </Card>

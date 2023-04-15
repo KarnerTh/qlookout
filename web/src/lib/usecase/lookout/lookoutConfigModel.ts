@@ -1,4 +1,5 @@
 import type { TableRow } from "$lib/components/table/table-data";
+import type { RuleModel } from "../review/ruleModel";
 
 export interface LookoutConfigModel {
   id: number;
@@ -9,7 +10,13 @@ export interface LookoutConfigModel {
   notifyMail: boolean;
 }
 
-export const convertLookoutConfigModelToTableData = (model: LookoutConfigModel): TableRow => {
+export type LookoutConfigDetailModel = LookoutConfigModel & {
+  rules: RuleModel[];
+};
+
+export const convertLookoutConfigModelToTableData = (
+  model: LookoutConfigModel
+): TableRow => {
   return {
     id: model.id,
     data: [
