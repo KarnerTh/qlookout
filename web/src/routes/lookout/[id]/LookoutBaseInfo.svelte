@@ -13,15 +13,15 @@
 </script>
 
 <Card>
-  <h5 class="mb-2 text-xl font-medium leading-tight text-neutral-800">
+  <h5 class="mb-2 text-lg font-medium leading-tight text-neutral-800">
     {lookout.name}
   </h5>
-  <p class="text-base text-neutral-600">
+  <p class="text-sm text-neutral-600">
     {lookout.cron}
   </p>
 
-  <h6 class="mb-2 mt-4 text-xl font-medium leading-tight text-neutral-800">
+  <h6 class="mb-2 mt-4 text-lg font-medium leading-tight text-neutral-800">
     Notifications
   </h6>
-  <p class="text-base text-neutral-600 flex">{notifications.join(", ")}</p>
+  <p class="text-sm text-neutral-600 flex">{notifications.join(", ")}</p>
 </Card>

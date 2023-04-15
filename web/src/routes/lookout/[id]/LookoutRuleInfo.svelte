@@ -7,7 +7,7 @@
 </script>
 
 <Card>
-  <h5 class="mb-2 text-xl font-medium leading-tight text-neutral-800">Rules</h5>
+  <h5 class="mb-2 text-lg font-medium leading-tight text-neutral-800">Rules</h5>
   <div class=" max-h-80 overflow-auto">
     <Table
       on:rowClicked={() => {}}
