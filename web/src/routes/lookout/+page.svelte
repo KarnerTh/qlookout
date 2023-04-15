@@ -4,14 +4,14 @@
   import { iconData } from "$lib/components/icons";
   import Table from "$lib/components/table/Table.svelte";
   import { afterNavigate, goto } from "$app/navigation";
-  import { getLookouts } from "$lib/usecase/lookout/query/getLookouts";
+  import { useLookouts } from "$lib/usecase/lookout/query/getLookouts";
   import { convertLookoutConfigModelToTableData } from "$lib/usecase/lookout/lookoutConfigModel";
   import LoadingSpinner from "$lib/components/loading/LoadingSpinner.svelte";
   import Button from "$lib/components/button/Button.svelte";
   import PageHeader from "$lib/components/header/PageHeader.svelte";
 
   let selectedIds: number[] = [];
-  const lookouts = getLookouts();
+  const lookouts = useLookouts();
 
   $: tableData = $lookouts.data
     ? $lookouts.data.lookouts.map(convertLookoutConfigModelToTableData)

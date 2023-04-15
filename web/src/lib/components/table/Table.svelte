@@ -1,6 +1,7 @@
 <script lang="ts">
   import type { TableRow } from "./table-data";
   import { createEventDispatcher } from "svelte";
+  import { getBoolIcon } from "$lib/util/boolEmojiUtil";
 
   const dispatch = createEventDispatcher<{
     rowClicked: { id: number };
@@ -75,7 +76,7 @@
         {#each rowEntry.data as value}
           <td class="px-6 py-4">
             {#if value.type === "boolean"}
-              {value.value ? "✔️" : "❌"}
+              {getBoolIcon(value.value)}
             {:else}
               {value.value}
             {/if}

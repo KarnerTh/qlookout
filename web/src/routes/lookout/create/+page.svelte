@@ -4,10 +4,10 @@
   import FormInputTextArea from "$lib/components/form/FormInputTextArea.svelte";
   import PageHeader from "$lib/components/header/PageHeader.svelte";
   import Button from "$lib/components/button/Button.svelte";
-  import { createLookoutMutation } from "$lib/usecase/lookout/query/createLookout";
+  import { useLookoutMutation } from "$lib/usecase/lookout/query/createLookout";
   import { goto } from "$app/navigation";
 
-  const createLookout = createLookoutMutation();
+  const createLookout = useLookoutMutation();
 
   const onSubmit = async (event: any) => {
     const data = new FormData(event.target);
@@ -35,7 +35,7 @@
   };
 </script>
 
-<PageHeader title="Create Lookout" showBackButton />
+<PageHeader title="Create Lookout" backAction={() => goto("/lookout")} />
 
 <form method="POST" class="w-full max-w-lg" on:submit|preventDefault={onSubmit}>
   <div class="flex flex-wrap -mx-3 mb-6">

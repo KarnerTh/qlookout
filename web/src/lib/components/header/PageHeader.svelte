@@ -2,13 +2,13 @@
   import IconButton from "$lib/components/button/IconButton.svelte";
 
   export let title: string;
-  export let showBackButton: boolean = false;
+  export let backAction: (() => void) | null = null;
 </script>
 
 <div class="flex items-center mb-5">
-  {#if showBackButton}
+  {#if backAction}
     <span class="mr-2">
-      <IconButton icon="arrow_left" on:click={() => history.back()} />
+      <IconButton icon="arrow_left" on:click={backAction} />
     </span>
   {/if}
   <h1 class="text-4xl font-extrabold tracking-tight">{title}</h1>

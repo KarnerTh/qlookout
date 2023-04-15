@@ -23,4 +23,4 @@ const lookoutMutation = gql`
   }
 `;
 
-export const createLookoutMutation = () => mutation(lookoutMutation);
+export const useLookoutMutation = () => mutation(lookoutMutation);
