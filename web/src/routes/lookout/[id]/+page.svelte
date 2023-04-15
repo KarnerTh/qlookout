@@ -1,11 +1,12 @@
 <script lang="ts">
   import { goto } from "$app/navigation";
   import { page } from "$app/stores";
-  import Card from "$lib/components/card/Card.svelte";
   import PageHeader from "$lib/components/header/PageHeader.svelte";
   import LoadingSpinner from "$lib/components/loading/LoadingSpinner.svelte";
   import { useLookout } from "$lib/usecase/lookout/query/getLookout";
-    import { getBoolIcon } from "$lib/util/boolEmojiUtil";
+  import LookoutBaseInfo from "./LookoutBaseInfo.svelte";
+  import LookoutQueryInfo from "./LookoutQueryInfo.svelte";
+  import LookoutRuleInfo from "./LookoutRuleInfo.svelte";
 
   const lookout = useLookout(+$page.params.id);
 </script>
@@ -16,38 +17,18 @@
   <div class="flex justify-center pt-9">
     <LoadingSpinner />
   </div>
-{:else}
+{:else if $lookout.data}
   <div class="flex flex-wrap gap-2">
-    <Card>
-      <h5 class="mb-2 text-xl font-medium leading-tight text-neutral-800">
-        {$lookout.data?.lookout.name}
-      </h5>
-      <p class="text-base text-neutral-600">
-        {$lookout.data?.lookout.cron}
-      </p>
+    <div class="max-w-sm">
+      <LookoutBaseInfo lookout={$lookout.data.lookout} />
+    </div>
 
-      <h6 class="mb-2 mt-4 text-xl font-medium leading-tight text-neutral-800">
-        Notifications
-      </h6>
-      <p class="text-base text-neutral-600">
-        {getBoolIcon($lookout.data?.lookout.notifyLocal)} Local
-      </p>
-      <p class="text-base text-neutral-600">
-        {getBoolIcon($lookout.data?.lookout.notifyMail)} Mail
-      </p>
-    </Card>
     <div class="grow">
-      <Card>
-        <h5 class="mb-2 text-xl font-medium leading-tight text-neutral-800">
-          Query
-        </h5>
-        <div class=" max-h-80 overflow-auto">
-          <code class="text-base text-neutral-600">
-            {$lookout.data?.lookout.query}
-          </code>
-        </div>
-      </Card>
+      <LookoutQueryInfo query={$lookout.data.lookout.query} />
     </div>
   </div>
-  {JSON.stringify($lookout)}
+
+  <div class="mt-2">
+    <LookoutRuleInfo />
+  </div>
 {/if}

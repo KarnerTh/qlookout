@@ -2,6 +2,7 @@
   import type { TableRow } from "./table-data";
   import { createEventDispatcher } from "svelte";
   import { getBoolIcon } from "$lib/util/boolEmojiUtil";
+  import { iconData } from "../icons";
 
   const dispatch = createEventDispatcher<{
     rowClicked: { id: number };
@@ -57,7 +58,7 @@
   <tbody>
     {#each rows as rowEntry}
       <tr
-        class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
+        class="bg-white cursor-pointer border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
         on:click={() => onRowClicked(rowEntry.id)}
       >
         <td class="w-4 p-4">
@@ -76,7 +77,7 @@
         {#each rowEntry.data as value}
           <td class="px-6 py-4">
             {#if value.type === "boolean"}
-              {getBoolIcon(value.value)}
+              {@html iconData[getBoolIcon(value.value)]}
             {:else}
               {value.value}
             {/if}
