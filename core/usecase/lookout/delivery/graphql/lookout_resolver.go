@@ -2,40 +2,39 @@ package graphql
 
 import (
 	"github.com/KarnerTh/query-lookout/usecase/lookout"
+	reviewGraphQl "github.com/KarnerTh/query-lookout/usecase/review/delivery/graphql"
 )
 
 type LookoutResolver struct {
 	lookoutManager lookout.LookoutManager
-	lookoutService lookout.LookoutService
+	lookoutRepo    lookout.LookoutRepo
+	reviewResolver reviewGraphQl.ReviewResolver
 }
 
-func NewLookoutResolver(lookoutManager lookout.LookoutManager, lookoutService lookout.LookoutService) LookoutResolver {
+func NewLookoutResolver(lookoutManager lookout.LookoutManager, lookoutRepo lookout.LookoutRepo, reviewResolver reviewGraphQl.ReviewResolver) LookoutResolver {
 	return LookoutResolver{
 		lookoutManager: lookoutManager,
-		lookoutService: lookoutService,
+		lookoutRepo:    lookoutRepo,
+		reviewResolver: reviewResolver,
 	}
 }
 
 func (r LookoutResolver) Lookouts() ([]lookoutConfigModel, error) {
-	lookouts, err := r.lookoutService.Get()
+	lookouts, err := r.lookoutRepo.Get()
 	if err != nil {
 		return nil, err
 	}
 
-	return lookoutToModel(lookouts), nil
-}
-
-func lookoutToModel(domain []lookout.LookoutConfig) []lookoutConfigModel {
-	models := make([]lookoutConfigModel, len(domain))
-	for i, value := range domain {
-		models[i] = configToModel(value)
+	models := make([]lookoutConfigModel, len(lookouts))
+	for i, value := range lookouts {
+		models[i] = lookoutConfigModelResolver{lookout: value, reviewResolver: r.reviewResolver}
 	}
 
-	return models
+	return models, nil
 }
 
 func (r LookoutResolver) CreateLookout(args struct{ Data lookoutConfigCreateModel }) (lookoutConfigModel, error) {
-	data, err := r.lookoutService.Create(lookout.LookoutConfigCreate{
+	data, err := r.lookoutRepo.Create(lookout.LookoutConfigCreate{
 		Name:        args.Data.Name,
 		Cron:        args.Data.Cron,
 		Query:       args.Data.Query,
@@ -44,18 +43,18 @@ func (r LookoutResolver) CreateLookout(args struct{ Data lookoutConfigCreateMode
 	})
 
 	if err != nil {
-		return lookoutConfigModel{}, err
+		return nil, err
 	}
 
 	r.lookoutManager.Watch(data.Id)
-	return configToModel(*data), nil
+	return lookoutConfigModelResolver{lookout: *data, reviewResolver: r.reviewResolver}, nil
 }
 
 func (r LookoutResolver) Lookout(args struct{ Id int32 }) (lookoutConfigModel, error) {
-	data, err := r.lookoutService.GetById(int(args.Id))
+	data, err := r.lookoutRepo.GetById(int(args.Id))
 	if err != nil {
-		return lookoutConfigModel{}, err
+		return nil, err
 	}
 
-	return configToModel(*data), nil
+	return lookoutConfigModelResolver{lookout: *data, reviewResolver: r.reviewResolver}, nil
 }

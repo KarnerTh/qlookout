@@ -10,7 +10,6 @@ schema {
 type Query {
     lookouts: [Lookout!]!
     lookout(id: Int!): Lookout!
-    rule: String!
 }
 
 type Mutation {
@@ -24,10 +23,19 @@ type Lookout {
     cron: String!
     notifyLocal: Boolean!
     notifyMail: Boolean!
+    rules: [Rule!]!
 }
 
 type Rule {
-    name: String!
+    Id: Int!
+    LookoutId: Int!
+    ColumnName: String!
+    ColumnType: String!
+    RowIndex: Int!
+    ExactValue: String
+    GreaterThan: String
+    LessThan: String
+    ShouldBeNull: Boolean!
 }
 
 

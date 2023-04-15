@@ -18,16 +18,16 @@ type NotifyManager interface {
 type notifyManager struct {
 	config                 config.Config
 	reviewResultSubscriber review.ReviewResultSubscriber
-	lookoutService         lookout.LookoutService
+	lookoutRepo            lookout.LookoutRepo
 	localNotifier          Notifier
 	mailNotifier           Notifier
 }
 
-func New(config config.Config, reviewResultSubscriber review.ReviewResultSubscriber, lookoutService lookout.LookoutService, localNotifier Notifier, mailNotifier Notifier) NotifyManager {
+func New(config config.Config, reviewResultSubscriber review.ReviewResultSubscriber, lookoutRepo lookout.LookoutRepo, localNotifier Notifier, mailNotifier Notifier) NotifyManager {
 	return notifyManager{
 		config:                 config,
 		reviewResultSubscriber: reviewResultSubscriber,
-		lookoutService:         lookoutService,
+		lookoutRepo:            lookoutRepo,
 		localNotifier:          localNotifier,
 		mailNotifier:           mailNotifier,
 	}
@@ -44,7 +44,7 @@ func (n notifyManager) Start() {
 
 func (n notifyManager) Notify(reviewResult review.ReviewResult) {
 	if !reviewResult.Success {
-		lookout, err := n.lookoutService.GetById(reviewResult.Rule.LookoutId)
+		lookout, err := n.lookoutRepo.GetById(reviewResult.Rule.LookoutId)
 		if err != nil {
 			log.WithError(err).Error("Could not get lookout config")
 		}

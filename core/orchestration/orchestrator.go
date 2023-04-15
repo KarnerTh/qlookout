@@ -5,7 +5,6 @@ import (
 
 	"github.com/KarnerTh/query-lookout/database"
 	"github.com/KarnerTh/query-lookout/observer"
-	"github.com/KarnerTh/query-lookout/usecase/lookout"
 	lookoutInfra "github.com/KarnerTh/query-lookout/usecase/lookout/infrastructure"
 	queryInfra "github.com/KarnerTh/query-lookout/usecase/query/infrastructure"
 	"github.com/KarnerTh/query-lookout/usecase/review"
@@ -44,15 +43,12 @@ func Setup() {
 	queryRepo := queryInfra.NewQueryRepo(watchDb)
 	reviewRepo := reviewInfra.NewReviewRepo(internalDb)
 
-	// services
-	lookoutService := lookout.NewLookoutService(lookoutRepo)
-
 	// use cases
 	watcher := watch.New(watchResultObserver, queryRepo)
-	lookoutManager := setupLookout(lookoutService, watcher)
+	lookoutManager := setupLookout(lookoutRepo, watcher)
 	setupReviewer(watchResultObserver, reviewResultObserver, reviewRepo)
-	setupNotifier(config, reviewResultObserver, lookoutService)
+	setupNotifier(config, reviewResultObserver, lookoutRepo)
 
 	// delivery
-	setupDelivery(lookoutManager, lookoutService)
+	setupDelivery(lookoutManager, lookoutRepo, reviewRepo)
 }

@@ -8,10 +8,10 @@ import (
 	"github.com/KarnerTh/query-lookout/usecase/review"
 )
 
-func setupNotifier(config config.Config, reviewResultSubscriber review.ReviewResultSubscriber, lookoutService lookout.LookoutService) {
+func setupNotifier(config config.Config, reviewResultSubscriber review.ReviewResultSubscriber, lookoutRepo lookout.LookoutRepo) {
 	localNotifier := notifyInfra.NewLocalNotifier()
 	mailNotifier := notifyInfra.NewMailNotifier(config.MailFromAddress(), config.MailToAddress(), config.MailSmtpHost(), config.MailSmtpPort())
 
-	notifier := notify.New(config, reviewResultSubscriber, lookoutService, localNotifier, mailNotifier)
+	notifier := notify.New(config, reviewResultSubscriber, lookoutRepo, localNotifier, mailNotifier)
 	go notifier.Start()
 }

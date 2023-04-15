@@ -1,7 +1,14 @@
 type Query {
-  rule: String!
 }
 
 type Rule {
-  name: String!
+  Id: Int!
+  LookoutId: Int!
+  ColumnName: String!
+  ColumnType: String!
+  RowIndex: Int!
+  ExactValue: String
+  GreaterThan: String
+  LessThan: String
+  ShouldBeNull: Boolean!
 }

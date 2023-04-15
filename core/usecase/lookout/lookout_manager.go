@@ -12,22 +12,22 @@ type LookoutManager interface {
 }
 
 type lookoutManager struct {
-	lookoutService LookoutService
-	watcher        watch.Watcher
-	watcherIds     map[int]watch.WatcherId // key is the id of the lookout
+	lookoutRepo LookoutRepo
+	watcher     watch.Watcher
+	watcherIds  map[int]watch.WatcherId // key is the id of the lookout
 }
 
-func NewLookoutManager(lookoutService LookoutService, watcher watch.Watcher) LookoutManager {
+func NewLookoutManager(lookoutRepo LookoutRepo, watcher watch.Watcher) LookoutManager {
 	return &lookoutManager{
-		lookoutService: lookoutService,
-		watcher:        watcher,
-		watcherIds:     make(map[int]watch.WatcherId),
+		lookoutRepo: lookoutRepo,
+		watcher:     watcher,
+		watcherIds:  make(map[int]watch.WatcherId),
 	}
 }
 
 func (l *lookoutManager) Start() {
 	log.Debug("Lookout manager started")
-	lookouts, err := l.lookoutService.Get()
+	lookouts, err := l.lookoutRepo.Get()
 	if err != nil {
 		log.WithError(err).Fatal("Could not get lookouts")
 	}
@@ -51,7 +51,7 @@ func (l *lookoutManager) Watch(lookoutId int) {
 		return
 	}
 
-	lookout, err := l.lookoutService.GetById(lookoutId)
+	lookout, err := l.lookoutRepo.GetById(lookoutId)
 	if err != nil {
 		log.WithError(err).Warnf("Can not add lookout with id %d, because getById failed", lookoutId)
 		return

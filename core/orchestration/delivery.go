@@ -8,15 +8,21 @@ import (
 	"github.com/KarnerTh/query-lookout/delivery/graphql"
 	"github.com/KarnerTh/query-lookout/usecase/lookout"
 	lookoutGraphQl "github.com/KarnerTh/query-lookout/usecase/lookout/delivery/graphql"
+	"github.com/KarnerTh/query-lookout/usecase/review"
+	reviewGraphQl "github.com/KarnerTh/query-lookout/usecase/review/delivery/graphql"
 )
 
-func setupDelivery(lookoutManager lookout.LookoutManager, lookoutService lookout.LookoutService) {
+func setupDelivery(lookoutManager lookout.LookoutManager, lookoutRepo lookout.LookoutRepo, reviewRepo review.ReviewRepo) {
 	log.Info("Start delivery")
+
+	reviewResolver := reviewGraphQl.NewReviewResolver(reviewRepo)
+	lookoutResolver := lookoutGraphQl.NewLookoutResolver(lookoutManager, lookoutRepo, reviewResolver)
 
 	graphql.Setup(
 		"/query",
 		&graphql.CombinedResolver{
-			LookoutResolver: lookoutGraphQl.NewLookoutResolver(lookoutManager, lookoutService),
+			LookoutResolver: lookoutResolver,
+			ReviewResolver:  reviewResolver,
 		},
 	)
 
