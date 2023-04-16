@@ -1,6 +1,4 @@
 <script lang="ts">
-  import Dropdown from "$lib/components/dropdown/Dropdown.svelte";
-  import DropdownItem from "$lib/components/dropdown/DropdownItem.svelte";
   import { iconData } from "$lib/components/icons";
   import Table from "$lib/components/table/Table.svelte";
   import { afterNavigate, goto } from "$app/navigation";
@@ -10,7 +8,6 @@
   import Button from "$lib/components/button/Button.svelte";
   import PageHeader from "$lib/components/header/PageHeader.svelte";
 
-  let selectedIds: number[] = [];
   const lookouts = useLookouts();
 
   $: tableData = $lookouts.data
@@ -19,22 +16,6 @@
 
   const onRowClicked = (id: number): void => {
     goto(`/lookout/${id}`);
-  };
-
-  const onCheckboxClicked = (id: number): void => {
-    if (selectedIds.includes(id)) {
-      selectedIds = selectedIds.filter((item) => item !== id);
-    } else {
-      selectedIds = [...selectedIds, id];
-    }
-  };
-
-  const onCheckboxAllClicked = (selected: boolean): void => {
-    if (selected) {
-      selectedIds = tableData.map((item) => item.id);
-    } else {
-      selectedIds = [];
-    }
   };
 
   afterNavigate(() => {
@@ -48,12 +29,7 @@
 
 <div class="overflow-x-auto">
   <div class="flex items-center pb-3">
-    <Dropdown title="Action">
-      <DropdownItem title="Set active" />
-      <DropdownItem title="Set inactive" />
-    </Dropdown>
-
-    <div class="relative ml-4">
+    <div class="relative">
       <div
         class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none"
       >
@@ -84,10 +60,6 @@
   {:else}
     <Table
       on:rowClicked={(event) => onRowClicked(event.detail.id)}
-      on:checkBoxAllClicked={(event) =>
-        onCheckboxAllClicked(event.detail.selected)}
-      on:checkBoxClicked={(event) => onCheckboxClicked(event.detail.id)}
-      {selectedIds}
       columns={[
         "Lookout name",
         "Cron",

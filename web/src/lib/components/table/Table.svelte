@@ -12,7 +12,8 @@
 
   export let columns: string[];
   export let rows: TableRow[];
-  export let selectedIds: number[];
+  export let selectedIds: number[] = [];
+  export let showCheckBox: boolean = false;
 
   let allCheckboxActive = false;
 
@@ -39,17 +40,19 @@
     class="text-xs text-gray-700 uppercase bg-gray-200 dark:bg-gray-700 dark:text-gray-400"
   >
     <tr>
-      <th scope="col" class="p-4">
-        <div class="flex items-center">
-          <input
-            type="checkbox"
-            class="w-4 h-4 accent-red-500"
-            checked={allCheckboxActive}
-            indeterminate={!allCheckboxActive && selectedIds.length > 0}
-            on:click={() => onCheckBoxAllClicked()}
-          />
-        </div>
-      </th>
+      {#if showCheckBox}
+        <th scope="col" class="p-4">
+          <div class="flex items-center">
+            <input
+              type="checkbox"
+              class="w-4 h-4 accent-red-500"
+              checked={allCheckboxActive}
+              indeterminate={!allCheckboxActive && selectedIds.length > 0}
+              on:click={() => onCheckBoxAllClicked()}
+            />
+          </div>
+        </th>
+      {/if}
       {#each columns as column}
         <th scope="col" class="px-6 py-3"> {column} </th>
       {/each}
@@ -61,19 +64,21 @@
         class="bg-white cursor-pointer border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
         on:click={() => onRowClicked(rowEntry.id)}
       >
-        <td class="w-4 p-4">
-          <div class="flex items-center">
-            <input
-              type="checkbox"
-              class="w-4 h-4 accent-red-500"
-              checked={selectedIds.includes(rowEntry.id)}
-              on:click={(event) => {
-                event.stopPropagation();
-                onCheckboxClicked(rowEntry.id);
-              }}
-            />
-          </div>
-        </td>
+        {#if showCheckBox}
+          <td class="w-4 p-4">
+            <div class="flex items-center">
+              <input
+                type="checkbox"
+                class="w-4 h-4 accent-red-500"
+                checked={selectedIds.includes(rowEntry.id)}
+                on:click={(event) => {
+                  event.stopPropagation();
+                  onCheckboxClicked(rowEntry.id);
+                }}
+              />
+            </div>
+          </td>
+        {/if}
         {#each rowEntry.data as value}
           <td class="px-6 py-4">
             {#if value.type === "boolean"}

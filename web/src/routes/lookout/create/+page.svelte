@@ -9,8 +9,8 @@
 
   const createLookout = useLookoutMutation();
 
-  const onSubmit = async (event: any) => {
-    const data = new FormData(event.target);
+  const onSubmit = async (event: SubmitEvent) => {
+    const data = new FormData(event.target as HTMLFormElement);
     const name = data.get("name")?.toString();
     const cron = data.get("cron")?.toString();
     const query = data.get("query")?.toString();

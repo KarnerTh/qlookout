@@ -8,7 +8,7 @@
   import LookoutQueryInfo from "./LookoutQueryInfo.svelte";
   import LookoutRuleInfo from "./LookoutRuleInfo.svelte";
 
-  const lookout = useLookout(+$page.params.id);
+  const lookout = useLookout(+$page.params.lookoutId);
 </script>
 
 <PageHeader title={"Lookout Detail"} backAction={() => goto("/lookout")} />
