@@ -42,7 +42,7 @@ func (r reviewer) Start() {
 }
 
 func (r reviewer) Review(watchResult watch.WatchResult) ([]ReviewResult, error) {
-	rules, err := r.reviewRepo.GetRules(watchResult.LookoutId)
+	rules, err := r.reviewRepo.GetForLookout(watchResult.LookoutId)
 	if err != nil {
 		log.WithError(err).Errorf("Could not get rules by id")
 		return nil, err

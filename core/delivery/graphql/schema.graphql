@@ -14,6 +14,7 @@ type Query {
 
 type Mutation {
     createLookout(data: LookoutCreate!): Lookout!
+    createRule(data: RuleCreate!): Rule!
 }
 
 type Lookout {
@@ -47,4 +48,15 @@ input LookoutCreate {
     cron: String!
     notifyLocal: Boolean!
     notifyMail: Boolean!
+}
+
+input RuleCreate {
+    lookoutId: Int!
+    columnName: String!
+    columnType: String!
+    rowIndex: Int!
+    exactValue: String
+    greaterThan: String
+    lessThan: String
+    shouldBeNull: Boolean
 }

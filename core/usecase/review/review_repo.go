@@ -1,5 +1,7 @@
 package review
 
 type ReviewRepo interface {
-	GetRules(lookoutId int) ([]ReviewRule, error)
+	GetForLookout(lookoutId int) ([]ReviewRule, error)
+	GetById(id int) (ReviewRule, error)
+	Create(data ReviewRuleCreate) (ReviewRule, error)
 }

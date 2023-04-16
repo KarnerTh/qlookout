@@ -1,6 +1,10 @@
 type Query {
 }
 
+type Mutation {
+  createRule(data: RuleCreate!): Rule!
+}
+
 type Rule {
   id: Int!
   lookoutId: Int!
@@ -11,4 +15,15 @@ type Rule {
   greaterThan: String
   lessThan: String
   shouldBeNull: Boolean!
+}
+
+input RuleCreate {
+  lookoutId: Int!
+  columnName: String!
+  columnType: String!
+  rowIndex: Int!
+  exactValue: String
+  greaterThan: String
+  lessThan: String
+  shouldBeNull: Boolean
 }

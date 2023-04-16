@@ -19,3 +19,14 @@ type ReviewRule struct {
 	LessThan     string
 	ShouldBeNull bool
 }
+
+type ReviewRuleCreate struct {
+	LookoutId    int
+	ColumnName   string
+	ColumnType   ColumnType
+	RowIndex     int
+	ExactValue   *string
+	GreaterThan  *string
+	LessThan     *string
+	ShouldBeNull *bool
+}
