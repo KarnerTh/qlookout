@@ -5,10 +5,48 @@
   import FormInputDropdown from "$lib/components/form/FormInputDropdown.svelte";
   import FormInputField from "$lib/components/form/FormInputField.svelte";
   import PageHeader from "$lib/components/header/PageHeader.svelte";
+  import { useRuleCreateMutation } from "$lib/usecase/review/mutation/createRule";
   import type { RuleType } from "../ruleType";
   import RuleInputs from "./RuleInputs.svelte";
 
-  const onSubmit = async (event: SubmitEvent) => {};
+  const createRule = useRuleCreateMutation();
+
+  const onSubmit = async (event: SubmitEvent) => {
+    const data = new FormData(event.target as HTMLFormElement);
+    const lookoutId = +$page.params.lookoutId;
+    const columnName = data.get("columnName")?.toString();
+    const columnType = data.get("columnType")?.toString();
+    const rowIndex = +(data.get("rowIndex") ?? 0);
+    const exactValue = data.get("exactValue")?.toString();
+    const lessThan = data.get("lessThan")?.toString();
+    const greaterThan = data.get("greaterThan")?.toString();
+    const shouldBeNull = data.has("shouldBeNull");
+
+    if (!lookoutId || !columnName || !columnType) {
+      alert("Something went wrong");
+      return;
+    }
+
+    const result = await createRule({
+      variables: {
+        lookoutId,
+        columnName,
+        columnType,
+        rowIndex,
+        exactValue,
+        lessThan,
+        greaterThan,
+        shouldBeNull,
+      },
+    });
+
+    if (result.errors) {
+      alert("Something went wrong");
+      return;
+    }
+
+    goto(`/lookout/${lookoutId}`, { state: { refetch: true } });
+  };
 
   let ruleType: RuleType;
 </script>

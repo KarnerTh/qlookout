@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { goto } from "$app/navigation";
+  import { afterNavigate, goto } from "$app/navigation";
   import { page } from "$app/stores";
   import PageHeader from "$lib/components/header/PageHeader.svelte";
   import LoadingSpinner from "$lib/components/loading/LoadingSpinner.svelte";
@@ -9,6 +9,12 @@
   import LookoutRuleInfo from "./LookoutRuleInfo.svelte";
 
   const lookout = useLookout(+$page.params.lookoutId);
+
+  afterNavigate(() => {
+    if (history.state.refetch) {
+      lookout.refetch();
+    }
+  });
 </script>
 
 <PageHeader title={"Lookout Detail"} backAction={() => goto("/lookout")} />

@@ -4,10 +4,10 @@
   import FormInputTextArea from "$lib/components/form/FormInputTextArea.svelte";
   import PageHeader from "$lib/components/header/PageHeader.svelte";
   import Button from "$lib/components/button/Button.svelte";
-  import { useLookoutMutation } from "$lib/usecase/lookout/query/createLookout";
+  import { useLookoutCreateMutation } from "$lib/usecase/lookout/mutation/createLookout";
   import { goto } from "$app/navigation";
 
-  const createLookout = useLookoutMutation();
+  const createLookout = useLookoutCreateMutation();
 
   const onSubmit = async (event: SubmitEvent) => {
     const data = new FormData(event.target as HTMLFormElement);
