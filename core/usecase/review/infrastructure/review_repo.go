@@ -60,6 +60,13 @@ func (r reviewRepo) GetById(id int) (review.ReviewRule, error) {
     from review_rule
     where id = ?
     `, id)
+
+	// if rows.Next is not called til it returns false, the rows are not automatically closed
+	// source: https://pkg.go.dev/database/sql#Rows.Close
+	defer func() {
+		_ = rows.Close()
+	}()
+
 	if err != nil {
 		return review.ReviewRule{}, err
 	}

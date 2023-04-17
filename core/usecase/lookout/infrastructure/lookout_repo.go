@@ -36,6 +36,13 @@ func (r lookoutRepo) Get() ([]lookout.LookoutConfig, error) {
 
 func (r lookoutRepo) GetById(id int) (*lookout.LookoutConfig, error) {
 	rows, err := r.db.Query("select id, name, query, cron, notify_local, notify_mail from lookout where id = ?", id)
+
+	// if rows.Next is not called til it returns false, the rows are not automatically closed
+	// source: https://pkg.go.dev/database/sql#Rows.Close
+	defer func() {
+		_ = rows.Close()
+	}()
+
 	if err != nil {
 		return nil, err
 	}
