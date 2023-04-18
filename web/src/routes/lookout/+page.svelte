@@ -25,9 +25,9 @@
   });
 </script>
 
-<PageHeader title="Lookouts" />
+<div class="flex flex-col max-h-full">
+  <PageHeader title="Lookouts" />
 
-<div class="overflow-x-auto">
   <div class="flex items-center pb-3">
     <div class="relative">
       <div
@@ -58,16 +58,18 @@
       <LoadingSpinner />
     </div>
   {:else}
-    <Table
-      on:rowClicked={(event) => onRowClicked(event.detail.id)}
-      columns={[
-        "Lookout name",
-        "Cron",
-        "# Rules",
-        "Notify local",
-        "Notify mail",
-      ]}
-      rows={tableData}
-    />
+    <div class="overflow-auto mb-2">
+      <Table
+        on:rowClicked={(event) => onRowClicked(event.detail.id)}
+        columns={[
+          "Lookout name",
+          "Cron",
+          "# Rules",
+          "Notify local",
+          "Notify mail",
+        ]}
+        rows={tableData}
+      />
+    </div>
   {/if}
 </div>

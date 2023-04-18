@@ -37,7 +37,7 @@
       </ul>
     </div>
   </div>
-  <div class="fixed right-1 left-64 m-3">
+  <div class="fixed right-1 left-64 top-0 bottom-0 m-3">
     <slot />
   </div>
 </div>
