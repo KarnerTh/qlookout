@@ -9,7 +9,18 @@
   import type { RuleType } from "../ruleType";
   import RuleInputs from "./RuleInputs.svelte";
 
+  let ruleType: RuleType;
+  let columnType: string;
+  let columnTypeInput: "text" | "number";
   const createRule = useRuleCreateMutation();
+
+  $: {
+    if (["int", "float"].includes(columnType)) {
+      columnTypeInput = "number";
+    } else {
+      columnTypeInput = "text";
+    }
+  }
 
   const onSubmit = async (event: SubmitEvent) => {
     const data = new FormData(event.target as HTMLFormElement);
@@ -47,8 +58,6 @@
 
     goto(`/lookout/${lookoutId}`, { state: { refetch: true } });
   };
-
-  let ruleType: RuleType;
 </script>
 
 <PageHeader
@@ -75,6 +84,7 @@
       name="columnType"
       required
       label="Column Type"
+      bind:value={columnType}
       options={[
         { name: "text", title: "text" },
         { name: "int", title: "int" },
@@ -96,7 +106,7 @@
       ]}
     />
 
-    <RuleInputs type={ruleType} />
+    <RuleInputs {ruleType} inputType={columnTypeInput} />
     <div class="w-full" />
     <div class="mt-4 mx-3">
       <Button title="Create" type="submit" leadingIcon="check" />

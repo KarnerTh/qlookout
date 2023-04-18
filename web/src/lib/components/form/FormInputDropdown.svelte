@@ -1,12 +1,10 @@
 <script lang="ts">
-  import type { RuleType } from "../../../routes/lookout/[lookoutId]/rule/ruleType";
-
   export let name: string;
   export let label: string;
   export let required: boolean = false;
   export let options: { name: string; title: string }[];
 
-  export let value: RuleType | undefined = undefined;
+  export let value: string | undefined = undefined;
 </script>
 
 <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">

@@ -2,18 +2,34 @@
   import FormInputField from "$lib/components/form/FormInputField.svelte";
   import type { RuleType } from "../ruleType";
 
-  export let type: RuleType;
+  export let ruleType: RuleType;
+  export let inputType: "text" | "number";
 </script>
 
-{#if type === "exact"}
-  <FormInputField name="exactValue" required label="Exact value" />
-{:else if type === "null"}
-  <input type="hidden" name="shouldBeNull" value={true} />
-{:else if type === "less"}
-  <FormInputField name="lessThan" required label="Less than" />
-{:else if type === "greater"}
-  <FormInputField name="greaterThan" required label="Greater than" />
-{:else if type === "between"}
-  <FormInputField name="greaterThan" required label="Greater than" />
-  <FormInputField name="lessThan" required label="Less than" />
+{#if ruleType === "exact"}
+  <FormInputField
+    name="exactValue"
+    required
+    label="Exact value"
+    type={inputType}
+  />
+{:else if ruleType === "null"}
+  <input name="shouldBeNull" value={true} type="hidden" />
+{:else if ruleType === "less"}
+  <FormInputField name="lessThan" required label="Less than" type={inputType} />
+{:else if ruleType === "greater"}
+  <FormInputField
+    name="greaterThan"
+    required
+    label="Greater than"
+    type={inputType}
+  />
+{:else if ruleType === "between"}
+  <FormInputField
+    name="greaterThan"
+    required
+    label="Greater than"
+    type={inputType}
+  />
+  <FormInputField name="lessThan" required label="Less than" type={inputType} />
 {/if}
