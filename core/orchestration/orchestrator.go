@@ -20,6 +20,7 @@ func Setup() {
 	// database connections
 	connectionFactory := database.NewConnectorFactory()
 	internalDb, err := connectionFactory.NewConnector("sqlite3://data.db")
+	defer func() { _ = internalDb.Close() }()
 	if err != nil {
 		log.WithError(err).Fatal("Could not initiate internal db")
 	}
@@ -30,6 +31,7 @@ func Setup() {
 	}
 
 	watchDb, err := connectionFactory.NewConnector(config.DataSource())
+	defer func() { _ = internalDb.Close() }()
 	if err != nil {
 		log.WithError(err).Fatal("Could not initiate connection to data source")
 	}

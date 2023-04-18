@@ -8,7 +8,14 @@ import (
 )
 
 func validate(watchResult watch.WatchResult, rule ReviewRule) (bool, error) {
-	actualValue := watchResult.Result.Rows[rule.RowIndex][rule.ColumnName]
+	if len(watchResult.Result.Rows) < rule.RowIndex+1 {
+		return false, fmt.Errorf("Row index is larger than row count (result length: %d, row index: %d)", len(watchResult.Result.Rows), rule.RowIndex)
+	}
+
+	actualValue, ok := watchResult.Result.Rows[rule.RowIndex][rule.ColumnName]
+	if !ok {
+		return false, fmt.Errorf("Rule column not found in result (%s)", rule.ColumnName)
+	}
 
 	if rule.ExactValue != "" {
 		value := fmt.Sprint(actualValue)
