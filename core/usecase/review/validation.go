@@ -1,6 +1,7 @@
 package review
 
 import (
+	"errors"
 	"fmt"
 	"strconv"
 
@@ -28,6 +29,8 @@ func validate(watchResult watch.WatchResult, rule ReviewRule) (bool, error) {
 	}
 
 	rangeResult := true
+	var greaterRangeError error
+	var lessRangeError error
 
 	if rule.GreaterThan != "" {
 		if rule.ColumnType == Int {
@@ -43,6 +46,7 @@ func validate(watchResult watch.WatchResult, rule ReviewRule) (bool, error) {
 			}
 			rangeResult = rangeResult && value > rule
 		} else {
+			greaterRangeError = fmt.Errorf("Greater than not supported with this column type: %s", rule.ColumnType)
 			rangeResult = false
 		}
 	}
@@ -61,12 +65,13 @@ func validate(watchResult watch.WatchResult, rule ReviewRule) (bool, error) {
 			}
 			rangeResult = rangeResult && value < rule
 		} else {
+			lessRangeError = fmt.Errorf("Less than not supported with this column type: %s", rule.ColumnType)
 			rangeResult = false
 		}
 	}
 
 	if rule.GreaterThan != "" || rule.LessThan != "" {
-		return rangeResult, nil
+		return rangeResult, errors.Join(greaterRangeError, lessRangeError)
 	}
 
 	return false, fmt.Errorf("Rule with id %d has no validation parameters", rule.Id)
