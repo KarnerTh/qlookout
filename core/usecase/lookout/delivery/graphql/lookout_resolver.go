@@ -58,3 +58,25 @@ func (r LookoutResolver) Lookout(args struct{ Id int32 }) (lookoutConfigModel, e
 
 	return lookoutConfigModelResolver{lookout: *data, reviewResolver: r.reviewResolver}, nil
 }
+
+func (r LookoutResolver) UpdateLookout(args struct {
+	Id   int32
+	Data lookoutConfigUpdateModel
+}) (lookoutConfigModel, error) {
+	data, err := r.lookoutRepo.Update(
+		int(args.Id),
+		lookout.LookoutConfigUpdate{
+			Name:        args.Data.Name,
+			Cron:        args.Data.Cron,
+			Query:       args.Data.Query,
+			NotifyLocal: args.Data.NotifyLocal,
+			NotifyMail:  args.Data.NotifyMail,
+		})
+
+	if err != nil {
+		return nil, err
+	}
+
+	// TODO: restart lookout watch - potential query or cron change
+	return lookoutConfigModelResolver{lookout: *data, reviewResolver: r.reviewResolver}, nil
+}

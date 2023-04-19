@@ -3,6 +3,7 @@ package infrastructure
 import (
 	"database/sql"
 	"fmt"
+	"strings"
 
 	"github.com/KarnerTh/query-lookout/usecase/lookout"
 )
@@ -72,6 +73,46 @@ values (?, ?, ?, ?, ?)
 returning id
     `, data.Name, data.Query, data.Cron, data.NotifyLocal, data.NotifyMail).Scan(&id)
 
+	if err != nil {
+		return nil, err
+	}
+
+	return r.GetById(id)
+}
+
+func (r lookoutRepo) Update(id int, data lookout.LookoutConfigUpdate) (*lookout.LookoutConfig, error) {
+	var updateProps []string
+	var args []any
+
+	if data.Name != nil {
+		updateProps = append(updateProps, "name=?")
+		args = append(args, data.Name)
+	}
+	if data.Cron != nil {
+		updateProps = append(updateProps, "cron=?")
+		args = append(args, data.Cron)
+	}
+	if data.Query != nil {
+		updateProps = append(updateProps, "query=?")
+		args = append(args, data.Query)
+	}
+	if data.NotifyLocal != nil {
+		updateProps = append(updateProps, "notify_local=?")
+		args = append(args, data.NotifyLocal)
+	}
+	if data.NotifyLocal != nil {
+		updateProps = append(updateProps, "notify_mail=?")
+		args = append(args, data.NotifyMail)
+	}
+
+	if len(updateProps) == 0 {
+		// nothing to update
+		return r.GetById(id)
+	}
+
+	query := "update lookout set " + strings.Join(updateProps, ",") + " where id = ?"
+	args = append(args, id)
+	_, err := r.db.Exec(query, args...)
 	if err != nil {
 		return nil, err
 	}

@@ -16,3 +16,11 @@ type LookoutConfigCreate struct {
 	NotifyLocal bool
 	NotifyMail  bool
 }
+
+type LookoutConfigUpdate struct {
+	Name        *string
+	Query       *string
+	Cron        *string
+	NotifyLocal *bool
+	NotifyMail  *bool
+}

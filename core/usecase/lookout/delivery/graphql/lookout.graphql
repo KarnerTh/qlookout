@@ -5,6 +5,7 @@ type Query {
 
 type Mutation {
   createLookout(data: LookoutCreate!): Lookout!
+  updateLookout(id: Int!, data: LookoutUpdate!): Lookout!
 }
 
 type Lookout {
@@ -24,4 +25,12 @@ input LookoutCreate {
   cron: String!
   notifyLocal: Boolean!
   notifyMail: Boolean!
+}
+
+input LookoutUpdate {
+  name: String
+  query: String
+  cron: String
+  notifyLocal: Boolean
+  notifyMail: Boolean
 }
