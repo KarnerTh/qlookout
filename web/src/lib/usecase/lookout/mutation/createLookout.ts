@@ -1,7 +1,7 @@
 import { gql } from "@apollo/client/core";
 import { mutation } from "svelte-apollo";
 
-const lookoutMutation = gql`
+const lookoutCreateMutation = gql`
   mutation CreateLookout(
     $name: String!
     $query: String!
@@ -23,4 +23,4 @@ const lookoutMutation = gql`
   }
 `;
 
-export const useLookoutCreateMutation = () => mutation(lookoutMutation);
+export const useLookoutCreateMutation = () => mutation(lookoutCreateMutation);

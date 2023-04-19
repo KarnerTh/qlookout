@@ -1,6 +1,7 @@
 <script lang="ts">
   export let label: string;
   export let name: string;
+  export let value: any | undefined = "";
   export let type: "text" | "number" = "text";
   export let placeholder: string = "";
   export let hasError: boolean = false;
@@ -15,6 +16,7 @@
     {label}
   </label>
   <input
+    {value}
     class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
     class:border-red-500={hasError}
     id={name}

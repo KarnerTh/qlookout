@@ -1,6 +1,7 @@
 <script lang="ts">
   export let label: string;
   export let name: string;
+  export let value: string = "";
   export let placeholder: string = "";
   export let hasError: boolean = false;
   export let required: boolean = false;
@@ -18,6 +19,7 @@
     class:border-red-500={hasError}
     id={name}
     rows="10"
+    {value}
     {name}
     {required}
     {placeholder}
