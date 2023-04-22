@@ -111,22 +111,16 @@ func (r reviewRepo) Update(id int, data review.ReviewRuleUpdate) (*review.Review
 		updateProps = append(updateProps, "row_index=?")
 		args = append(args, data.RowIndex)
 	}
-	if data.ExactValue != nil {
-		updateProps = append(updateProps, "exact_value=?")
-		args = append(args, data.ExactValue)
-	}
-	if data.GreaterThan != nil {
-		updateProps = append(updateProps, "greater_than=?")
-		args = append(args, data.GreaterThan)
-	}
-	if data.LessThan != nil {
-		updateProps = append(updateProps, "less_than=?")
-		args = append(args, data.LessThan)
-	}
-	if data.ShouldBeNull != nil {
-		updateProps = append(updateProps, "should_be_null=?")
-		args = append(args, data.ShouldBeNull)
-	}
+
+	// rule values must always be updated
+	updateProps = append(updateProps, "exact_value=?")
+	args = append(args, data.ExactValue)
+	updateProps = append(updateProps, "greater_than=?")
+	args = append(args, data.GreaterThan)
+	updateProps = append(updateProps, "less_than=?")
+	args = append(args, data.LessThan)
+	updateProps = append(updateProps, "should_be_null=?")
+	args = append(args, data.ShouldBeNull)
 
 	if len(updateProps) == 0 {
 		// nothing to Update
