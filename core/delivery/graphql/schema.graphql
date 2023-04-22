@@ -16,6 +16,7 @@ type Mutation {
     createLookout(data: LookoutCreate!): Lookout!
     updateLookout(id: Int!, data: LookoutUpdate!): Lookout!
     createRule(data: RuleCreate!): Rule!
+    updateRule(id: Int!, data: RuleUpdate!): Rule!
 }
 
 type Lookout {
@@ -64,6 +65,16 @@ input RuleCreate {
     columnName: String!
     columnType: String!
     rowIndex: Int!
+    exactValue: String
+    greaterThan: String
+    lessThan: String
+    shouldBeNull: Boolean
+}
+
+input RuleUpdate {
+    columnName: String
+    columnType: String
+    rowIndex: Int
     exactValue: String
     greaterThan: String
     lessThan: String

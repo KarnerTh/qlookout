@@ -3,6 +3,7 @@ type Query {
 
 type Mutation {
   createRule(data: RuleCreate!): Rule!
+  updateRule(id: Int!, data: RuleUpdate!): Rule!
 }
 
 type Rule {
@@ -22,6 +23,16 @@ input RuleCreate {
   columnName: String!
   columnType: String!
   rowIndex: Int!
+  exactValue: String
+  greaterThan: String
+  lessThan: String
+  shouldBeNull: Boolean
+}
+
+input RuleUpdate {
+  columnName: String
+  columnType: String
+  rowIndex: Int
   exactValue: String
   greaterThan: String
   lessThan: String

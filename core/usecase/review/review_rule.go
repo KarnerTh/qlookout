@@ -30,3 +30,13 @@ type ReviewRuleCreate struct {
 	LessThan     *string
 	ShouldBeNull *bool
 }
+
+type ReviewRuleUpdate struct {
+	ColumnName   *string
+	ColumnType   *ColumnType
+	RowIndex     *int
+	ExactValue   *string
+	GreaterThan  *string
+	LessThan     *string
+	ShouldBeNull *bool
+}

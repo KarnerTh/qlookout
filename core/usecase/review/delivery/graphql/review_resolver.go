@@ -42,5 +42,31 @@ func (r ReviewResolver) CreateRule(args struct{ Data reviewRuleCreateModel }) (R
 		return nil, err
 	}
 
-	return reviewRuleModelResolver{rule: data}, nil
+	return reviewRuleModelResolver{rule: *data}, nil
+}
+
+func (r ReviewResolver) UpdateRule(args struct {
+	Id   int32
+	Data reviewRuleUpdateModel
+}) (ReviewRuleModel, error) {
+	rowIndex := int(*args.Data.RowIndex)
+	data, err := r.reviewRepo.Update(
+		int(args.Id),
+		review.ReviewRuleUpdate{
+			ColumnName:   args.Data.ColumnName,
+			ColumnType:   (*review.ColumnType)(args.Data.ColumnType),
+			RowIndex:     &rowIndex,
+			ExactValue:   args.Data.ExactValue,
+			LessThan:     args.Data.LessThan,
+			GreaterThan:  args.Data.GreaterThan,
+			ShouldBeNull: args.Data.ShouldBeNull,
+		},
+	)
+
+	if err != nil {
+		return nil, err
+	}
+
+	return reviewRuleModelResolver{rule: *data}, nil
+
 }
