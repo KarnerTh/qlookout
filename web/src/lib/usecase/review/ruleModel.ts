@@ -19,7 +19,7 @@ export const convertRuleModelToTableData = (model: RuleModel): TableRow => {
   } else if (model.shouldBeNull) {
     rule = "null";
   } else if (model.lessThan && model.greaterThan) {
-    rule = `${model.lessThan} - ${model.greaterThan}`;
+    rule = `${model.greaterThan} - ${model.lessThan}`;
   } else if (model.lessThan) {
     rule = `<${model.lessThan}`;
   } else if (model.greaterThan) {

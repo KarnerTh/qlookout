@@ -5,14 +5,14 @@
 
   export let ruleType: RuleType | undefined;
   export let inputType: "text" | "number";
-  export let value: RuleModel;
+  export let value: RuleModel | undefined = undefined;
 </script>
 
 {#if ruleType === "exact"}
   <FormInputField
     name="exactValue"
     required
-    value={value.exactValue}
+    value={value?.exactValue}
     label="Exact value"
     type={inputType}
   />
@@ -22,7 +22,7 @@
   <FormInputField
     name="lessThan"
     required
-    value={value.lessThan}
+    value={value?.lessThan}
     label="Less than"
     type={inputType}
   />
@@ -30,7 +30,7 @@
   <FormInputField
     name="greaterThan"
     required
-    value={value.greaterThan}
+    value={value?.greaterThan}
     label="Greater than"
     type={inputType}
   />
@@ -38,14 +38,14 @@
   <FormInputField
     name="greaterThan"
     required
-    value={value.greaterThan}
+    value={value?.greaterThan}
     label="Greater than"
     type={inputType}
   />
   <FormInputField
     name="lessThan"
     required
-    value={value.lessThan}
+    value={value?.lessThan}
     label="Less than"
     type={inputType}
   />
