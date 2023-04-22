@@ -1,4 +1,5 @@
 type Query {
+  rule(id: Int!): Rule!
 }
 
 type Mutation {

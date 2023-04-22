@@ -26,6 +26,15 @@ func (r ReviewResolver) Rules(args struct{ LookoutId int32 }) ([]ReviewRuleModel
 	return models, nil
 }
 
+func (r ReviewResolver) Rule(args struct{ Id int32 }) (ReviewRuleModel, error) {
+	data, err := r.reviewRepo.GetById(int(args.Id))
+	if err != nil {
+		return nil, err
+	}
+
+	return reviewRuleModelResolver{rule: *data}, nil
+}
+
 func (r ReviewResolver) CreateRule(args struct{ Data reviewRuleCreateModel }) (ReviewRuleModel, error) {
 	data, err := r.reviewRepo.Create(review.ReviewRuleCreate{
 		LookoutId:    int(args.Data.LookoutId),

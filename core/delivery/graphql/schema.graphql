@@ -10,6 +10,7 @@ schema {
 type Query {
     lookouts: [Lookout!]!
     lookout(id: Int!): Lookout!
+    rule(id: Int!): Rule!
 }
 
 type Mutation {
