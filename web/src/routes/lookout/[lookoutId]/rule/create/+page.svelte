@@ -7,13 +7,14 @@
   import PageHeader from "$lib/components/header/PageHeader.svelte";
   import { useRuleCreateMutation } from "$lib/usecase/review/mutation/createRule";
   import type { RuleType } from "../ruleType";
-  import RuleInputs from "./RuleInputs.svelte";
+  import RuleInputs from "../RuleInputs.svelte";
 
   let ruleType: RuleType;
   let columnType: string;
   let columnTypeInput: "text" | "number";
   const createRule = useRuleCreateMutation();
 
+  // update input type on select change
   $: {
     if (["int", "float"].includes(columnType)) {
       columnTypeInput = "number";
@@ -76,6 +77,7 @@
     <FormInputField
       name="rowIndex"
       required
+      type="number"
       label="Row index"
       placeholder="0"
     />

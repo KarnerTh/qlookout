@@ -1,20 +1,20 @@
 import { gql } from "@apollo/client/core";
 import { mutation } from "svelte-apollo";
 
-const ruleCreateMutation = gql`
-  mutation CreateRule(
-    $lookoutId: Int!
-    $columnName: String!
-    $columnType: String!
+const ruleUpdateMutation = gql`
+  mutation UpdateRule(
+    $id: Int!
+    $columnName: String
+    $columnType: String
     $rowIndex: Int!
     $exactValue: String
     $lessThan: String
     $greaterThan: String
     $shouldBeNull: Boolean
   ) {
-    createRule(
+    updateRule(
+      id: $id
       data: {
-        lookoutId: $lookoutId
         columnName: $columnName
         columnType: $columnType
         rowIndex: $rowIndex
@@ -29,4 +29,4 @@ const ruleCreateMutation = gql`
   }
 `;
 
-export const useRuleCreateMutation = () => mutation(ruleCreateMutation);
+export const useRuleUpdateMutation = () => mutation(ruleUpdateMutation);

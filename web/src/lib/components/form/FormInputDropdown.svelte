@@ -21,6 +21,7 @@
       {required}
       class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 mb-3 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
     >
+      <option value={undefined} selected disabled hidden>Choose {label}</option>
       {#each options as option}
         <option value={option.name}>{option.title}</option>
       {/each}

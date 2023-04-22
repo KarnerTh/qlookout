@@ -11,7 +11,7 @@
 
   export let rules: RuleModel[];
   const onRowClicked = (id: number): void => {
-    goto(`/lookout/${$page.params.lookoutId}/rule/${id}`);
+    goto(`/lookout/${$page.params.lookoutId}/rule/${id}/edit`);
   };
 </script>
 
