@@ -137,6 +137,21 @@ func (r reviewRepo) Update(id int, data review.ReviewRuleUpdate) (*review.Review
 	return r.GetById(id)
 }
 
+func (r reviewRepo) Delete(id int) (*review.ReviewRule, error) {
+	existing, err := r.GetById(id)
+	if err != nil {
+		return nil, err
+	}
+
+	query := "delete from review_rule where id = ?"
+	_, err = r.db.Exec(query, id)
+	if err != nil {
+		return nil, err
+	}
+
+	return existing, nil
+}
+
 func scanRule(row *sql.Rows) (*review.ReviewRule, error) {
 	var rule review.ReviewRule
 	var exactValue sql.NullString

@@ -5,6 +5,7 @@ type Query {
 type Mutation {
   createRule(data: RuleCreate!): Rule!
   updateRule(id: Int!, data: RuleUpdate!): Rule!
+  deleteRule(id: Int!): Rule!
 }
 
 type Rule {

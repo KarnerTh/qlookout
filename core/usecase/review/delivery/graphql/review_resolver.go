@@ -77,5 +77,13 @@ func (r ReviewResolver) UpdateRule(args struct {
 	}
 
 	return reviewRuleModelResolver{rule: *data}, nil
+}
 
+func (r ReviewResolver) DeleteRule(args struct{ Id int32 }) (ReviewRuleModel, error) {
+	data, err := r.reviewRepo.Delete(int(args.Id))
+	if err != nil {
+		return nil, err
+	}
+
+	return reviewRuleModelResolver{rule: *data}, nil
 }

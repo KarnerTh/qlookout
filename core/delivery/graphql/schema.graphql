@@ -18,6 +18,7 @@ type Mutation {
     updateLookout(id: Int!, data: LookoutUpdate!): Lookout!
     createRule(data: RuleCreate!): Rule!
     updateRule(id: Int!, data: RuleUpdate!): Rule!
+    deleteRule(id: Int!): Rule!
 }
 
 type Lookout {
