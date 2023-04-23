@@ -119,3 +119,18 @@ func (r lookoutRepo) Update(id int, data lookout.LookoutConfigUpdate) (*lookout.
 
 	return r.GetById(id)
 }
+
+func (r lookoutRepo) Delete(id int) (*lookout.LookoutConfig, error) {
+	existing, err := r.GetById(id)
+	if err != nil {
+		return nil, err
+	}
+
+	query := "delete from lookout where id = ?"
+	_, err = r.db.Exec(query, id)
+	if err != nil {
+		return nil, err
+	}
+
+	return existing, nil
+}

@@ -80,3 +80,13 @@ func (r LookoutResolver) UpdateLookout(args struct {
 	// TODO: restart lookout watch - potential query or cron change
 	return lookoutConfigModelResolver{lookout: *data, reviewResolver: r.reviewResolver}, nil
 }
+
+func (r LookoutResolver) DeleteLookout(args struct{ Id int32 }) (lookoutConfigModel, error) {
+	data, err := r.lookoutRepo.Delete(int(args.Id))
+	if err != nil {
+		return nil, err
+	}
+
+	// TODO: remove lookout from manager
+	return lookoutConfigModelResolver{lookout: *data, reviewResolver: r.reviewResolver}, nil
+}

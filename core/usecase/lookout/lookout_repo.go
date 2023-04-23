@@ -5,4 +5,5 @@ type LookoutRepo interface {
 	GetById(id int) (*LookoutConfig, error)
 	Create(data LookoutConfigCreate) (*LookoutConfig, error)
 	Update(id int, data LookoutConfigUpdate) (*LookoutConfig, error)
+	Delete(id int) (*LookoutConfig, error)
 }

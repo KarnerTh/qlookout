@@ -6,6 +6,7 @@ type Query {
 type Mutation {
   createLookout(data: LookoutCreate!): Lookout!
   updateLookout(id: Int!, data: LookoutUpdate!): Lookout!
+  deleteLookout(id: Int!): Lookout!
 }
 
 type Lookout {

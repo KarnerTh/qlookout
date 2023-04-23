@@ -20,7 +20,7 @@ create table review_rule(
   less_than text,
   should_be_null boolean,
 
-  FOREIGN KEY(lookout_id) REFERENCES lookout(id)
+  FOREIGN KEY(lookout_id) REFERENCES lookout(id) on delete cascade
 );
 
 

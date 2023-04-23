@@ -25,6 +25,12 @@ func Setup() {
 		log.WithError(err).Fatal("Could not initiate internal db")
 	}
 
+	// enable sqlite foreign key support
+	_, err = internalDb.Exec("PRAGMA foreign_keys=ON")
+	if err != nil {
+		log.WithError(err).Fatal("Could not enable foreign key support for internal db")
+	}
+
 	err = database.MigrateInternalSqliteDb(internalDb)
 	if err != nil {
 		log.WithError(err).Fatal("Shutting down due to failing migrations")

@@ -16,6 +16,7 @@ type Query {
 type Mutation {
     createLookout(data: LookoutCreate!): Lookout!
     updateLookout(id: Int!, data: LookoutUpdate!): Lookout!
+    deleteLookout(id: Int!): Lookout!
     createRule(data: RuleCreate!): Rule!
     updateRule(id: Int!, data: RuleUpdate!): Rule!
     deleteRule(id: Int!): Rule!
