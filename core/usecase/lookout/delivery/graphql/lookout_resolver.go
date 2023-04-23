@@ -77,7 +77,7 @@ func (r LookoutResolver) UpdateLookout(args struct {
 		return nil, err
 	}
 
-	// TODO: restart lookout watch - potential query or cron change
+	r.lookoutManager.Reload(int(args.Id))
 	return lookoutConfigModelResolver{lookout: *data, reviewResolver: r.reviewResolver}, nil
 }
 
@@ -87,6 +87,6 @@ func (r LookoutResolver) DeleteLookout(args struct{ Id int32 }) (lookoutConfigMo
 		return nil, err
 	}
 
-	// TODO: remove lookout from manager
+	r.lookoutManager.Remove(int(args.Id))
 	return lookoutConfigModelResolver{lookout: *data, reviewResolver: r.reviewResolver}, nil
 }

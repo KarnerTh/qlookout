@@ -9,6 +9,8 @@ import (
 type LookoutManager interface {
 	Start()
 	Watch(lookoutId int)
+	Remove(lookoutId int)
+	Reload(lookoutId int)
 }
 
 type lookoutManager struct {
@@ -65,4 +67,20 @@ func (l *lookoutManager) Watch(lookoutId int) {
 	})
 	l.watcherIds[lookoutId] = id
 	log.Infof("Added watch for lookout with id %d", lookoutId)
+}
+
+func (l *lookoutManager) Remove(lookoutId int) {
+	watchId, ok := l.watcherIds[lookoutId]
+	if !ok {
+		log.Errorf("Could not remove lookout with id %d, because it was not found", lookoutId)
+	}
+
+	l.watcher.StopWatching(watchId)
+	delete(l.watcherIds, lookoutId)
+	log.Infof("Removed watch for lookout with id %d", lookoutId)
+}
+
+func (l *lookoutManager) Reload(lookoutId int) {
+	l.Remove(lookoutId)
+	l.Watch(lookoutId)
 }

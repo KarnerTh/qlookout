@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { iconData } from "$lib/components/icons";
   import Table from "$lib/components/table/Table.svelte";
   import { afterNavigate, goto } from "$app/navigation";
   import { useLookouts } from "$lib/usecase/lookout/query/getLookouts";
