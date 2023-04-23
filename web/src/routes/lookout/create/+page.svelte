@@ -73,7 +73,7 @@
       ]}
     />
 
-    <div class="mt-4 mx-3">
+    <div class="mt-4 mx-3 w-full flex flex-row-reverse">
       <Button title="Create" type="submit" leadingIcon="check" />
     </div>
   </div>

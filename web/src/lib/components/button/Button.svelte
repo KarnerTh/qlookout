@@ -5,11 +5,16 @@
   export let leadingIcon: Icon | null = null;
   export let trailingIcon: Icon | null = null;
   export let type: "submit" | "reset" | "button" = "button";
+  export let buttonType: "default" | "red" = "default";
 </script>
 
 <span class="rounded-md shadow-sm">
   <button
     class="flex justify-center items-center w-full px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:text-gray-500 focus:outline-none active:bg-gray-50 active:text-gray-800"
+    class:text-red-500={buttonType === "red"}
+    class:border-red-500={buttonType === "red"}
+    class:hover:text-white={buttonType === "red"}
+    class:hover:bg-red-500={buttonType === "red"}
     {type}
     on:click
   >

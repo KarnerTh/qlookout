@@ -7,14 +7,18 @@
   import PageHeader from "$lib/components/header/PageHeader.svelte";
   import { useRule } from "$lib/usecase/review/query/getRule";
   import { useRuleUpdateMutation } from "$lib/usecase/review/mutation/updateRule";
+  import { useRuleDeleteMutation } from "$lib/usecase/review/mutation/deleteRule";
   import RuleInputs from "../../RuleInputs.svelte";
   import type { RuleType } from "../../ruleType";
   import LoadingSpinner from "$lib/components/loading/LoadingSpinner.svelte";
+  import DialogButton from "$lib/components/dialog/DialogButton.svelte";
 
   let ruleType: RuleType | undefined;
   let columnType: string | undefined;
   let columnTypeInput: "text" | "number";
+
   const updateRule = useRuleUpdateMutation();
+  const deleteRule = useRuleDeleteMutation();
   const lookoutId = +$page.params.lookoutId;
   const ruleId = +$page.params.ruleId;
   const rule = useRule(ruleId);
@@ -82,6 +86,16 @@
 
     goto(`/lookout/${lookoutId}`, { state: { refetch: true } });
   };
+
+  const onDelete = async () => {
+    const result = await deleteRule({ variables: { id: ruleId } });
+    if (result.errors) {
+      alert("Something went wrong");
+      return;
+    }
+
+    goto(`/lookout/${lookoutId}`, { state: { refetch: true } });
+  };
 </script>
 
 <PageHeader
@@ -142,9 +156,33 @@
         ]}
       />
 
-      <RuleInputs {ruleType} value={$rule.data.rule} inputType={columnTypeInput} />
+      <RuleInputs
+        {ruleType}
+        value={$rule.data.rule}
+        inputType={columnTypeInput}
+      />
       <div class="w-full" />
-      <div class="mt-4 mx-3">
+      <div class="mt-4 mx-3 w-full flex flex-row-reverse gap-2">
+        <DialogButton
+          buttonText="Delete"
+          buttonIcon="trash"
+          buttonType="red"
+          dialogTitle="Delete Rule"
+          dialogDescription="Do you realy want to delete this rule? This action cannot be undone"
+          actionButtons={[
+            {
+              title: "Cancel",
+              onClick() {},
+            },
+            {
+              title: "Delete",
+              buttonType: "red",
+              onClick() {
+                onDelete();
+              },
+            },
+          ]}
+        />
         <Button title="Update" type="submit" leadingIcon="check" />
       </div>
     </div>
