@@ -200,6 +200,54 @@ var lessThanValueFloatTypeFailure = testCaseData{
 	expectedResult: false,
 }
 
+var notEnoughRowsFailure = testCaseData{
+	Rows: []map[string]any{{"column1": 1.123}},
+	rule: ReviewRule{
+		RowIndex:   1,
+		ColumnName: "column1",
+		LessThan:   "1.12",
+		ColumnType: Float,
+	},
+	shouldReturnError: true,
+	expectedResult:    false,
+}
+
+var columnNameNotFoundFailure = testCaseData{
+	Rows: []map[string]any{{"column1": 1.123}},
+	rule: ReviewRule{
+		RowIndex:   0,
+		ColumnName: "columnXY",
+		LessThan:   "1.12",
+		ColumnType: Float,
+	},
+	shouldReturnError: true,
+	expectedResult:    false,
+}
+
+var columnTypeForGreaterNotSupportedFailure = testCaseData{
+	Rows: []map[string]any{{"column1": 1.123}},
+	rule: ReviewRule{
+		RowIndex:    0,
+		ColumnName:  "column1",
+		GreaterThan: "1.12",
+		ColumnType:  Text,
+	},
+	shouldReturnError: true,
+	expectedResult:    false,
+}
+
+var columnTypeForLessNotSupportedFailure = testCaseData{
+	Rows: []map[string]any{{"column1": 1.123}},
+	rule: ReviewRule{
+		RowIndex:   0,
+		ColumnName: "column1",
+		LessThan:   "1.12",
+		ColumnType: Text,
+	},
+	shouldReturnError: true,
+	expectedResult:    false,
+}
+
 func TestValidate(t *testing.T) {
 	testCases := []testCaseData{
 		exactValueSuccess,
@@ -219,6 +267,10 @@ func TestValidate(t *testing.T) {
 		greaterThanValueFloatTypeFailure,
 		lessThanValueFloatTypeSuccess,
 		lessThanValueFloatTypeFailure,
+		notEnoughRowsFailure,
+		columnNameNotFoundFailure,
+		columnTypeForGreaterNotSupportedFailure,
+		columnTypeForLessNotSupportedFailure,
 	}
 
 	for i, testCase := range testCases {
