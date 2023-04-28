@@ -10,13 +10,31 @@ type MockLookoutManager struct {
 }
 
 // Reload provides a mock function with given fields: lookoutId
-func (_m *MockLookoutManager) Reload(lookoutId int) {
-	_m.Called(lookoutId)
+func (_m *MockLookoutManager) Reload(lookoutId int) error {
+	ret := _m.Called(lookoutId)
+
+	var r0 error
+	if rf, ok := ret.Get(0).(func(int) error); ok {
+		r0 = rf(lookoutId)
+	} else {
+		r0 = ret.Error(0)
+	}
+
+	return r0
 }
 
 // Remove provides a mock function with given fields: lookoutId
-func (_m *MockLookoutManager) Remove(lookoutId int) {
-	_m.Called(lookoutId)
+func (_m *MockLookoutManager) Remove(lookoutId int) error {
+	ret := _m.Called(lookoutId)
+
+	var r0 error
+	if rf, ok := ret.Get(0).(func(int) error); ok {
+		r0 = rf(lookoutId)
+	} else {
+		r0 = ret.Error(0)
+	}
+
+	return r0
 }
 
 // Start provides a mock function with given fields:
@@ -34,8 +52,17 @@ func (_m *MockLookoutManager) Start() error {
 }
 
 // Watch provides a mock function with given fields: lookoutId
-func (_m *MockLookoutManager) Watch(lookoutId int) {
-	_m.Called(lookoutId)
+func (_m *MockLookoutManager) Watch(lookoutId int) error {
+	ret := _m.Called(lookoutId)
+
+	var r0 error
+	if rf, ok := ret.Get(0).(func(int) error); ok {
+		r0 = rf(lookoutId)
+	} else {
+		r0 = ret.Error(0)
+	}
+
+	return r0
 }
 
 type mockConstructorTestingTNewMockLookoutManager interface {

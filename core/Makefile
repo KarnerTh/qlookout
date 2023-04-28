@@ -18,7 +18,7 @@ run-down-migration:
 # https://github.com/vektra/mockery is needed
 .PHONY: create-mocks
 create-mocks:
-	mockery --all --case=underscore --inpackage --inpackage-suffix
+	mockery
 
 .PHONY: test-coverage
 test-coverage:
