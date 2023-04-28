@@ -18,11 +18,14 @@ run-down-migration:
 # https://github.com/vektra/mockery is needed
 .PHONY: create-mocks
 create-mocks:
-	mockery --all
+	mockery --all --case=underscore --inpackage --inpackage-suffix
 
 .PHONY: test-coverage
 test-coverage:
-	go test -cover -coverprofile=coverage.out ./...; go tool cover -html=coverage.out -o coverage.html; rm coverage.out
+	go test -cover -coverprofile=coverage.out ./...; \
+	cat coverage.out | grep -v "mock" > coverage.clean.out; \
+	go tool cover -html=coverage.clean.out -o coverage.html; \
+	rm coverage.out coverage.clean.out
 
 # https://github.com/mfridman/tparse is needed
 .PHONY: test-all

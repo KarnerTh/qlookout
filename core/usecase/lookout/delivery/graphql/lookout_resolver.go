@@ -46,7 +46,11 @@ func (r LookoutResolver) CreateLookout(args struct{ Data lookoutConfigCreateMode
 		return nil, err
 	}
 
-	r.lookoutManager.Watch(data.Id)
+	err = r.lookoutManager.Watch(data.Id)
+	if err != nil {
+		return nil, err
+	}
+
 	return lookoutConfigModelResolver{lookout: *data, reviewResolver: r.reviewResolver}, nil
 }
 
@@ -77,7 +81,11 @@ func (r LookoutResolver) UpdateLookout(args struct {
 		return nil, err
 	}
 
-	r.lookoutManager.Reload(int(args.Id))
+	err = r.lookoutManager.Reload(int(args.Id))
+	if err != nil {
+		return nil, err
+	}
+
 	return lookoutConfigModelResolver{lookout: *data, reviewResolver: r.reviewResolver}, nil
 }
 
@@ -87,6 +95,10 @@ func (r LookoutResolver) DeleteLookout(args struct{ Id int32 }) (lookoutConfigMo
 		return nil, err
 	}
 
-	r.lookoutManager.Remove(int(args.Id))
+	err = r.lookoutManager.Remove(int(args.Id))
+	if err != nil {
+		return nil, err
+	}
+
 	return lookoutConfigModelResolver{lookout: *data, reviewResolver: r.reviewResolver}, nil
 }

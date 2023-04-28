@@ -7,6 +7,12 @@ import (
 
 func setupLookout(lookoutRepo lookout.LookoutRepo, watcher watch.Watcher) lookout.LookoutManager {
 	l := lookout.NewLookoutManager(lookoutRepo, watcher)
-	go l.Start()
+
+	go func() {
+		err := l.Start()
+		if err != nil {
+			panic(err)
+		}
+	}()
 	return l
 }
