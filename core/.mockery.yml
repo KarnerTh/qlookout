@@ -1,4 +1,3 @@
-all: true
 inpackage: true
 inpackage-suffix: true
 case: underscore
