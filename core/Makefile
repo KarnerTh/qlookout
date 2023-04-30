@@ -18,7 +18,7 @@ run-down-migration:
 # https://github.com/vektra/mockery is needed
 .PHONY: create-mocks
 create-mocks:
-	mockery
+	go generate ./...
 
 .PHONY: test-coverage
 test-coverage:
@@ -30,7 +30,7 @@ test-coverage:
 # https://github.com/mfridman/tparse is needed
 .PHONY: test-all
 test-all:
-	go test $(test_target) -cover -json | tparse -all
+	go test $(test_target) -json | tparse -all
 
 # https://github.com/mfridman/tparse is needed
 .PHONY: test-unit

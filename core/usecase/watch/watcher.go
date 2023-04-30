@@ -9,6 +9,7 @@ import (
 
 type WatcherId = cron.EntryID
 
+//go:generate mockery --name Watcher 
 type Watcher interface {
 	Watch(config WatchConfig) WatcherId
 	StopWatching(id WatcherId)
