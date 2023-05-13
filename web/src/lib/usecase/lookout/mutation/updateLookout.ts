@@ -16,8 +16,8 @@ const lookoutUpdateMutation = gql`
         name: $name
         query: $query
         cron: $cron
-        notifyMail: $notifyMail
         notifyLocal: $notifyLocal
+        notifyMail: $notifyMail
       }
     ) {
       id

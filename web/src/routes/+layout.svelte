@@ -1,16 +1,20 @@
 <script lang="ts">
   import "../app.css";
   import NavigationItem from "../lib/components/navigation/NavigationItem.svelte";
-  import { ApolloClient, HttpLink, InMemoryCache } from "@apollo/client/core";
-  import { setClient } from "svelte-apollo";
   import logo from "$lib/assets/logo.svg";
+  import { setupGraphQl } from "$lib/graphql_setup";
+  import { useNewNotificationSubscription } from "$lib/usecase/notify/subscription/newNotification";
+  import { notifications } from "$lib/stores/notification.store";
 
-  const client = new ApolloClient({
-    link: new HttpLink({ uri: "http://localhost:8080/query" }),
-    cache: new InMemoryCache(),
-  });
+  setupGraphQl();
 
-  setClient(client);
+  // add notifications to store
+  const notificationSubscription = useNewNotificationSubscription();
+  $: {
+    if ($notificationSubscription.data) {
+      notifications.add($notificationSubscription.data.newNotification);
+    }
+  }
 </script>
 
 <div
@@ -26,12 +30,12 @@
         <!-- <NavigationHeader title="Menu" /> -->
         <!-- <NavigationItem icon="dashboard" title="Dashboard" link="/dashboard" /> -->
         <NavigationItem icon="lookouts" title="Lookouts" link="/lookout" />
-        <!-- <NavigationItem -->
-        <!--   icon="notification" -->
-        <!--   title="Notifications" -->
-        <!--   link="/notifications" -->
-        <!--   badge="12" -->
-        <!-- /> -->
+        <NavigationItem
+          icon="notification"
+          title="Notifications"
+          link="/notifications"
+          badge="12"
+        />
         <!-- <NavigationHeader title="Settings" /> -->
         <!-- <NavigationItem icon="settings" title="Settings" link="/settings" /> -->
         <!-- <NavigationItem icon="logout" title="Logout" link="/logout" /> -->
