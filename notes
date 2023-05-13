@@ -1,9 +1,0 @@
-- SQL in memory for internal stuff
-- SQL interface for quering
-- graphql controller
-- do not panic all the time (log.fatal)
-
-
-
-# Docker
-- install sql lite before? https://github.com/mattn/go-sqlite3/issues/451
