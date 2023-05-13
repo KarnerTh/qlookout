@@ -1,6 +1,7 @@
 import type { NotificationModel } from "$lib/usecase/notify/notificationModel";
 import { writable } from "svelte/store";
 import type { StoreType } from "./storeUtil";
+import { browser } from "$app/environment";
 
 interface NotificationStore {
   subscribe: StoreType<NotificationModel[]>;
@@ -9,7 +10,17 @@ interface NotificationStore {
 }
 
 const createNotificationStore = (): NotificationStore => {
-  const { subscribe, update, set } = writable<NotificationModel[]>([]);
+  let storedNotifications: NotificationModel[] | undefined;
+
+  if (browser) {
+    storedNotifications = !!localStorage.notifications
+      ? JSON.parse(localStorage.notifications)
+      : null;
+  }
+
+  const { subscribe, update, set } = writable<NotificationModel[]>(
+    storedNotifications || []
+  );
 
   const add = (entry: NotificationModel): void => {
     update((list) => [entry, ...list]);
@@ -18,6 +29,10 @@ const createNotificationStore = (): NotificationStore => {
   const clear = (): void => {
     set([]);
   };
+
+  if (browser) {
+    subscribe((value) => (localStorage.notifications = JSON.stringify(value)));
+  }
 
   return {
     subscribe,
