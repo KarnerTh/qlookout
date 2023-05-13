@@ -5,6 +5,8 @@ import type { NotificationModel } from "../notificationModel";
 const newNotificationSubscription = gql`
   subscription newNotificationSubscription {
     newNotification {
+      lookoutId
+      ruleId
       title
       description
       timestamp

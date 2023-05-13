@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { goto } from "$app/navigation";
   import type { NotificationModel } from "$lib/usecase/notify/notificationModel";
   import Card from "../card/Card.svelte";
 
@@ -13,7 +14,7 @@
   };
 </script>
 
-<Card>
+<Card cursor on:click={() => goto(`/lookout/${notification.lookoutId}`)}>
   <div class="flex gap-2">
     <div class="flex flex-col">
       <div class="font-bold">{notification.title}</div>

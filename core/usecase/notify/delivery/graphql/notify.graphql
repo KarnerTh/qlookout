@@ -3,6 +3,8 @@ type Subscription {
 }
 
 type Notification {
+  lookoutId: Int!
+  ruleId: Int!
   title: String!
   description: String!
   deepLink: String!

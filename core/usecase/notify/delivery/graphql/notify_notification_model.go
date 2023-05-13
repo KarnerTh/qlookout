@@ -7,6 +7,8 @@ import (
 )
 
 type notificationModel interface {
+	LookoutId() int32
+	RuleId() int32
 	Title() string
 	Description() string
 	DeepLink() string
@@ -15,6 +17,14 @@ type notificationModel interface {
 
 type notificationModelResolver struct {
 	notification notify.Notification
+}
+
+func (r notificationModelResolver) LookoutId() int32 {
+	return int32(r.notification.LookoutId)
+}
+
+func (r notificationModelResolver) RuleId() int32 {
+	return int32(r.notification.RuleId)
 }
 
 func (r notificationModelResolver) Title() string {

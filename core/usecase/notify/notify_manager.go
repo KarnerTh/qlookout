@@ -53,6 +53,8 @@ func (n notifyManager) Notify(reviewResult review.ReviewResult) {
 		}
 
 		notification := Notification{
+			LookoutId:   lookout.Id,
+			RuleId:      reviewResult.Rule.Id,
 			Title:       fmt.Sprintf("NOK: %s", lookout.Name),
 			Description: "rule not successfull",
 			DeepLink:    n.config.BaseUrl(), // TODO: add deeplink parameter

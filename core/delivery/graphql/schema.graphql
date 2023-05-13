@@ -38,6 +38,8 @@ type Lookout {
 }
 
 type Notification {
+    lookoutId: Int!
+    ruleId: Int!
     title: String!
     description: String!
     deepLink: String!
