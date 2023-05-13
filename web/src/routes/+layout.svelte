@@ -34,7 +34,9 @@
           icon="notification"
           title="Notifications"
           link="/notifications"
-          badge="12"
+          badge={$notifications.length
+            ? $notifications.length.toString()
+            : undefined}
         />
         <!-- <NavigationHeader title="Settings" /> -->
         <!-- <NavigationItem icon="settings" title="Settings" link="/settings" /> -->
