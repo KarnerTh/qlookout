@@ -6,6 +6,7 @@ import (
 	"github.com/KarnerTh/query-lookout/database"
 	"github.com/KarnerTh/query-lookout/observer"
 	lookoutInfra "github.com/KarnerTh/query-lookout/usecase/lookout/infrastructure"
+	"github.com/KarnerTh/query-lookout/usecase/notify"
 	queryInfra "github.com/KarnerTh/query-lookout/usecase/query/infrastructure"
 	"github.com/KarnerTh/query-lookout/usecase/review"
 	reviewInfra "github.com/KarnerTh/query-lookout/usecase/review/infrastructure"
@@ -45,6 +46,7 @@ func Setup() {
 	// notifier
 	watchResultObserver := observer.New[watch.WatchResult]()
 	reviewResultObserver := observer.New[review.ReviewResult]()
+	notificationObserver := observer.New[notify.Notification]()
 
 	// repos
 	lookoutRepo := lookoutInfra.NewLookoutRepo(internalDb)
@@ -55,8 +57,8 @@ func Setup() {
 	watcher := watch.New(watchResultObserver, queryRepo)
 	lookoutManager := setupLookout(lookoutRepo, watcher)
 	setupReviewer(watchResultObserver, reviewResultObserver, reviewRepo)
-	setupNotifier(config, reviewResultObserver, lookoutRepo)
+	setupNotifier(config, reviewResultObserver, notificationObserver, lookoutRepo)
 
 	// delivery
-	setupDelivery(lookoutManager, lookoutRepo, reviewRepo)
+	setupDelivery(lookoutManager, lookoutRepo, reviewRepo, notificationObserver)
 }

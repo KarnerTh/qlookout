@@ -17,6 +17,7 @@ require (
 	github.com/godbus/dbus/v5 v5.1.0 // indirect
 	github.com/golang-sql/civil v0.0.0-20220223132316-b832511892a9 // indirect
 	github.com/golang-sql/sqlexp v0.1.0 // indirect
+	github.com/gorilla/websocket v1.4.2 // indirect
 	github.com/hashicorp/errwrap v1.1.0 // indirect
 	github.com/hashicorp/go-multierror v1.1.1 // indirect
 	github.com/hashicorp/hcl v1.0.0 // indirect
@@ -52,6 +53,7 @@ require (
 	github.com/go-sql-driver/mysql v1.7.1
 	github.com/golang-migrate/migrate/v4 v4.15.2
 	github.com/graph-gophers/graphql-go v1.5.0
+	github.com/graph-gophers/graphql-transport-ws v0.0.2
 	github.com/jackc/pgx/v4 v4.18.1
 	github.com/stretchr/testify v1.8.2
 	golang.org/x/sys v0.7.0 // indirect

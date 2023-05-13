@@ -86,7 +86,7 @@ func TestNotify(t *testing.T) {
 	t.Run("Send multiple notifications", func(t *testing.T) {
 		// Arrange
 		manager, localNotifierMock, mailNotifierMock, lookoutRepoMock, configMock := createNotifierWithMocks()
-		lookout := lookout.LookoutConfig{Id: 1,NotifyLocal: true, NotifyMail: true}
+		lookout := lookout.LookoutConfig{Id: 1, NotifyLocal: true, NotifyMail: true}
 		lookoutRepoMock.On("GetById", lookout.Id).Return(&lookout, nil).Once()
 		configMock.On("BaseUrl").Return("").Once()
 		localNotifierMock.On("Send", mock.Anything).Return(nil).Once()

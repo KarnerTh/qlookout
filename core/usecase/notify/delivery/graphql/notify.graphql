@@ -1,0 +1,10 @@
+type Subscription {
+  newNotification: Notification!
+}
+
+type Notification {
+  title: String!
+  description: String!
+  deepLink: String!
+  timestamp: String!
+}

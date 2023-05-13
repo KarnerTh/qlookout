@@ -14,8 +14,7 @@ const (
 
 type config struct{}
 
-
-//go:generate mockery --name Config 
+//go:generate mockery --name Config
 type Config interface {
 	LogLevel() string
 	DataSource() string

@@ -2,6 +2,7 @@ package notify
 
 import (
 	"fmt"
+	"time"
 
 	log "github.com/sirupsen/logrus"
 
@@ -18,15 +19,17 @@ type NotifyManager interface {
 type notifyManager struct {
 	config                 config.Config
 	reviewResultSubscriber review.ReviewResultSubscriber
+	notificationPublisher  NotificationPublisher
 	lookoutRepo            lookout.LookoutRepo
 	localNotifier          Notifier
 	mailNotifier           Notifier
 }
 
-func New(config config.Config, reviewResultSubscriber review.ReviewResultSubscriber, lookoutRepo lookout.LookoutRepo, localNotifier Notifier, mailNotifier Notifier) NotifyManager {
+func New(config config.Config, reviewResultSubscriber review.ReviewResultSubscriber, notificationPublisher NotificationPublisher, lookoutRepo lookout.LookoutRepo, localNotifier Notifier, mailNotifier Notifier) NotifyManager {
 	return notifyManager{
 		config:                 config,
 		reviewResultSubscriber: reviewResultSubscriber,
+		notificationPublisher:  notificationPublisher,
 		lookoutRepo:            lookoutRepo,
 		localNotifier:          localNotifier,
 		mailNotifier:           mailNotifier,
@@ -53,7 +56,10 @@ func (n notifyManager) Notify(reviewResult review.ReviewResult) {
 			Title:       fmt.Sprintf("NOK: %s", lookout.Name),
 			Description: "rule not successfull",
 			DeepLink:    n.config.BaseUrl(), // TODO: add deeplink parameter
+			Timestamp:   time.Now(),
 		}
+
+		n.notificationPublisher.Publish(notification)
 
 		if lookout.NotifyLocal {
 			err = n.localNotifier.Send(notification)
