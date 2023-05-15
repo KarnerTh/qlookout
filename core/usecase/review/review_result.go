@@ -6,7 +6,8 @@ type ReviewResultPublisher = observer.Publisher[ReviewResult]
 type ReviewResultSubscriber = observer.Subscriber[ReviewResult]
 
 type ReviewResult struct {
-	Rule   ReviewRule
-	Result ValidationResult
-	Error  error
+	LookoutId int
+	Rule      ReviewRule
+	Result    ValidationResult
+	Error     error
 }

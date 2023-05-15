@@ -47,18 +47,29 @@ func (n notifyManager) Start() {
 
 func (n notifyManager) Notify(reviewResult review.ReviewResult) {
 	if !reviewResult.Result.IsValid {
-		lookout, err := n.lookoutRepo.GetById(reviewResult.Rule.LookoutId)
+		lookout, err := n.lookoutRepo.GetById(reviewResult.LookoutId)
 		if err != nil {
 			log.WithError(err).Error("Could not get lookout config")
+			return
 		}
 
-		notification := Notification{
-			LookoutId:   lookout.Id,
-			RuleId:      reviewResult.Rule.Id,
-			Title:       fmt.Sprintf("NOK: %s", lookout.Name),
-			Description: reviewResult.Result.Description,
-			DeepLink:    n.config.BaseUrl(), // TODO: add deeplink parameter
-			Timestamp:   time.Now(),
+		var notification Notification
+
+		if reviewResult.Error == nil {
+			notification = Notification{
+				LookoutId:   lookout.Id,
+				RuleId:      reviewResult.Rule.Id,
+				Title:       fmt.Sprintf("NOK: %s", lookout.Name),
+				Description: reviewResult.Result.Description,
+				Timestamp:   time.Now(),
+			}
+		} else {
+			notification = Notification{
+				LookoutId:   lookout.Id,
+				Title:       fmt.Sprintf("Error: %s", lookout.Name),
+				Description: reviewResult.Error.Error(),
+				Timestamp:   time.Now(),
+			}
 		}
 
 		n.notificationPublisher.Publish(notification)

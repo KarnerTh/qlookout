@@ -46,7 +46,6 @@
         columns={[
           "Lookout name",
           "Cron",
-          "# Rules",
           "Notify local",
           "Notify mail",
         ]}

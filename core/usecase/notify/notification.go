@@ -14,6 +14,5 @@ type Notification struct {
 	RuleId      int
 	Title       string
 	Description string
-	DeepLink    string
 	Timestamp   time.Time
 }

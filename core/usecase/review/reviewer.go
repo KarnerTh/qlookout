@@ -48,6 +48,10 @@ func (r reviewer) Review(watchResult watch.WatchResult) ([]ReviewResult, error) 
 		return nil, err
 	}
 
+	if watchResult.Error != nil {
+		return []ReviewResult{{LookoutId: watchResult.LookoutId, Result: ValidationResult{IsValid: false}, Error: watchResult.Error}}, nil
+	}
+
 	results := make([]ReviewResult, len(rules))
 	for i, rule := range rules {
 		validationResult, err := validate(watchResult, rule)
@@ -56,9 +60,10 @@ func (r reviewer) Review(watchResult watch.WatchResult) ([]ReviewResult, error) 
 		}
 
 		results[i] = ReviewResult{
-			Rule:   rule,
-			Result: validationResult,
-			Error:  err,
+			LookoutId: watchResult.LookoutId,
+			Rule:      rule,
+			Result:    validationResult,
+			Error:     err,
 		}
 	}
 

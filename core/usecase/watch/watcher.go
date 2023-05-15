@@ -59,6 +59,7 @@ func executeCronJob(job cronJobWatchData) {
 	result, err := job.queryRepo.Query(job.config.Query)
 	if err != nil {
 		log.WithError(err).Error("Error quering job")
+		job.resultPublisher.Publish(WatchResult{LookoutId: job.config.LookoutId, Error: err})
 		return
 	}
 

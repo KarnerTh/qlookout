@@ -22,7 +22,7 @@
     {#if $notifications.length === 0}
       <div class="flex items-center justify-center pt-5">No notifications</div>
     {:else}
-      {#each $notifications as notification (`${notification.ruleId}-${notification.timestamp}`)}
+      {#each $notifications as notification (notification)}
         <div class="mb-2">
           <NotificationListItem {notification} />
         </div>

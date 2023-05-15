@@ -11,7 +11,6 @@ type notificationModel interface {
 	RuleId() int32
 	Title() string
 	Description() string
-	DeepLink() string
 	Timestamp() string
 }
 
@@ -33,10 +32,6 @@ func (r notificationModelResolver) Title() string {
 
 func (r notificationModelResolver) Description() string {
 	return r.notification.Description
-}
-
-func (r notificationModelResolver) DeepLink() string {
-	return r.notification.DeepLink
 }
 
 func (r notificationModelResolver) Timestamp() string {
