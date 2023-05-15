@@ -46,7 +46,7 @@ func (n notifyManager) Start() {
 }
 
 func (n notifyManager) Notify(reviewResult review.ReviewResult) {
-	if !reviewResult.Success {
+	if !reviewResult.Result.IsValid {
 		lookout, err := n.lookoutRepo.GetById(reviewResult.Rule.LookoutId)
 		if err != nil {
 			log.WithError(err).Error("Could not get lookout config")
@@ -56,7 +56,7 @@ func (n notifyManager) Notify(reviewResult review.ReviewResult) {
 			LookoutId:   lookout.Id,
 			RuleId:      reviewResult.Rule.Id,
 			Title:       fmt.Sprintf("NOK: %s", lookout.Name),
-			Description: "rule not successfull",
+			Description: reviewResult.Result.Description,
 			DeepLink:    n.config.BaseUrl(), // TODO: add deeplink parameter
 			Timestamp:   time.Now(),
 		}

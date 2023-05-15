@@ -292,7 +292,7 @@ func TestValidate(t *testing.T) {
 			} else {
 				assert.Nil(t, err)
 			}
-			assert.Equal(t, testCase.expectedResult, result)
+			assert.Equal(t, testCase.expectedResult, result.IsValid)
 		})
 	}
 }

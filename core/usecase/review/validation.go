@@ -4,77 +4,108 @@ import (
 	"errors"
 	"fmt"
 	"strconv"
+	"strings"
 
 	"github.com/KarnerTh/query-lookout/usecase/watch"
 )
 
-func validate(watchResult watch.WatchResult, rule ReviewRule) (bool, error) {
+type ValidationResult struct {
+	IsValid     bool
+	Description string
+}
+
+func validate(watchResult watch.WatchResult, rule ReviewRule) (ValidationResult, error) {
 	if len(watchResult.Result.Rows) < rule.RowIndex+1 {
-		return false, fmt.Errorf("Row index is larger than row count (result length: %d, row index: %d)", len(watchResult.Result.Rows), rule.RowIndex)
+		return ValidationResult{IsValid: false}, fmt.Errorf("Row index is larger than row count (result length: %d, row index: %d)", len(watchResult.Result.Rows), rule.RowIndex)
 	}
 
 	actualValue, ok := watchResult.Result.Rows[rule.RowIndex][rule.ColumnName]
 	if !ok {
-		return false, fmt.Errorf("Rule column not found in result (%s)", rule.ColumnName)
+		return ValidationResult{IsValid: false}, fmt.Errorf("Rule column not found in result (%s)", rule.ColumnName)
 	}
 
 	if rule.ExactValue != "" {
 		value := fmt.Sprint(actualValue)
 		expectedValue := rule.ExactValue
-		return value == expectedValue, nil
+
+		isValid := value == expectedValue
+		if isValid {
+			return ValidationResult{IsValid: true}, nil
+		}
+
+		return ValidationResult{IsValid: false, Description: fmt.Sprintf("Excpected exact value '%s', but got '%s'", expectedValue, value)}, nil
 	}
 
 	if rule.ShouldBeNull {
-		return actualValue == nil, nil
+		isValid := actualValue == nil
+		if isValid {
+			return ValidationResult{IsValid: true}, nil
+		}
+
+		return ValidationResult{IsValid: false, Description: fmt.Sprintf("Expected value to be null, but got '%s'", fmt.Sprint(actualValue))}, nil
 	}
 
 	rangeResult := true
+	rangeDescriptions := []string{}
 	var greaterRangeError error
 	var lessRangeError error
 
 	if rule.GreaterThan != "" {
+		var greaterIsValid bool
 		if rule.ColumnType == Int {
 			value, rule, err := getInt64Values(actualValue, rule.GreaterThan)
 			if err != nil {
-				return false, err
+				return ValidationResult{IsValid: false}, err
 			}
-			rangeResult = rangeResult && value > rule
+			greaterIsValid = value > rule
 		} else if rule.ColumnType == Float {
 			value, rule, err := getFloat64Values(actualValue, rule.GreaterThan)
 			if err != nil {
-				return false, err
+				return ValidationResult{IsValid: false}, err
 			}
-			rangeResult = rangeResult && value > rule
+
+			greaterIsValid = value > rule
 		} else {
 			greaterRangeError = fmt.Errorf("Greater than not supported with this column type: %s", rule.ColumnType)
-			rangeResult = false
+			greaterIsValid = false
+		}
+
+		rangeResult = rangeResult && greaterIsValid
+		if !greaterIsValid {
+			rangeDescriptions = append(rangeDescriptions, fmt.Sprintf("Expected value to be greater than '%s', but got '%s'", rule.GreaterThan, fmt.Sprint(actualValue)))
 		}
 	}
 
 	if rule.LessThan != "" {
+		var lessThanIsValid bool
 		if rule.ColumnType == Int {
 			value, rule, err := getInt64Values(actualValue, rule.LessThan)
 			if err != nil {
-				return false, err
+				return ValidationResult{IsValid: false}, err
 			}
-			rangeResult = rangeResult && value < rule
+			lessThanIsValid = value < rule
 		} else if rule.ColumnType == Float {
 			value, rule, err := getFloat64Values(actualValue, rule.LessThan)
 			if err != nil {
-				return false, err
+				return ValidationResult{IsValid: false}, err
 			}
-			rangeResult = rangeResult && value < rule
+			lessThanIsValid = value < rule
 		} else {
 			lessRangeError = fmt.Errorf("Less than not supported with this column type: %s", rule.ColumnType)
-			rangeResult = false
+			lessThanIsValid = false
+		}
+
+		rangeResult = rangeResult && lessThanIsValid
+		if !lessThanIsValid {
+			rangeDescriptions = append(rangeDescriptions, fmt.Sprintf("Expected value to be less than '%s', but got '%s'", rule.LessThan, fmt.Sprint(actualValue)))
 		}
 	}
 
 	if rule.GreaterThan != "" || rule.LessThan != "" {
-		return rangeResult, errors.Join(greaterRangeError, lessRangeError)
+		return ValidationResult{IsValid: rangeResult, Description: strings.Join(rangeDescriptions, ",")}, errors.Join(greaterRangeError, lessRangeError)
 	}
 
-	return false, fmt.Errorf("Rule with id %d has no validation parameters", rule.Id)
+	return ValidationResult{IsValid: false}, fmt.Errorf("Rule with id %d has no validation parameters", rule.Id)
 }
 
 func getInt64Values(actualValue any, ruleValue string) (actualValueResult int64, ruleValueResult int64, error error) {

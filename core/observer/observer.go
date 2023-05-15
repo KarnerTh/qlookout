@@ -10,6 +10,7 @@ type Subscriber[T any] interface {
 	Subscribe() <-chan T
 }
 
+//go:generate mockery --name Observer
 type Observer[T any] interface {
 	Publisher[T]
 	Subscriber[T]

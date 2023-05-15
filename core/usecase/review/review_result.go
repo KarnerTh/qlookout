@@ -6,7 +6,7 @@ type ReviewResultPublisher = observer.Publisher[ReviewResult]
 type ReviewResultSubscriber = observer.Subscriber[ReviewResult]
 
 type ReviewResult struct {
-	Rule    ReviewRule
-	Success bool
-	Error   error
+	Rule   ReviewRule
+	Result ValidationResult
+	Error  error
 }

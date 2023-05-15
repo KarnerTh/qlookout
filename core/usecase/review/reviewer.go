@@ -50,15 +50,15 @@ func (r reviewer) Review(watchResult watch.WatchResult) ([]ReviewResult, error) 
 
 	results := make([]ReviewResult, len(rules))
 	for i, rule := range rules {
-		success, err := validate(watchResult, rule)
+		validationResult, err := validate(watchResult, rule)
 		if err != nil {
 			log.WithError(err).Error("Error in validating rule")
 		}
 
 		results[i] = ReviewResult{
-			Rule:    rule,
-			Success: success,
-			Error:   err,
+			Rule:   rule,
+			Result: validationResult,
+			Error:  err,
 		}
 	}
 
