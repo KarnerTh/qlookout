@@ -10,7 +10,7 @@ import (
 
 func setupNotifier(config config.Config, reviewResultSubscriber review.ReviewResultSubscriber, notificationPublisher notify.NotificationPublisher, lookoutRepo lookout.LookoutRepo) {
 	localNotifier := notifyInfra.NewLocalNotifier()
-	mailNotifier := notifyInfra.NewMailNotifier(config.MailFromAddress(), config.MailToAddress(), config.MailSmtpHost(), config.MailSmtpPort())
+	mailNotifier := notifyInfra.NewMailNotifier(config)
 
 	notifier := notify.New(config, reviewResultSubscriber, notificationPublisher, lookoutRepo, localNotifier, mailNotifier)
 	go notifier.Start()

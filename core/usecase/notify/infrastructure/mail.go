@@ -10,31 +10,39 @@ import (
 
 	log "github.com/sirupsen/logrus"
 
+	"github.com/KarnerTh/query-lookout/config"
 	"github.com/KarnerTh/query-lookout/usecase/notify"
 )
 
 //go:embed mail_template.html
 var mailTemplateContent string
 
+type mailData struct {
+	notify.Notification
+	DeepLink string
+}
+
 type mailNotifier struct {
 	fromAddress  string
 	toAddress    string
 	smtpHost     string
 	smtpPort     string
+	baseUrl      string
 	mailTemplate *template.Template
 }
 
-func NewMailNotifier(fromAddress string, toAddress string, smtpHost string, smtpPort string) notify.Notifier {
+func NewMailNotifier(config config.Config) notify.Notifier {
 	tmpl, err := template.New("mail_template").Parse(mailTemplateContent)
 	if err != nil {
 		log.WithError(err).Fatal("Could not load mail template")
 	}
 
 	return mailNotifier{
-		fromAddress:  fromAddress,
-		toAddress:    toAddress,
-		smtpHost:     smtpHost,
-		smtpPort:     smtpPort,
+		fromAddress:  config.MailFromAddress(),
+		toAddress:    config.MailToAddress(),
+		smtpHost:     config.MailSmtpHost(),
+		smtpPort:     config.MailSmtpPort(),
+		baseUrl:      config.BaseUrl(),
 		mailTemplate: tmpl,
 	}
 }
@@ -61,14 +69,19 @@ func (n mailNotifier) getMailMsg(value notify.Notification) []byte {
 	toHeader := fmt.Sprintf("To: %s\n", n.toAddress)
 	subject := "Subject: Test email from Go!\n"
 	mime := "MIME-version: 1.0;\nContent-Type: text/html; charset=\"UTF-8\";\n\n"
-	body := getMailContent(n.mailTemplate, value)
+	body := getMailContent(n.mailTemplate, value, n.baseUrl)
 
 	return []byte(toHeader + fromHeader + subject + mime + body)
 }
 
-func getMailContent(template *template.Template, data notify.Notification) string {
+func getMailContent(template *template.Template, data notify.Notification, baseUrl string) string {
+	inputData := mailData{
+		Notification: data,
+		DeepLink:     fmt.Sprintf("%s/lookout/%d", baseUrl, data.LookoutId),
+	}
+
 	bodyBuf := new(bytes.Buffer)
-	if err := template.Execute(bodyBuf, data); err != nil {
+	if err := template.Execute(bodyBuf, inputData); err != nil {
 		log.WithError(err).Error("Could not load mail template")
 		return ""
 	}
