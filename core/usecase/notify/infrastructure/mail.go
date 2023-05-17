@@ -28,6 +28,8 @@ type mailNotifier struct {
 	smtpHost     string
 	smtpPort     string
 	baseUrl      string
+	username     string
+	password     string
 	mailTemplate *template.Template
 }
 
@@ -43,6 +45,8 @@ func NewMailNotifier(config config.Config) notify.Notifier {
 		smtpHost:     config.MailSmtpHost(),
 		smtpPort:     config.MailSmtpPort(),
 		baseUrl:      config.BaseUrl(),
+		username:     config.MailUsername(),
+		password:     config.MailPassword(),
 		mailTemplate: tmpl,
 	}
 }
@@ -52,11 +56,12 @@ func (n mailNotifier) Send(value notify.Notification) error {
 		return err
 	}
 
+	smptAuth := smtp.PlainAuth("", n.username, n.password, n.smtpHost)
 	smtpAddress := fmt.Sprintf("%s:%s", n.smtpHost, n.smtpPort)
 	to := strings.Split(n.toAddress, ",")
 	msg := n.getMailMsg(value)
 
-	if err := smtp.SendMail(smtpAddress, nil, n.fromAddress, to, msg); err != nil {
+	if err := smtp.SendMail(smtpAddress, smptAuth, n.fromAddress, to, msg); err != nil {
 		log.WithError(err).Error("Could not send mail")
 		return err
 	}

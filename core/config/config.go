@@ -10,6 +10,8 @@ const (
 	mailToAddress   = "mail_to_address"
 	mailSmtpHost    = "mail_smtp_host"
 	mailSmtpPort    = "mail_smtp_port"
+	mailUsername    = "mail_username"
+	mailPassword    = "mail_password"
 )
 
 type config struct{}
@@ -23,6 +25,8 @@ type Config interface {
 	MailToAddress() string
 	MailSmtpHost() string
 	MailSmtpPort() string
+	MailUsername() string
+	MailPassword() string
 }
 
 func New() Config {
@@ -57,4 +61,12 @@ func (c config) MailSmtpHost() string {
 
 func (c config) MailSmtpPort() string {
 	return viper.GetString(mailSmtpPort)
+}
+
+func (c config) MailUsername() string {
+	return viper.GetString(mailUsername)
+}
+
+func (c config) MailPassword() string {
+	return viper.GetString(mailPassword)
 }

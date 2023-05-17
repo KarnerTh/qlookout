@@ -65,6 +65,20 @@ func (_m *MockConfig) MailFromAddress() string {
 	return r0
 }
 
+// MailPassword provides a mock function with given fields:
+func (_m *MockConfig) MailPassword() string {
+	ret := _m.Called()
+
+	var r0 string
+	if rf, ok := ret.Get(0).(func() string); ok {
+		r0 = rf()
+	} else {
+		r0 = ret.Get(0).(string)
+	}
+
+	return r0
+}
+
 // MailSmtpHost provides a mock function with given fields:
 func (_m *MockConfig) MailSmtpHost() string {
 	ret := _m.Called()
@@ -95,6 +109,20 @@ func (_m *MockConfig) MailSmtpPort() string {
 
 // MailToAddress provides a mock function with given fields:
 func (_m *MockConfig) MailToAddress() string {
+	ret := _m.Called()
+
+	var r0 string
+	if rf, ok := ret.Get(0).(func() string); ok {
+		r0 = rf()
+	} else {
+		r0 = ret.Get(0).(string)
+	}
+
+	return r0
+}
+
+// MailUsername provides a mock function with given fields:
+func (_m *MockConfig) MailUsername() string {
 	ret := _m.Called()
 
 	var r0 string
