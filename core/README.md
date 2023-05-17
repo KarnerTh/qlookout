@@ -12,6 +12,8 @@ mail_from_address       From which mail address the notifcation mails are sent
 mail_to_address         To which mail addresses notifcations are sent (multiple addresses separated by comma)
 mail_smtp_host          SMTP host
 mail_smtp_port          SMTP port
+mail_username           SMTP username
+mail_password           SMTP password
 ```
 
 The configs are loaded in that order (details can be found [here](https://github.com/spf13/viper#why-viper))
@@ -29,6 +31,8 @@ mail_from_address: "test@works.at"
 mail_to_address: "first@works.at,second@works.at"
 mail_smtp_host: "localhost"
 mail_smtp_port: "1025"
+mail_username: "your@mail.net"
+mail_password: "superSecret1"
 ```
 
 ### Example environment variables
@@ -41,6 +45,8 @@ export QL_MAIL_FROM_ADDRESS="test@works.at"
 export QL_MAIL_TO_ADDRESS="first@works.at,second@works.at"
 export QL_MAIL_SMTP_HOST="localhost"
 export QL_MAIL_SMTP_PORT="1025"
+export QL_MAIL_USERNAME="your@mail.net"
+export QL_MAIL_PASSWORD="superSecret1"
 ```
 
 ### GraphQl schema
