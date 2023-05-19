@@ -30,6 +30,5 @@ func setupDelivery(lookoutManager lookout.LookoutManager, lookoutRepo lookout.Lo
 		},
 	)
 
-	// TODO: port config?
 	go log.Fatal(http.ListenAndServe(":8080", nil))
 }
