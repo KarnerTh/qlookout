@@ -1,6 +1,8 @@
 package orchestration
 
 import (
+	"fmt"
+
 	log "github.com/sirupsen/logrus"
 
 	"github.com/KarnerTh/query-lookout/core/database"
@@ -20,7 +22,7 @@ func Setup() {
 
 	// database connections
 	connectionFactory := database.NewConnectorFactory()
-	internalDb, err := connectionFactory.NewConnector("sqlite3://data.db")
+	internalDb, err := connectionFactory.NewConnector(fmt.Sprintf("sqlite3://%s", config.DatabaseFile()))
 	defer func() { _ = internalDb.Close() }()
 	if err != nil {
 		log.WithError(err).Fatal("Could not initiate internal db")

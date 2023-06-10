@@ -26,5 +26,5 @@ func setupConfig() config.Config {
 		log.WithError(err).Fatal("Could not read config")
 	}
 
-	return config.New()
+	return config.New(homeDir)
 }

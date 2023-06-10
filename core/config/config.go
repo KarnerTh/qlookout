@@ -1,9 +1,14 @@
 package config
 
-import "github.com/spf13/viper"
+import (
+	"path"
+
+	"github.com/spf13/viper"
+)
 
 const (
 	logLevel        = "log_level"
+	databaseFile    = "database_file"
 	dataSource      = "data_source"
 	baseUrl         = "base_url"
 	mailFromAddress = "mail_from_address"
@@ -19,6 +24,7 @@ type config struct{}
 //go:generate mockery --name Config
 type Config interface {
 	LogLevel() string
+	DatabaseFile() string
 	DataSource() string
 	BaseUrl() string
 	MailFromAddress() string
@@ -29,14 +35,19 @@ type Config interface {
 	MailPassword() string
 }
 
-func New() Config {
+func New(homeDir string) Config {
 	viper.SetDefault(logLevel, "INFO")
+	viper.SetDefault(databaseFile, path.Join(homeDir, "data.db"))
 
 	return config{}
 }
 
 func (c config) LogLevel() string {
 	return viper.GetString(logLevel)
+}
+
+func (c config) DatabaseFile() string {
+	return viper.GetString(databaseFile)
 }
 
 func (c config) DataSource() string {

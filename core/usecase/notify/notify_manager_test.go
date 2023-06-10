@@ -51,10 +51,8 @@ func TestNotify(t *testing.T) {
 		notificationObserver.On("Publish", mock.Anything).Once()
 		localNotifierMock.On("Send", mock.Anything).Return(nil).Once()
 		reviewResult := review.ReviewResult{
-			Result: review.ValidationResult{IsValid: false},
-			Rule: review.ReviewRule{
-				LookoutId: lookout.Id,
-			},
+			Result:    review.ValidationResult{IsValid: false},
+			LookoutId: lookout.Id,
 		}
 
 		// Act
@@ -74,10 +72,8 @@ func TestNotify(t *testing.T) {
 		notificationObserver.On("Publish", mock.Anything).Once()
 		mailNotifierMock.On("Send", mock.Anything).Return(nil).Once()
 		reviewResult := review.ReviewResult{
-			Result: review.ValidationResult{IsValid: false},
-			Rule: review.ReviewRule{
-				LookoutId: lookout.Id,
-			},
+			Result:    review.ValidationResult{IsValid: false},
+			LookoutId: lookout.Id,
 		}
 
 		// Act
@@ -98,10 +94,8 @@ func TestNotify(t *testing.T) {
 		localNotifierMock.On("Send", mock.Anything).Return(nil).Once()
 		mailNotifierMock.On("Send", mock.Anything).Return(nil).Once()
 		reviewResult := review.ReviewResult{
-			Result: review.ValidationResult{IsValid: false},
-			Rule: review.ReviewRule{
-				LookoutId: lookout.Id,
-			},
+			Result:    review.ValidationResult{IsValid: false},
+			LookoutId: lookout.Id,
 		}
 
 		// Act

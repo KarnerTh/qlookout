@@ -6,6 +6,7 @@ The core for the query-lookout
 
 ```
 log_level               Log level of the core (panic, fatal, error, warn, info, debug, trace)
+database_file           The file that is used for the internal sqlite database (defaults to `data.db` in your home directory)
 data_source             The data source for the lookouts
 base_url                Base url of the application (e.g. for the notification deeplink)
 mail_from_address       From which mail address the notifcation mails are sent
@@ -25,6 +26,7 @@ The configs are loaded in that order (details can be found [here](https://github
 
 ```yaml
 log_level: TRACE
+database_file: "custom_file_name.db"
 data_source: "sqlite3://data.db"
 base_url: "https://karnerth.github.io/portfolio/"
 mail_from_address: "test@works.at"
@@ -39,6 +41,7 @@ mail_password: "superSecret1"
 
 ```bash
 export QL_LOG_LEVEL="INFO"
+export QL_DATABASE_FILE="custom_file_name.db"
 export QL_DATA_SOURCE="sqlite3://data.db"
 export QL_BASE_URL="https://karnerth.github.io/portfolio/"
 export QL_MAIL_FROM_ADDRESS="test@works.at"
