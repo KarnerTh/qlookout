@@ -1,8 +1,8 @@
 package orchestration
 
 import (
-	"github.com/KarnerTh/query-lookout/usecase/review"
-	"github.com/KarnerTh/query-lookout/usecase/watch"
+	"github.com/KarnerTh/query-lookout/core/usecase/review"
+	"github.com/KarnerTh/query-lookout/core/usecase/watch"
 )
 
 func setupReviewer(

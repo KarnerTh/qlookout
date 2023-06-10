@@ -10,10 +10,10 @@ import (
 	"github.com/graph-gophers/graphql-transport-ws/graphqlws"
 	log "github.com/sirupsen/logrus"
 
-	"github.com/KarnerTh/query-lookout/delivery"
-	lookoutResolver "github.com/KarnerTh/query-lookout/usecase/lookout/delivery/graphql"
-	notifyResolver "github.com/KarnerTh/query-lookout/usecase/notify/delivery/graphql"
-	reviewResolver "github.com/KarnerTh/query-lookout/usecase/review/delivery/graphql"
+	"github.com/KarnerTh/query-lookout/core/delivery"
+	lookoutResolver "github.com/KarnerTh/query-lookout/core/usecase/lookout/delivery/graphql"
+	notifyResolver "github.com/KarnerTh/query-lookout/core/usecase/notify/delivery/graphql"
+	reviewResolver "github.com/KarnerTh/query-lookout/core/usecase/review/delivery/graphql"
 )
 
 //go:embed schema.graphql

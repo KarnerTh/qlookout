@@ -3,14 +3,14 @@ package orchestration
 import (
 	log "github.com/sirupsen/logrus"
 
-	"github.com/KarnerTh/query-lookout/database"
-	"github.com/KarnerTh/query-lookout/observer"
-	lookoutInfra "github.com/KarnerTh/query-lookout/usecase/lookout/infrastructure"
-	"github.com/KarnerTh/query-lookout/usecase/notify"
-	queryInfra "github.com/KarnerTh/query-lookout/usecase/query/infrastructure"
-	"github.com/KarnerTh/query-lookout/usecase/review"
-	reviewInfra "github.com/KarnerTh/query-lookout/usecase/review/infrastructure"
-	"github.com/KarnerTh/query-lookout/usecase/watch"
+	"github.com/KarnerTh/query-lookout/core/database"
+	"github.com/KarnerTh/query-lookout/core/observer"
+	lookoutInfra "github.com/KarnerTh/query-lookout/core/usecase/lookout/infrastructure"
+	"github.com/KarnerTh/query-lookout/core/usecase/notify"
+	queryInfra "github.com/KarnerTh/query-lookout/core/usecase/query/infrastructure"
+	"github.com/KarnerTh/query-lookout/core/usecase/review"
+	reviewInfra "github.com/KarnerTh/query-lookout/core/usecase/review/infrastructure"
+	"github.com/KarnerTh/query-lookout/core/usecase/watch"
 )
 
 func Setup() {

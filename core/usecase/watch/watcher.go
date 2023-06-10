@@ -4,7 +4,7 @@ import (
 	"github.com/robfig/cron/v3"
 	log "github.com/sirupsen/logrus"
 
-	"github.com/KarnerTh/query-lookout/usecase/query"
+	"github.com/KarnerTh/query-lookout/core/usecase/query"
 )
 
 type WatcherId = cron.EntryID

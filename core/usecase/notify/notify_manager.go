@@ -6,9 +6,9 @@ import (
 
 	log "github.com/sirupsen/logrus"
 
-	"github.com/KarnerTh/query-lookout/config"
-	"github.com/KarnerTh/query-lookout/usecase/lookout"
-	"github.com/KarnerTh/query-lookout/usecase/review"
+	"github.com/KarnerTh/query-lookout/core/config"
+	"github.com/KarnerTh/query-lookout/core/usecase/lookout"
+	"github.com/KarnerTh/query-lookout/core/usecase/review"
 )
 
 type NotifyManager interface {

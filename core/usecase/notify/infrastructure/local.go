@@ -4,7 +4,7 @@ import (
 	"github.com/gen2brain/beeep"
 	log "github.com/sirupsen/logrus"
 
-	"github.com/KarnerTh/query-lookout/usecase/notify"
+	"github.com/KarnerTh/query-lookout/core/usecase/notify"
 )
 
 type localNotifier struct{}

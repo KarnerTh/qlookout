@@ -5,13 +5,13 @@ import (
 
 	log "github.com/sirupsen/logrus"
 
-	"github.com/KarnerTh/query-lookout/delivery/graphql"
-	"github.com/KarnerTh/query-lookout/usecase/lookout"
-	lookoutGraphQl "github.com/KarnerTh/query-lookout/usecase/lookout/delivery/graphql"
-	"github.com/KarnerTh/query-lookout/usecase/notify"
-	notifyGraphQl "github.com/KarnerTh/query-lookout/usecase/notify/delivery/graphql"
-	"github.com/KarnerTh/query-lookout/usecase/review"
-	reviewGraphQl "github.com/KarnerTh/query-lookout/usecase/review/delivery/graphql"
+	"github.com/KarnerTh/query-lookout/core/delivery/graphql"
+	"github.com/KarnerTh/query-lookout/core/usecase/lookout"
+	lookoutGraphQl "github.com/KarnerTh/query-lookout/core/usecase/lookout/delivery/graphql"
+	"github.com/KarnerTh/query-lookout/core/usecase/notify"
+	notifyGraphQl "github.com/KarnerTh/query-lookout/core/usecase/notify/delivery/graphql"
+	"github.com/KarnerTh/query-lookout/core/usecase/review"
+	reviewGraphQl "github.com/KarnerTh/query-lookout/core/usecase/review/delivery/graphql"
 )
 
 func setupDelivery(lookoutManager lookout.LookoutManager, lookoutRepo lookout.LookoutRepo, reviewRepo review.ReviewRepo, notificationSubscriber notify.NotificationSubscriber) {

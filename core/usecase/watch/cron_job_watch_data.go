@@ -1,6 +1,6 @@
 package watch
 
-import "github.com/KarnerTh/query-lookout/usecase/query"
+import "github.com/KarnerTh/query-lookout/core/usecase/query"
 
 type cronJobWatchData struct {
 	config          WatchConfig

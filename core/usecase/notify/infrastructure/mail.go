@@ -10,8 +10,8 @@ import (
 
 	log "github.com/sirupsen/logrus"
 
-	"github.com/KarnerTh/query-lookout/config"
-	"github.com/KarnerTh/query-lookout/usecase/notify"
+	"github.com/KarnerTh/query-lookout/core/config"
+	"github.com/KarnerTh/query-lookout/core/usecase/notify"
 )
 
 //go:embed mail_template.html

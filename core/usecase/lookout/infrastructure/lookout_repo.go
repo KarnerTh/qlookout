@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/KarnerTh/query-lookout/usecase/lookout"
+	"github.com/KarnerTh/query-lookout/core/usecase/lookout"
 )
 
 type lookoutRepo struct {

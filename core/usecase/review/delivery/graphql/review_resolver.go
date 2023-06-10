@@ -1,6 +1,6 @@
 package graphql
 
-import "github.com/KarnerTh/query-lookout/usecase/review"
+import "github.com/KarnerTh/query-lookout/core/usecase/review"
 
 type ReviewResolver struct {
 	reviewRepo review.ReviewRepo

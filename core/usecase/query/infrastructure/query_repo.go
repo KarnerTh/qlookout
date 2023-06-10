@@ -3,7 +3,7 @@ package infrastructure
 import (
 	"database/sql"
 
-	"github.com/KarnerTh/query-lookout/usecase/query"
+	"github.com/KarnerTh/query-lookout/core/usecase/query"
 )
 
 type queryRepo struct {

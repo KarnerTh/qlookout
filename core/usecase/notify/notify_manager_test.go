@@ -3,10 +3,10 @@ package notify
 import (
 	"testing"
 
-	"github.com/KarnerTh/query-lookout/config"
-	"github.com/KarnerTh/query-lookout/observer"
-	"github.com/KarnerTh/query-lookout/usecase/lookout"
-	"github.com/KarnerTh/query-lookout/usecase/review"
+	"github.com/KarnerTh/query-lookout/core/config"
+	"github.com/KarnerTh/query-lookout/core/observer"
+	"github.com/KarnerTh/query-lookout/core/usecase/lookout"
+	"github.com/KarnerTh/query-lookout/core/usecase/review"
 	"github.com/stretchr/testify/mock"
 )
 

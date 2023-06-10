@@ -1,8 +1,8 @@
 package graphql
 
 import (
-	"github.com/KarnerTh/query-lookout/usecase/lookout"
-	reviewGraphQl "github.com/KarnerTh/query-lookout/usecase/review/delivery/graphql"
+	"github.com/KarnerTh/query-lookout/core/usecase/lookout"
+	reviewGraphQl "github.com/KarnerTh/query-lookout/core/usecase/review/delivery/graphql"
 )
 
 type lookoutConfigModel interface {

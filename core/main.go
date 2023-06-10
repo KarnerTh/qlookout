@@ -6,11 +6,11 @@ import (
 	"os/signal"
 	"syscall"
 
-	"github.com/KarnerTh/query-lookout/orchestration"
+	"github.com/KarnerTh/query-lookout/core/orchestration"
 )
 
 func main() {
-	orchestration.Setup()
+	go orchestration.Setup()
 
 	// Keep program running until SIGINT or SIGTERM
 	quitChannel := make(chan os.Signal, 1)

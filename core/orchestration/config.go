@@ -6,7 +6,7 @@ import (
 	log "github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
 
-	"github.com/KarnerTh/query-lookout/config"
+	"github.com/KarnerTh/query-lookout/core/config"
 )
 
 func setupConfig() config.Config {

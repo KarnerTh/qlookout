@@ -5,7 +5,7 @@ import (
 
 	log "github.com/sirupsen/logrus"
 
-	"github.com/KarnerTh/query-lookout/usecase/watch"
+	"github.com/KarnerTh/query-lookout/core/usecase/watch"
 )
 
 type LookoutManager interface {
