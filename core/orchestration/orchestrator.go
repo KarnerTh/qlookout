@@ -16,7 +16,8 @@ import (
 )
 
 func Setup() {
-	config := setupConfig()
+	flags := parseFlags()
+	config := setupConfig(flags.ConfigPath)
 	setupLogger(config)
 	log.Debug("Setup orchestration")
 

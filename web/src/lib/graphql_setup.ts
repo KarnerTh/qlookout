@@ -12,12 +12,12 @@ import { SubscriptionClient } from "subscriptions-transport-ws";
 
 export const setupGraphQl = () => {
   const httpLink = new HttpLink({
-    uri: "http://localhost:8080/query",
+    uri: "http://localhost:63001/query",
   });
 
   const wsLink = browser
     ? new WebSocketLink(
-        new SubscriptionClient("ws://localhost:8080/query", {
+        new SubscriptionClient("ws://localhost:63001/query", {
           reconnect: true,
         })
       )

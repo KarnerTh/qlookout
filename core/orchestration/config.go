@@ -9,17 +9,22 @@ import (
 	"github.com/KarnerTh/query-lookout/core/config"
 )
 
-func setupConfig() config.Config {
+func setupConfig(configPath string) config.Config {
 	homeDir, err := os.UserHomeDir()
 	if err != nil {
 		log.WithError(err).Fatal("Could not get home dir")
 	}
 
-	viper.AddConfigPath(homeDir)
 	viper.SetConfigType("yaml")
-	viper.SetEnvPrefix("QL")
-	viper.AutomaticEnv()
-	viper.SetConfigName(".query-lookout")
+
+	if configPath != "" {
+		viper.SetConfigFile(configPath)
+	} else {
+		viper.AddConfigPath(homeDir)
+		viper.SetEnvPrefix("QL")
+		viper.AutomaticEnv()
+		viper.SetConfigName(".query-lookout")
+	}
 
 	err = viper.ReadInConfig()
 	if err != nil {

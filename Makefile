@@ -13,5 +13,5 @@ build_web:
 .PHONY: build_core
 build_core:
 	@echo "Building core .."
-	go build -o qlookout main.go
+	CGO_ENABLED=1 go build -o qlookout main.go
 	@echo "Building core done ✅"

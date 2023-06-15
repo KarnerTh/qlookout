@@ -30,5 +30,5 @@ func setupDelivery(lookoutManager lookout.LookoutManager, lookoutRepo lookout.Lo
 		},
 	)
 
-	go log.Fatal(http.ListenAndServe(":8080", nil))
+	go log.Fatal(http.ListenAndServe(":63001", nil))
 }

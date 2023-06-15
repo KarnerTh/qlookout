@@ -42,18 +42,18 @@ func setupCore() {
 func setupWeb() {
 	log.Infoln("Starting web")
 
-  webSubFiles, err := fs.Sub(webFiles, "web/build")
-  if err != nil {
-    log.WithError(err).Fatal("Could not get web files")
-  }
+	webSubFiles, err := fs.Sub(webFiles, "web/build")
+	if err != nil {
+		log.WithError(err).Fatal("Could not get web files")
+	}
 
-  httpFS := http.FS(webSubFiles)
-  frontendFS := http.FileServer(httpFS)
+	httpFS := http.FS(webSubFiles)
+	frontendFS := http.FileServer(httpFS)
 	serveIndex := serveFileContents("index.html", httpFS)
 	http.Handle("/", intercept404(frontendFS, serveIndex))
 
-	log.Infoln("Listening on 3000")
-	err = http.ListenAndServe(":3000", nil)
+	log.Infoln("Listening on 63000")
+	err = http.ListenAndServe(":63000", nil)
 	if err != nil {
 		log.Fatal(err)
 	}

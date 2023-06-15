@@ -1,0 +1,12 @@
+log_level: trace
+database_file: "data.db"
+data_source: "sqlite3://data.db"
+base_url: "http://localhost:5173" 
+mail_from_address: "tka-test@gmx.net"
+mail_to_address: "thomas.7.karner@gmail.com"
+mail_smtp_host: "localhost"
+mail_smtp_port: "1025"
+#mail_smtp_host: "mail.gmx.net"
+#mail_smtp_port: "587"
+mail_username: "tka-test@gmx.net"
+mail_password: "xxx"
