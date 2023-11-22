@@ -2,15 +2,16 @@ package database
 
 import (
 	"database/sql"
+	"fmt"
+	"log/slog"
 
 	_ "github.com/go-sql-driver/mysql"
-	log "github.com/sirupsen/logrus"
 )
 
 func openMysql(driverName DbType, dataSource string) (*sql.DB, error) {
 	db, err := sql.Open(driverName.String(), dataSource)
 	if err != nil {
-		log.WithError(err).Errorf("Could not open database %s with connection string %s", driverName, dataSource)
+		slog.Error(fmt.Sprintf("Could not open database %s with connection string %s", driverName, dataSource), slog.Any("error", err))
 		return nil, err
 	}
 

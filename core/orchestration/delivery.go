@@ -1,9 +1,8 @@
 package orchestration
 
 import (
+	"log/slog"
 	"net/http"
-
-	log "github.com/sirupsen/logrus"
 
 	"github.com/KarnerTh/query-lookout/core/delivery/graphql"
 	"github.com/KarnerTh/query-lookout/core/usecase/lookout"
@@ -15,7 +14,7 @@ import (
 )
 
 func setupDelivery(lookoutManager lookout.LookoutManager, lookoutRepo lookout.LookoutRepo, reviewRepo review.ReviewRepo, notificationSubscriber notify.NotificationSubscriber) {
-	log.Info("Start delivery")
+	slog.Info("Start delivery")
 
 	reviewResolver := reviewGraphQl.NewReviewResolver(reviewRepo)
 	lookoutResolver := lookoutGraphQl.NewLookoutResolver(lookoutManager, lookoutRepo, reviewResolver)
@@ -30,5 +29,5 @@ func setupDelivery(lookoutManager lookout.LookoutManager, lookoutRepo lookout.Lo
 		},
 	)
 
-	go log.Fatal(http.ListenAndServe(":63001", nil))
+	go slog.Error("Delivery failed", http.ListenAndServe(":63001", nil))
 }

@@ -5,10 +5,9 @@ import (
 	_ "embed"
 	"fmt"
 	"html/template"
+	"log/slog"
 	"net/smtp"
 	"strings"
-
-	log "github.com/sirupsen/logrus"
 
 	"github.com/KarnerTh/query-lookout/core/config"
 	"github.com/KarnerTh/query-lookout/core/usecase/notify"
@@ -36,7 +35,8 @@ type mailNotifier struct {
 func NewMailNotifier(config config.Config) notify.Notifier {
 	tmpl, err := template.New("mail_template").Parse(mailTemplateContent)
 	if err != nil {
-		log.WithError(err).Fatal("Could not load mail template")
+		slog.Error("Could not load mail template", slog.Any("error", err))
+		panic("Could not load mail template")
 	}
 
 	return mailNotifier{
@@ -62,7 +62,7 @@ func (n mailNotifier) Send(value notify.Notification) error {
 	msg := n.getMailMsg(value)
 
 	if err := smtp.SendMail(smtpAddress, smptAuth, n.fromAddress, to, msg); err != nil {
-		log.WithError(err).Error("Could not send mail")
+		slog.Error("Could not send mail", slog.Any("error", err))
 		return err
 	}
 
@@ -87,7 +87,7 @@ func getMailContent(template *template.Template, data notify.Notification, baseU
 
 	bodyBuf := new(bytes.Buffer)
 	if err := template.Execute(bodyBuf, inputData); err != nil {
-		log.WithError(err).Error("Could not load mail template")
+		slog.Error("Could not load mail template", slog.Any("error", err))
 		return ""
 	}
 

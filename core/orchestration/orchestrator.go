@@ -2,8 +2,7 @@ package orchestration
 
 import (
 	"fmt"
-
-	log "github.com/sirupsen/logrus"
+	"log/slog"
 
 	"github.com/KarnerTh/query-lookout/core/database"
 	"github.com/KarnerTh/query-lookout/core/observer"
@@ -19,31 +18,35 @@ func Setup() {
 	flags := parseFlags()
 	config := setupConfig(flags.ConfigPath)
 	setupLogger(config)
-	log.Debug("Setup orchestration")
+	slog.Debug("Setup orchestration")
 
 	// database connections
 	connectionFactory := database.NewConnectorFactory()
 	internalDb, err := connectionFactory.NewConnector(fmt.Sprintf("sqlite3://%s", config.DatabaseFile()))
 	defer func() { _ = internalDb.Close() }()
 	if err != nil {
-		log.WithError(err).Fatal("Could not initiate internal db")
+		slog.Error("Could not initiate internal db", slog.Any("error", err))
+		return
 	}
 
 	// enable sqlite foreign key support
 	_, err = internalDb.Exec("PRAGMA foreign_keys=ON")
 	if err != nil {
-		log.WithError(err).Fatal("Could not enable foreign key support for internal db")
+		slog.Error("Could not enable foreign key support for internal db", slog.Any("error", err))
+		return
 	}
 
 	err = database.MigrateInternalSqliteDb(internalDb)
 	if err != nil {
-		log.WithError(err).Fatal("Shutting down due to failing migrations")
+		slog.Error("Shutting down due to failing migrations", slog.Any("error", err))
+		return
 	}
 
 	watchDb, err := connectionFactory.NewConnector(config.DataSource())
 	defer func() { _ = internalDb.Close() }()
 	if err != nil {
-		log.WithError(err).Fatal("Could not initiate connection to data source")
+		slog.Error("Could not initiate connection to data source", slog.Any("error", err))
+		return
 	}
 
 	// notifier

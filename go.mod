@@ -1,11 +1,8 @@
 module github.com/KarnerTh/query-lookout
 
-go 1.20
+go 1.21
 
-require (
-	github.com/KarnerTh/query-lookout/core v0.0.0 //version changed to v0.0.0-00010101000000-000000000000 after go mod tidy
-	github.com/sirupsen/logrus v1.9.0
-)
+require github.com/KarnerTh/query-lookout/core v0.0.0 //version changed to v0.0.0-00010101000000-000000000000 after go mod tidy
 
 require (
 	github.com/davecgh/go-spew v1.1.1 // indirect

@@ -2,13 +2,13 @@ package graphql
 
 import (
 	_ "embed"
+	"log/slog"
 	"net/http"
 
 	"github.com/friendsofgo/graphiql"
 	"github.com/graph-gophers/graphql-go"
 	"github.com/graph-gophers/graphql-go/relay"
 	"github.com/graph-gophers/graphql-transport-ws/graphqlws"
-	log "github.com/sirupsen/logrus"
 
 	"github.com/KarnerTh/query-lookout/core/delivery"
 	lookoutResolver "github.com/KarnerTh/query-lookout/core/usecase/lookout/delivery/graphql"
@@ -26,7 +26,7 @@ type CombinedResolver struct {
 }
 
 func Setup(endpoint string, resolver *CombinedResolver) {
-	log.Info("Setup graphql schema and handler")
+	slog.Info("Setup graphql schema and handler")
 	opts := []graphql.SchemaOpt{graphql.UseFieldResolvers()}
 	schema := graphql.MustParseSchema(schemaContent, resolver, opts...)
 	graphQlHandler := graphqlws.NewHandlerFunc(schema, delivery.CorsMiddleware(&relay.Handler{Schema: schema}))

@@ -2,9 +2,8 @@ package notify
 
 import (
 	"fmt"
+	"log/slog"
 	"time"
-
-	log "github.com/sirupsen/logrus"
 
 	"github.com/KarnerTh/query-lookout/core/config"
 	"github.com/KarnerTh/query-lookout/core/usecase/lookout"
@@ -49,7 +48,7 @@ func (n notifyManager) Notify(reviewResult review.ReviewResult) {
 	if !reviewResult.Result.IsValid {
 		lookout, err := n.lookoutRepo.GetById(reviewResult.LookoutId)
 		if err != nil {
-			log.WithError(err).Error("Could not get lookout config")
+			slog.Error("Could not get lookout config", slog.Any("error", err))
 			return
 		}
 
@@ -77,13 +76,13 @@ func (n notifyManager) Notify(reviewResult review.ReviewResult) {
 		if lookout.NotifyLocal {
 			err = n.localNotifier.Send(notification)
 			if err != nil {
-				log.WithError(err).Error("Could not send local notification")
+				slog.Error("Could not send local notification", slog.Any("error", err))
 			}
 		}
 		if lookout.NotifyMail {
 			err = n.mailNotifier.Send(notification)
 			if err != nil {
-				log.WithError(err).Error("Could not send mail notification")
+				slog.Error("Could not send mail notification", slog.Any("error", err))
 			}
 		}
 	}

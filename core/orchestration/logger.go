@@ -1,17 +1,30 @@
 package orchestration
 
 import (
-	log "github.com/sirupsen/logrus"
+	"log/slog"
+	"os"
+	"strings"
 
 	"github.com/KarnerTh/query-lookout/core/config"
 )
 
 func setupLogger(config config.Config) {
-	logLevel, err := log.ParseLevel(config.LogLevel())
-	if err != nil {
-		log.WithError(err).Errorf("Could not parse log level %s, fallback to INFO", config.LogLevel())
-		logLevel = log.InfoLevel
-	}
+	logLevel := parseLevel(config.LogLevel())
+	logger := slog.New(slog.NewTextHandler(os.Stdout, &slog.HandlerOptions{Level: logLevel}))
+	slog.SetDefault(logger)
+}
 
-	log.SetLevel(logLevel)
+func parseLevel(lvl string) slog.Level {
+	switch strings.ToLower(lvl) {
+	case "debug":
+		return slog.LevelDebug
+	case "info":
+		return slog.LevelInfo
+	case "warn":
+		return slog.LevelWarn
+	case "error":
+		return slog.LevelError
+	default:
+		return slog.LevelDebug
+	}
 }

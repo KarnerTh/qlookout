@@ -3,9 +3,9 @@ package database
 import (
 	"database/sql"
 	"errors"
+	"fmt"
+	"log/slog"
 	"strings"
-
-	log "github.com/sirupsen/logrus"
 )
 
 type connectorFactory struct{}
@@ -53,10 +53,10 @@ func open(openFunc func(driverName DbType, dataSource string) (*sql.DB, error), 
 func verifyConnection(db *sql.DB, driverName DbType) error {
 	err := db.Ping()
 	if err != nil {
-		log.WithError(err).Errorf("Could not verify db connection %s", driverName)
+		slog.Error(fmt.Sprintf("Could not verify db connection %s", driverName), slog.Any("error", err))
 		return err
 	}
 
-	log.Debugf("Connected to %s db successfully", driverName)
+	slog.Debug(fmt.Sprintf("Connected to %s db successfully", driverName))
 	return nil
 }

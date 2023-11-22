@@ -1,7 +1,7 @@
 package review
 
 import (
-	log "github.com/sirupsen/logrus"
+	"log/slog"
 
 	"github.com/KarnerTh/query-lookout/core/usecase/watch"
 )
@@ -44,7 +44,7 @@ func (r reviewer) Start() {
 func (r reviewer) Review(watchResult watch.WatchResult) ([]ReviewResult, error) {
 	rules, err := r.reviewRepo.GetForLookout(watchResult.LookoutId)
 	if err != nil {
-		log.WithError(err).Errorf("Could not get rules by id")
+		slog.Error("Could not get rules by id", slog.Any("error", err))
 		return nil, err
 	}
 
@@ -56,7 +56,7 @@ func (r reviewer) Review(watchResult watch.WatchResult) ([]ReviewResult, error) 
 	for i, rule := range rules {
 		validationResult, err := validate(watchResult, rule)
 		if err != nil {
-			log.WithError(err).Error("Error in validating rule")
+			slog.Error("Error in validating rule", slog.Any("error", err))
 		}
 
 		results[i] = ReviewResult{

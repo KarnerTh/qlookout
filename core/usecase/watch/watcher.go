@@ -1,8 +1,10 @@
 package watch
 
 import (
+	"fmt"
+	"log/slog"
+
 	"github.com/robfig/cron/v3"
-	log "github.com/sirupsen/logrus"
 
 	"github.com/KarnerTh/query-lookout/core/usecase/query"
 )
@@ -44,7 +46,8 @@ func (w watcher) Watch(config WatchConfig) WatcherId {
 
 	id, err := w.cron.AddJob(config.Cron, job)
 	if err != nil {
-		log.WithError(err).Fatal("Could not start cron job - please check lookout configuration")
+		slog.Error("Could not start cron job - please check lookout configuration", slog.Any("error", err))
+		panic("Could not start cron job - please check lookout configuration")
 	}
 
 	return id
@@ -55,10 +58,10 @@ func (w watcher) StopWatching(id WatcherId) {
 }
 
 func executeCronJob(job cronJobWatchData) {
-	log.Infof("Execute lookout %s", job.config.Name)
+	slog.Info(fmt.Sprintf("Execute lookout %s", job.config.Name))
 	result, err := job.queryRepo.Query(job.config.Query)
 	if err != nil {
-		log.WithError(err).Error("Error quering job")
+		slog.Error("Error quering job", slog.Any("error", err))
 		job.resultPublisher.Publish(WatchResult{LookoutId: job.config.LookoutId, Error: err})
 		return
 	}

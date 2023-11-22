@@ -1,9 +1,9 @@
 package orchestration
 
 import (
+	"log/slog"
 	"os"
 
-	log "github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
 
 	"github.com/KarnerTh/query-lookout/core/config"
@@ -12,7 +12,8 @@ import (
 func setupConfig(configPath string) config.Config {
 	homeDir, err := os.UserHomeDir()
 	if err != nil {
-		log.WithError(err).Fatal("Could not get home dir")
+		slog.Error("Could not get home dir", slog.Any("error", err))
+		panic("Could not get home dir")
 	}
 
 	viper.SetConfigType("yaml")
@@ -28,7 +29,8 @@ func setupConfig(configPath string) config.Config {
 
 	err = viper.ReadInConfig()
 	if err != nil {
-		log.WithError(err).Fatal("Could not read config")
+		slog.Error("Could not read config", slog.Any("error", err))
+		panic("Could not read config")
 	}
 
 	return config.New(homeDir)

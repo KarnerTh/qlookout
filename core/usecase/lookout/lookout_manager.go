@@ -2,8 +2,7 @@ package lookout
 
 import (
 	"fmt"
-
-	log "github.com/sirupsen/logrus"
+	"log/slog"
 
 	"github.com/KarnerTh/query-lookout/core/usecase/watch"
 )
@@ -30,10 +29,10 @@ func NewLookoutManager(lookoutRepo LookoutRepo, watcher watch.Watcher) LookoutMa
 }
 
 func (l *lookoutManager) Start() error {
-	log.Debug("Lookout manager started")
+	slog.Debug("Lookout manager started")
 	lookouts, err := l.lookoutRepo.Get()
 	if err != nil {
-		log.WithError(err).Error("Could not get lookouts")
+		slog.Error("Could not get lookouts", slog.Any("error", err))
 		return err
 	}
 
@@ -46,20 +45,20 @@ func (l *lookoutManager) Start() error {
 		})
 		l.watcherIds[lo.Id] = id
 	}
-	log.Info("All lookouts started successfully")
+	slog.Info("All lookouts started successfully")
 	return nil
 }
 
 func (l *lookoutManager) Watch(lookoutId int) error {
 	_, ok := l.watcherIds[lookoutId]
 	if ok {
-		log.Warnf("Can not add lookout with id %d, because it is already running", lookoutId)
+		slog.Warn(fmt.Sprintf("Can not add lookout with id %d, because it is already running", lookoutId))
 		return fmt.Errorf("Can not add lookout with id %d, because it is already running", lookoutId)
 	}
 
 	lookout, err := l.lookoutRepo.GetById(lookoutId)
 	if err != nil {
-		log.WithError(err).Warnf("Can not add lookout with id %d, because getById failed", lookoutId)
+		slog.Warn(fmt.Sprintf("Can not add lookout with id %d, because getById failed", lookoutId), slog.Any("error", err))
 		return err
 	}
 
@@ -70,20 +69,20 @@ func (l *lookoutManager) Watch(lookoutId int) error {
 		Cron:      lookout.Cron,
 	})
 	l.watcherIds[lookoutId] = id
-	log.Infof("Added watch for lookout with id %d", lookoutId)
+	slog.Info(fmt.Sprintf("Added watch for lookout with id %d", lookoutId))
 	return nil
 }
 
 func (l *lookoutManager) Remove(lookoutId int) error {
 	watchId, ok := l.watcherIds[lookoutId]
 	if !ok {
-		log.Errorf("Could not remove lookout with id %d, because it was not found", lookoutId)
+		slog.Error(fmt.Sprintf("Could not remove lookout with id %d, because it was not found", lookoutId))
 		return fmt.Errorf("Could not remove lookout with id %d, because it was not found", lookoutId)
 	}
 
 	l.watcher.StopWatching(watchId)
 	delete(l.watcherIds, lookoutId)
-	log.Infof("Removed watch for lookout with id %d", lookoutId)
+	slog.Info(fmt.Sprintf("Removed watch for lookout with id %d", lookoutId))
 	return nil
 }
 

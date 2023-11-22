@@ -4,13 +4,12 @@ import (
 	"embed"
 	"fmt"
 	"io/fs"
+	"log/slog"
 	"net/http"
 	"os"
 	"os/signal"
 	"strings"
 	"syscall"
-
-	log "github.com/sirupsen/logrus"
 
 	"github.com/KarnerTh/query-lookout/core/orchestration"
 )
@@ -19,7 +18,8 @@ import (
 var webFiles embed.FS
 
 func main() {
-	log.SetLevel(log.InfoLevel)
+	logger := slog.New(slog.NewTextHandler(os.Stdout, &slog.HandlerOptions{Level: slog.LevelInfo}))
+	slog.SetDefault(logger)
 
 	setupCore()
 	setupWeb()
@@ -31,20 +31,21 @@ func setupQuitWatcher() {
 	quitChannel := make(chan os.Signal, 1)
 	signal.Notify(quitChannel, syscall.SIGINT, syscall.SIGTERM)
 	<-quitChannel
-	log.Infoln("Service stopped - see you soon 👋")
+	slog.Info("Service stopped - see you soon 👋")
 }
 
 func setupCore() {
-	log.Infoln("Starting core")
+	slog.Info("Starting core")
 	go orchestration.Setup()
 }
 
 func setupWeb() {
-	log.Infoln("Starting web")
+	slog.Info("Starting web")
 
 	webSubFiles, err := fs.Sub(webFiles, "web/build")
 	if err != nil {
-		log.WithError(err).Fatal("Could not get web files")
+		slog.Error("Could not get web files", slog.Any("error", err))
+		return
 	}
 
 	httpFS := http.FS(webSubFiles)
@@ -52,10 +53,10 @@ func setupWeb() {
 	serveIndex := serveFileContents("index.html", httpFS)
 	http.Handle("/", intercept404(frontendFS, serveIndex))
 
-	log.Infoln("Listening on 63000")
+	slog.Info("Listening on 63000")
 	err = http.ListenAndServe(":63000", nil)
 	if err != nil {
-		log.Fatal(err)
+		slog.Error("Could not start server", slog.Any("error", err))
 	}
 }
 
