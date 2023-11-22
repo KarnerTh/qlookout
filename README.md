@@ -35,7 +35,7 @@ Supported databases:
 ## Configuration
 
 ```
-log_level               Log level of the core (panic, fatal, error, warn, info, debug, trace)
+log_level               Log level of the core (error, warn, info, debug)
 database_file           The file that is used for the internal sqlite database (defaults to `data.db` in your home directory)
 data_source             The data source for the lookouts
 base_url                Base url of the application (e.g. for the notification deeplink)
@@ -55,7 +55,7 @@ The configs are loaded in that order (details can be found [here](https://github
 ### Example config file
 
 ```yaml
-log_level: TRACE
+log_level: INFO
 database_file: "custom_file_name.db"
 data_source: "sqlite3://data.db"
 base_url: "https://karnerth.github.io/portfolio/"
