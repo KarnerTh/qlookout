@@ -37,7 +37,7 @@ type Config interface {
 
 func New(homeDir string) Config {
 	viper.SetDefault(logLevel, "INFO")
-	viper.SetDefault(databaseFile, path.Join(homeDir, "data.db"))
+	viper.SetDefault(databaseFile, path.Join(homeDir, "qlookout-data.db"))
 
 	return config{}
 }

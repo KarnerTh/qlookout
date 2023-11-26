@@ -27,10 +27,14 @@ func setupConfig(configPath string) config.Config {
 		viper.SetConfigName(".query-lookout")
 	}
 
-	err = viper.ReadInConfig()
-	if err != nil {
-		slog.Error("Could not read config", slog.Any("error", err))
-		panic("Could not read config")
+	if err := viper.ReadInConfig(); err != nil {
+		if _, ok := err.(viper.ConfigFileNotFoundError); ok {
+			// Config file not required
+			slog.Info("Starting without config file")
+		} else {
+			slog.Error("Could not read config", slog.Any("error", err))
+			panic("Could not read config")
+		}
 	}
 
 	return config.New(homeDir)
