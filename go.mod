@@ -2,7 +2,7 @@ module github.com/KarnerTh/query-lookout
 
 go 1.21
 
-require github.com/KarnerTh/query-lookout/core v0.0.0 //version changed to v0.0.0-00010101000000-000000000000 after go mod tidy
+require github.com/KarnerTh/query-lookout/core v0.0.0-20231126190600-857bd3bc8029
 
 require (
 	github.com/davecgh/go-spew v1.1.1 // indirect
@@ -68,4 +68,4 @@ require (
 	modernc.org/token v1.0.0 // indirect
 )
 
-replace github.com/KarnerTh/query-lookout/core => ./core
+// replace github.com/KarnerTh/query-lookout/core => ./core
