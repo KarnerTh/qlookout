@@ -15,7 +15,7 @@ modifications or data constellations in your database.
 Want to see what has changed? Take a look at
 the [Changelog](https://github.com/KarnerTh/query-lookout/blob/main/CHANGELOG.md)
 
-## How does it work
+## How does it work 
 1. Create a new **lookout**
     1. Define a display name
     1. Configure a cron expression how often it should run (details [here](https://github.com/robfig/cron#background---cron-spec-format))
@@ -36,6 +36,7 @@ https://github.com/KarnerTh/query-lookout/assets/22556363/e9d9c451-ba07-4eaf-908
 # Contents
 <ul>
   <li><a href="#features">Features</a></li>
+  <li><a href="#getting-started">Getting started</a></li>
   <li><a href="#installation">Installation</a></li>
   <li><a href="#supported-databases">Supported databases</a></li>
   <li><a href="#configuration">Configuration</a></li>
@@ -67,7 +68,9 @@ Get up and running in a few steps - locally or whereever you want.
 
 ## Getting started
 1. Install query-lookout (details [here](#installation))
-1. Create a configuration file `~/.query-lookout` (details [here](#configuration))
+1. Create the configuration file `~/.query-lookout` (details [here](#configuration))
+    1. Important config is `data_source`, which defines the connection string
+    to your database
 1. Run `qlookout`
 1. Open [http://localhost:63000/](http://localhost:63000/)
 1. Enjoy
@@ -88,16 +91,21 @@ go install github.com/KarnerTh/query-lookout@latest
 
 ## Configuration
 ```
-log_level               Log level of the core (error, warn, info, debug)
-database_file           The file that is used for the internal sqlite database (defaults to `data.db` in your home directory)
+# required
 data_source             The data source for the lookouts
-base_url                Base url of the application (e.g. for the notification deeplink)
+
+# mail config
 mail_from_address       From which mail address the notifcation mails are sent
 mail_to_address         To which mail addresses notifcations are sent (multiple addresses separated by comma)
 mail_smtp_host          SMTP host
 mail_smtp_port          SMTP port
 mail_username           SMTP username
 mail_password           SMTP password
+
+# optional
+log_level               Log level of the core (error, warn, info, debug)
+database_file           The file that is used for the internal sqlite database (defaults to `data.db` in your home directory)
+base_url                Base url of the application (e.g. for the notification deeplink)
 ```
 
 The configs are loaded in that order (details can be found [here](https://github.com/spf13/viper#why-viper))
