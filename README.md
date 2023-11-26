@@ -77,17 +77,6 @@ Get up and running in a few steps - locally or whereever you want.
 go install github.com/KarnerTh/query-lookout@latest
 ```
 
-or
-
-```sh
-todo: docker
-```
-
-or
-
-just head over to the [Releases](https://github.com/KarnerTh/query-lookout/releases)
-page and download the right executable for your operating system. To be able
-to use it globally on your system, add the executable to your path.
 
 ## Supported databases
 | Database   | Example Connection-String                                  |
