@@ -1,0 +1,1 @@
+import{R as t}from"./control.e7f5239e.js";function r(e,o){return new t(e,o)}new TextEncoder;function n(){throw r(308,"/lookout")}const l=Object.freeze(Object.defineProperty({__proto__:null,load:n},Symbol.toStringTag,{value:"Module"}));export{l as _,n as l};
