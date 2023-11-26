@@ -1,7 +1,7 @@
 .DEFAULT_GOAL := build_project
 
 # GIT_TAG := $(shell git describe --tags --abbrev=0)
-GIT_TAG := 0.0.0-$(shell git rev-parse HEAD) # use commit hash until we switch to proper versions
+GIT_TAG := v0.0.0-$(shell git rev-parse HEAD) # use commit hash until we switch to proper versions
 
 .PHONY: build_project
 build_project:
@@ -16,6 +16,7 @@ build_web:
 	npm run build --prefix web
 	@echo "Building web app done ✅"
 
-.PHONY: publish-package
-publish-package:
+.PHONY: publish_package
+publish_package:
+	git tag -a $(GIT_TAG) -m "" && git push origin $(GIT_TAG)
 	GOPROXY=proxy.golang.org go list -m github.com/KarnerTh/query-lookout@$(GIT_TAG)
