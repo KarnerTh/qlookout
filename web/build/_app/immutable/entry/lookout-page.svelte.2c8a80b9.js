@@ -1,4 +1,4 @@
-import{S as T,i as V,s as B,k,y as L,a as E,l as v,m as y,z as C,c as q,h as d,n as b,b as I,A as D,D as g,d as _,f as M,g as $,B as x,F as A,v as j,E as z}from"../chunks/index.f49fd5c2.js";import{T as F}from"../chunks/Table.2a8d44c2.js";import{P as H,B as Q,a as R,g as S}from"../chunks/PageHeader.8297dd43.js";import{k as G,q as J}from"../chunks/svelte-apollo.d2e69eac.js";import{L as K}from"../chunks/LoadingSpinner.1a458fe5.js";const O=G`
+import{S as T,i as V,s as B,k,y as L,a as E,l as v,m as y,z as C,c as q,h as d,n as b,b as I,A as D,D as g,d as _,f as M,g as $,B as x,F as A,v as j,E as z}from"../chunks/index.f49fd5c2.js";import{T as F}from"../chunks/Table.2a8d44c2.js";import{P as H,B as Q,a as R,g as S}from"../chunks/PageHeader.b42d5f8a.js";import{k as G,q as J}from"../chunks/svelte-apollo.e94973ad.js";import{L as K}from"../chunks/LoadingSpinner.1a458fe5.js";const O=G`
   query Lookouts {
     lookouts {
       id

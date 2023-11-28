@@ -5,7 +5,7 @@ import (
 	"os"
 	"strings"
 
-	"github.com/KarnerTh/query-lookout/core/config"
+	"github.com/KarnerTh/qlookout/core/config"
 )
 
 func setupLogger(config config.Config) {

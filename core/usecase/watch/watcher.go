@@ -6,7 +6,7 @@ import (
 
 	"github.com/robfig/cron/v3"
 
-	"github.com/KarnerTh/query-lookout/core/usecase/query"
+	"github.com/KarnerTh/qlookout/core/usecase/query"
 )
 
 type WatcherId = cron.EntryID

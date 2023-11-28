@@ -1,4 +1,4 @@
-import{k as e,q as u}from"./svelte-apollo.d2e69eac.js";const l=e`
+import{k as e,q as u}from"./svelte-apollo.e94973ad.js";const l=e`
   query Lookout($id: Int!) {
     lookout(id: $id) {
       id

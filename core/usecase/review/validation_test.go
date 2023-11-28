@@ -6,8 +6,8 @@ import (
 
 	"github.com/stretchr/testify/assert"
 
-	"github.com/KarnerTh/query-lookout/core/usecase/query"
-	"github.com/KarnerTh/query-lookout/core/usecase/watch"
+	"github.com/KarnerTh/qlookout/core/usecase/query"
+	"github.com/KarnerTh/qlookout/core/usecase/watch"
 )
 
 type testCaseData struct {

@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/KarnerTh/query-lookout/core/usecase/review"
+	"github.com/KarnerTh/qlookout/core/usecase/review"
 )
 
 type reviewRepo struct {

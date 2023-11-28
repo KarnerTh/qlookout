@@ -4,14 +4,14 @@ import (
 	"fmt"
 	"log/slog"
 
-	"github.com/KarnerTh/query-lookout/core/database"
-	"github.com/KarnerTh/query-lookout/core/observer"
-	lookoutInfra "github.com/KarnerTh/query-lookout/core/usecase/lookout/infrastructure"
-	"github.com/KarnerTh/query-lookout/core/usecase/notify"
-	queryInfra "github.com/KarnerTh/query-lookout/core/usecase/query/infrastructure"
-	"github.com/KarnerTh/query-lookout/core/usecase/review"
-	reviewInfra "github.com/KarnerTh/query-lookout/core/usecase/review/infrastructure"
-	"github.com/KarnerTh/query-lookout/core/usecase/watch"
+	"github.com/KarnerTh/qlookout/core/database"
+	"github.com/KarnerTh/qlookout/core/observer"
+	lookoutInfra "github.com/KarnerTh/qlookout/core/usecase/lookout/infrastructure"
+	"github.com/KarnerTh/qlookout/core/usecase/notify"
+	queryInfra "github.com/KarnerTh/qlookout/core/usecase/query/infrastructure"
+	"github.com/KarnerTh/qlookout/core/usecase/review"
+	reviewInfra "github.com/KarnerTh/qlookout/core/usecase/review/infrastructure"
+	"github.com/KarnerTh/qlookout/core/usecase/watch"
 )
 
 func Setup() {

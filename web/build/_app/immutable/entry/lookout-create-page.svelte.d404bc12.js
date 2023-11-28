@@ -1,4 +1,4 @@
-import{S as A,i as Q,s as R,y as g,a as S,k as E,z as d,c as q,l as I,m as B,h as v,n as C,A as y,b as N,D as h,N as V,Q as z,E as G,g as _,d as b,B as k}from"../chunks/index.f49fd5c2.js";import{F as H,a as U}from"../chunks/FormInputTextArea.2980ceeb.js";import{F as P}from"../chunks/FormInputField.6e32f34e.js";import{P as j,B as J,g as T}from"../chunks/PageHeader.8297dd43.js";import{k as K,m as W}from"../chunks/svelte-apollo.d2e69eac.js";const X=K`
+import{S as A,i as Q,s as R,y as g,a as S,k as E,z as d,c as q,l as I,m as B,h as v,n as C,A as y,b as N,D as h,N as V,Q as z,E as G,g as _,d as b,B as k}from"../chunks/index.f49fd5c2.js";import{F as H,a as U}from"../chunks/FormInputTextArea.2980ceeb.js";import{F as P}from"../chunks/FormInputField.6e32f34e.js";import{P as j,B as J,g as T}from"../chunks/PageHeader.b42d5f8a.js";import{k as K,m as W}from"../chunks/svelte-apollo.e94973ad.js";const X=K`
   mutation CreateLookout(
     $name: String!
     $query: String!

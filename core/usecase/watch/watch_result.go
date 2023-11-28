@@ -1,8 +1,8 @@
 package watch
 
 import (
-	"github.com/KarnerTh/query-lookout/core/observer"
-	"github.com/KarnerTh/query-lookout/core/usecase/query"
+	"github.com/KarnerTh/qlookout/core/observer"
+	"github.com/KarnerTh/qlookout/core/usecase/query"
 )
 
 type WatchResultPublisher = observer.Publisher[WatchResult]

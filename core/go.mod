@@ -1,4 +1,4 @@
-module github.com/KarnerTh/query-lookout/core
+module github.com/KarnerTh/qlookout/core
 
 go 1.21
 

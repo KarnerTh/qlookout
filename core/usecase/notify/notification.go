@@ -3,7 +3,7 @@ package notify
 import (
 	"time"
 
-	"github.com/KarnerTh/query-lookout/core/observer"
+	"github.com/KarnerTh/qlookout/core/observer"
 )
 
 type NotificationPublisher = observer.Publisher[Notification]

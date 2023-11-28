@@ -4,10 +4,11 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/KarnerTh/query-lookout/core/usecase/watch"
 	"github.com/robfig/cron/v3"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
+
+	"github.com/KarnerTh/qlookout/core/usecase/watch"
 )
 
 func createManagerWithMocks() (lookoutManager, *MockLookoutRepo, *watch.MockWatcher) {

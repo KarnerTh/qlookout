@@ -6,7 +6,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/KarnerTh/query-lookout/core/usecase/watch"
+	"github.com/KarnerTh/qlookout/core/usecase/watch"
 )
 
 type ValidationResult struct {

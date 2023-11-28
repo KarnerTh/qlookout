@@ -1,6 +1,6 @@
 package graphql
 
-import "github.com/KarnerTh/query-lookout/core/usecase/review"
+import "github.com/KarnerTh/qlookout/core/usecase/review"
 
 type ReviewRuleModel interface {
 	Id() int32

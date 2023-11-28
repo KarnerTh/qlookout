@@ -3,7 +3,7 @@ package graphql
 import (
 	"time"
 
-	"github.com/KarnerTh/query-lookout/core/usecase/notify"
+	"github.com/KarnerTh/qlookout/core/usecase/notify"
 )
 
 type notificationModel interface {

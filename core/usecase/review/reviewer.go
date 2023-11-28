@@ -3,7 +3,7 @@ package review
 import (
 	"log/slog"
 
-	"github.com/KarnerTh/query-lookout/core/usecase/watch"
+	"github.com/KarnerTh/qlookout/core/usecase/watch"
 )
 
 type Reviewer interface {

@@ -9,8 +9,8 @@ import (
 	"net/smtp"
 	"strings"
 
-	"github.com/KarnerTh/query-lookout/core/config"
-	"github.com/KarnerTh/query-lookout/core/usecase/notify"
+	"github.com/KarnerTh/qlookout/core/config"
+	"github.com/KarnerTh/qlookout/core/usecase/notify"
 )
 
 //go:embed mail_template.html

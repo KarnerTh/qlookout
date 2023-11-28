@@ -5,9 +5,9 @@ import (
 	"log/slog"
 	"time"
 
-	"github.com/KarnerTh/query-lookout/core/config"
-	"github.com/KarnerTh/query-lookout/core/usecase/lookout"
-	"github.com/KarnerTh/query-lookout/core/usecase/review"
+	"github.com/KarnerTh/qlookout/core/config"
+	"github.com/KarnerTh/qlookout/core/usecase/lookout"
+	"github.com/KarnerTh/qlookout/core/usecase/review"
 )
 
 type NotifyManager interface {

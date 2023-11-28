@@ -6,7 +6,7 @@ import (
 	"os/signal"
 	"syscall"
 
-	"github.com/KarnerTh/query-lookout/core/orchestration"
+	"github.com/KarnerTh/qlookout/core/orchestration"
 )
 
 func main() {

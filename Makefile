@@ -19,4 +19,4 @@ build_web:
 .PHONY: publish_package
 publish_package:
 	git tag -a $(GIT_TAG) -m "" && git push origin $(GIT_TAG)
-	GOPROXY=proxy.golang.org go list -m github.com/KarnerTh/query-lookout@$(GIT_TAG)
+	GOPROXY=proxy.golang.org go list -m github.com/KarnerTh/qlookout@$(GIT_TAG)

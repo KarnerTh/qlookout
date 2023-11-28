@@ -3,11 +3,12 @@ package notify
 import (
 	"testing"
 
-	"github.com/KarnerTh/query-lookout/core/config"
-	"github.com/KarnerTh/query-lookout/core/observer"
-	"github.com/KarnerTh/query-lookout/core/usecase/lookout"
-	"github.com/KarnerTh/query-lookout/core/usecase/review"
 	"github.com/stretchr/testify/mock"
+
+	"github.com/KarnerTh/qlookout/core/config"
+	"github.com/KarnerTh/qlookout/core/observer"
+	"github.com/KarnerTh/qlookout/core/usecase/lookout"
+	"github.com/KarnerTh/qlookout/core/usecase/review"
 )
 
 func createNotifierWithMocks() (NotifyManager, *MockNotifier, *MockNotifier, *lookout.MockLookoutRepo, *observer.MockObserver[Notification], *config.MockConfig) {

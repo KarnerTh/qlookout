@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://github.com/KarnerTh/query-lookout/assets/22556363/1057ff28-c90e-4013-b09a-9a03f86a5860" alt="Query-Lookout logo"/>
+  <img src="https://github.com/KarnerTh/qlookout/assets/22556363/1057ff28-c90e-4013-b09a-9a03f86a5860" alt="Query-Lookout logo"/>
 </p>
 
 # Query-Lookout
@@ -13,7 +13,7 @@ modifications or data constellations in your database.
 
 
 Want to see what has changed? Take a look at
-the [Changelog](https://github.com/KarnerTh/query-lookout/blob/main/CHANGELOG.md)
+the [Changelog](https://github.com/KarnerTh/qlookout/blob/main/CHANGELOG.md)
 
 ## How does it work 
 1. Create a new **lookout**
@@ -29,7 +29,7 @@ the [Changelog](https://github.com/KarnerTh/query-lookout/blob/main/CHANGELOG.md
     1. Expected value
 
 
-https://github.com/KarnerTh/query-lookout/assets/22556363/e9d9c451-ba07-4eaf-908a-80a1a1c2b174
+https://github.com/KarnerTh/qlookout/assets/22556363/e9d9c451-ba07-4eaf-908a-80a1a1c2b174
 
 
 
@@ -68,7 +68,7 @@ Get up and running in a few steps - locally or whereever you want.
 
 ## Getting started
 1. Install query-lookout (details [here](#installation))
-1. Create the configuration file `~/.query-lookout` (details [here](#configuration))
+1. Create the configuration file `~/.qlookout` (details [here](#configuration))
     1. Important config is `data_source`, which defines the connection string
     to your database
 1. Run `qlookout`
@@ -77,7 +77,7 @@ Get up and running in a few steps - locally or whereever you want.
 
 ## Installation
 ```sh
-go install github.com/KarnerTh/query-lookout@latest
+go install github.com/KarnerTh/qlookout@latest
 ```
 
 
@@ -111,7 +111,7 @@ base_url                Base url of the application (e.g. for the notification d
 The configs are loaded in that order (details can be found [here](https://github.com/spf13/viper#why-viper))
 
 - as environment variables with a `QL_` prefix in ALL_CAPS
-- a yaml configuration file located in `~/.query-lookout`
+- a yaml configuration file located in `~/.qlookout`
 
 ### Example config file
 ```yaml

@@ -1,6 +1,6 @@
 package review
 
-import "github.com/KarnerTh/query-lookout/core/observer"
+import "github.com/KarnerTh/qlookout/core/observer"
 
 type ReviewResultPublisher = observer.Publisher[ReviewResult]
 type ReviewResultSubscriber = observer.Subscriber[ReviewResult]

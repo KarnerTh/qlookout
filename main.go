@@ -11,7 +11,7 @@ import (
 	"strings"
 	"syscall"
 
-	"github.com/KarnerTh/query-lookout/core/orchestration"
+	"github.com/KarnerTh/qlookout/core/orchestration"
 )
 
 //go:embed all:web/build

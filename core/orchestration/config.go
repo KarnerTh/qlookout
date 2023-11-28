@@ -6,7 +6,7 @@ import (
 
 	"github.com/spf13/viper"
 
-	"github.com/KarnerTh/query-lookout/core/config"
+	"github.com/KarnerTh/qlookout/core/config"
 )
 
 func setupConfig(configPath string) config.Config {
@@ -24,7 +24,7 @@ func setupConfig(configPath string) config.Config {
 		viper.AddConfigPath(homeDir)
 		viper.SetEnvPrefix("QL")
 		viper.AutomaticEnv()
-		viper.SetConfigName(".query-lookout")
+		viper.SetConfigName(".qlookout")
 	}
 
 	if err := viper.ReadInConfig(); err != nil {

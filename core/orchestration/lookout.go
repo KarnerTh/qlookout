@@ -1,8 +1,8 @@
 package orchestration
 
 import (
-	"github.com/KarnerTh/query-lookout/core/usecase/lookout"
-	"github.com/KarnerTh/query-lookout/core/usecase/watch"
+	"github.com/KarnerTh/qlookout/core/usecase/lookout"
+	"github.com/KarnerTh/qlookout/core/usecase/watch"
 )
 
 func setupLookout(lookoutRepo lookout.LookoutRepo, watcher watch.Watcher) lookout.LookoutManager {

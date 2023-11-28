@@ -1,4 +1,4 @@
-import{S as te,i as ne,s as ae,w as L,R as U,y as T,a as b,k as Q,z as v,c as I,l as j,m as G,h as B,n as M,A as y,b as W,D as g,N as re,Q as oe,T as X,g as S,d as k,B as x,F as le}from"../chunks/index.f49fd5c2.js";import{P as ue,B as se,g as Y}from"../chunks/PageHeader.8297dd43.js";import{p as me}from"../chunks/stores.aa56ac9d.js";import{F as Z,R as ie}from"../chunks/RuleInputs.63f4425d.js";import{F as ee}from"../chunks/FormInputField.6e32f34e.js";import{k as pe,m as fe}from"../chunks/svelte-apollo.d2e69eac.js";const de=pe`
+import{S as te,i as ne,s as ae,w as L,R as U,y as T,a as b,k as Q,z as v,c as I,l as j,m as G,h as B,n as M,A as y,b as W,D as g,N as re,Q as oe,T as X,g as S,d as k,B as x,F as le}from"../chunks/index.f49fd5c2.js";import{P as ue,B as se,g as Y}from"../chunks/PageHeader.b42d5f8a.js";import{p as me}from"../chunks/stores.6683fd3d.js";import{F as Z,R as ie}from"../chunks/RuleInputs.63f4425d.js";import{F as ee}from"../chunks/FormInputField.6e32f34e.js";import{k as pe,m as fe}from"../chunks/svelte-apollo.e94973ad.js";const de=pe`
   mutation CreateRule(
     $lookoutId: Int!
     $columnName: String!
