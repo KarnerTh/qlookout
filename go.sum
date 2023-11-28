@@ -80,8 +80,8 @@ github.com/Azure/go-autorest/tracing v0.6.0/go.mod h1:+vhtPC754Xsa23ID7GlGsrdKBp
 github.com/BurntSushi/toml v0.3.1/go.mod h1:xHWCNGjB5oqiDr8zfno3MHue2Ht5sIBksp03qcyfWMU=
 github.com/BurntSushi/xgb v0.0.0-20160522181843-27f122750802/go.mod h1:IVnqGOEym/WlBOVXweHU+Q+/VP0lqqI8lqeDx9IjBqo=
 github.com/ClickHouse/clickhouse-go v1.4.3/go.mod h1:EaI/sW7Azgz9UATzd5ZdZHRUhHgv5+JMS9NSr2smCJI=
-github.com/KarnerTh/qlookout/core v0.0.0-20231128183737-42b3b10349d5 h1:XQUqN59bOswBJho0pfFXc4x17PS9iFQjrNYBIf6OonM=
-github.com/KarnerTh/qlookout/core v0.0.0-20231128183737-42b3b10349d5/go.mod h1:SH2qd7rRfw/JHyY5YEtELXLGqY9n7zo1MZKo2Pf2LLk=
+github.com/KarnerTh/qlookout/core v0.0.0-20231128190233-9a323432143b h1:nNFa1N3ZAB/kF90lCo3xP7yUYA8gWofBY17HPgY1ep8=
+github.com/KarnerTh/qlookout/core v0.0.0-20231128190233-9a323432143b/go.mod h1:SH2qd7rRfw/JHyY5YEtELXLGqY9n7zo1MZKo2Pf2LLk=
 github.com/Masterminds/semver/v3 v3.1.1 h1:hLg3sBzpNErnxhQtUy/mmLR2I9foDujNK030IGemrRc=
 github.com/Masterminds/semver/v3 v3.1.1/go.mod h1:VPu/7SZ7ePZ3QOrcuXROw5FAcLl4a0cBrbBpGY/8hQs=
 github.com/Microsoft/go-winio v0.4.11/go.mod h1:VhR8bwka0BXejwEJY73c50VrPtXAaKcyvVC4A4RozmA=

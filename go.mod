@@ -2,7 +2,7 @@ module github.com/KarnerTh/qlookout
 
 go 1.21
 
-require github.com/KarnerTh/qlookout/core v0.0.0-20231128183737-42b3b10349d5
+require github.com/KarnerTh/qlookout/core v0.0.0-20231128190233-9a323432143b
 
 require (
 	github.com/davecgh/go-spew v1.1.1 // indirect
@@ -67,5 +67,3 @@ require (
 	modernc.org/strutil v1.1.0 // indirect
 	modernc.org/token v1.0.0 // indirect
 )
-
-// replace github.com/KarnerTh/qlookout/core => ./core
