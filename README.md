@@ -77,7 +77,7 @@ Get up and running in a few steps - locally or whereever you want.
 
 ## Installation
 ```sh
-go install github.com/KarnerTh/qlookout@latest
+go install github.com/KarnerTh/qlookout@main
 ```
 
 
