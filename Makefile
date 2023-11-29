@@ -1,7 +1,7 @@
 .DEFAULT_GOAL := build_project
 
 # GIT_TAG := $(shell git describe --tags --abbrev=0)
-GIT_TAG := v0.0.0-$(shell git rev-parse HEAD) # use commit hash until we switch to proper versions
+GIT_TAG := v0.0.0-$(shell date +%Y%m%d%H%M%S)-$(shell git rev-parse HEAD | cut -c 1-12)
 
 .PHONY: build_project
 build_project:
