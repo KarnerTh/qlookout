@@ -1,0 +1,37 @@
+version: "3"
+services:
+  qlookout-postgres-test-db:
+    image: postgres:14-alpine
+    environment:
+      POSTGRES_USER: "user"
+      POSTGRES_PASSWORD: "password"
+      POSTGRES_DB: "qlookout_test"
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./db-setup.sql:/docker-entrypoint-initdb.d/1.sql
+  qlookout-mysql-test-db:
+    image: mysql:8.0
+    command: --default-authentication-plugin=mysql_native_password
+    environment:
+      MYSQL_DATABASE: "qlookout_test"
+      MYSQL_USER: "user"
+      MYSQL_PASSWORD: "password"
+      MYSQL_ROOT_PASSWORD: "password"
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./db-setup.sql:/docker-entrypoint-initdb.d/1.sql
+  qlookout-mssql-test-db:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    environment:
+      ACCEPT_EULA: "Y"
+      SA_PASSWORD: "securePassword1!"
+    ports:
+      - "1433:1433"
+    volumes:
+      - ./db-setup.sql:/usr/src/app/db-setup.sql
+      - ./mssql/mssql-setup.sql:/usr/src/app/mssql-setup.sql
+      - ./mssql/entrypoint.sh:/usr/src/app/entrypoint.sh
+    working_dir: /usr/src/app
+    command: sh -c './entrypoint.sh & /opt/mssql/bin/sqlservr;'

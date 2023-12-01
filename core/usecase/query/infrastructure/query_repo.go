@@ -15,7 +15,13 @@ func NewQueryRepo(db *sql.DB) query.QueryRepo {
 }
 
 func (q queryRepo) Query(queryString string) (query.QueryResult, error) {
-	rows, err := q.db.Query(queryString)
+	stmt, err := q.db.Prepare(queryString)
+	if err != nil {
+		return query.QueryResult{}, err
+	}
+	defer stmt.Close()
+	rows, err := stmt.Query()
+
 	if err != nil {
 		return query.QueryResult{}, err
 	}
