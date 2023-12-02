@@ -80,6 +80,18 @@ Get up and running in a few steps - locally or whereever you want.
 go install github.com/KarnerTh/qlookout@main
 ```
 
+or via docker
+
+```sh
+docker run \
+    --network=""               `# if you want to access another docker container` \
+    -v qlookout_data:/root     `# if you want to persist your data` \
+    -e QL_DATA_SOURCE=""       `# the datasource which you want to query` \
+    -p 63000:63000             `# port for the ui` \
+    -p 63001:63001             `# port for the core` \
+    ghcr.io/karnerth/qlookout:latest
+```
+
 
 ## Supported databases
 | Database   | Example Connection-String                                  |
