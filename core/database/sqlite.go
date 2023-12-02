@@ -8,7 +8,6 @@ import (
 	"strings"
 
 	"github.com/golang-migrate/migrate/v4"
-	"github.com/golang-migrate/migrate/v4/database/sqlite3"
 	"github.com/golang-migrate/migrate/v4/source/iofs"
 	_ "modernc.org/sqlite"
 )
@@ -35,13 +34,13 @@ func MigrateInternalSqliteDb(db *sql.DB) error {
 		return err
 	}
 
-	instance, err := sqlite3.WithInstance(db, &sqlite3.Config{})
+	instance, err := WithSqliteMigrateInstance(db, &SqliteMigrateConfig{})
 	if err != nil {
 		slog.Error("Could not create db instance", slog.Any("error", err))
 		return err
 	}
 
-	m, err := migrate.NewWithInstance("iofs", migrationFiles, "sqlite3", instance)
+	m, err := migrate.NewWithInstance("iofs", migrationFiles, "sqlite", instance)
 	if err != nil {
 		slog.Error("Could not create migration instance", slog.Any("error", err))
 		return err

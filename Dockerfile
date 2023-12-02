@@ -1,17 +1,11 @@
-FROM node:18.16 AS web-builder
+FROM golang:1.21-alpine AS builder
+RUN apk add --no-cache make
 WORKDIR /app
 COPY . .
-RUN npm ci --prefix web
-RUN make build_web
-
-FROM golang:1.20-alpine AS core-builder
-RUN apk add --no-cache make gcc musl-dev
-WORKDIR /app
-COPY --from=web-builder /app .
-RUN make build_core
+RUN make build_project
 
 FROM alpine:latest
 WORKDIR /app
-COPY --from=core-builder /app/qlookout ./
+COPY --from=builder /app/qlookout ./
 ENTRYPOINT ["./qlookout"]
 

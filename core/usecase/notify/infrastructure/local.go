@@ -17,7 +17,11 @@ func NewLocalNotifier() notify.Notifier {
 func (n localNotifier) Send(value notify.Notification) error {
 	err := beeep.Notify(value.Title, value.Description, "assets/information.png")
 	if err != nil {
-		slog.Error("Could not create local notifiation", slog.Any("error", err))
+		if err == beeep.ErrUnsupported {
+			slog.Warn("Local notifications not supported for this system")
+		} else {
+			slog.Error("Could not create local notifiation", slog.Any("error", err))
+		}
 	}
 
 	return err
